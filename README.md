@@ -1,14 +1,16 @@
 # IT_ASSET_MANAGEMENT
 
 Project: IT Equipment/Asset Lifecycle Management for INF BN 
-Description: This README file has an overview of the project like - Technology used, Folder structure, and detailed steps of execution for the IT Equipment/Asset Lifecycle Management System for INF BN.
+Description: This project implements a role-based IT Equipment/Asset Life Cycle Management System that tracks assets from procurement to disposal using PHP and MySQL for INF BN.
 
 --------------------------------------------------
 1️. Technology Used at Different Levels:
 --------------------------------------------------
 ```text
-Layer -----------------------   Technology Used
-UI                              PHP
+Layer                           Technology Used
+----------------------------------------------
+Frontend                        HTML, CSS, JavaScript
+Backend                         PHP
 Database                        MySQL Server Apache (via XAMPP)
 Hosting                         Localhost (XAMPP)
 Reports                         Excel format
@@ -48,12 +50,13 @@ it_asset_management/
 3. Life Cycle Stages 
 --------------------------------------------------
 ```text
-Stages ----------------------- Implemented Page
-Procurement	                  equipment_master.php
-Issue	                        clerk/allocation.php
-Use	                        allocation table (Issued state)
-Maintenance	                  it_jco/maintenance.php
-Repair	                     it_jco/maintenance.php
+Stages                        Implemented Page
+----------------------------------------------
+Procurement                    equipment_master.php
+Issue                          clerk/allocation.php
+Use                            allocation table (Issued state)
+Maintenance                    it_jco/maintenance.php
+Repair                         it_jco/maintenance.php
 BER	                        disposal decision logic
 Disposal	                     admin/disposal.php
 ```
