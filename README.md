@@ -7,11 +7,11 @@ Description: This README file has an overview of the project like - Technology u
 1️. Technology Used at Different Levels:
 --------------------------------------------------
 ```text
-Layer                 Technology Used
-UI                     PHP
-Database               MySQL Server Apache (via XAMPP)
-Hosting                Localhost (XAMPP)
-Reports                Excel format
+Layer -----------------------   Technology Used
+UI                              PHP
+Database                        MySQL Server Apache (via XAMPP)
+Hosting                         Localhost (XAMPP)
+Reports                         Excel format
 ```
 
 --------------------------------------------------
@@ -45,14 +45,15 @@ it_asset_management/
    └─ downloads.php
 ```
 --------------------------------------------------
-3. Life Cycle Stage Implemented Where
+3. Life Cycle Stages 
 --------------------------------------------------
 ```text
+Stages ----------------------- Implemented Page
 Procurement	                  equipment_master.php
 Issue	                        clerk/allocation.php
-Use	                          allocation table (Issued state)
+Use	                        allocation table (Issued state)
 Maintenance	                  it_jco/maintenance.php
-Repair	                      it_jco/maintenance.php
-BER	                          disposal decision logic
-Disposal	                    admin/disposal.php
+Repair	                     it_jco/maintenance.php
+BER	                        disposal decision logic
+Disposal	                     admin/disposal.php
 ```
