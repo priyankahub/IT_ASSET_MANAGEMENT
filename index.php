@@ -17,7 +17,7 @@
     <div class="banner-overlay"></div>
 
     <div class="banner-content">
-        <img src="images/logo.png" class="logo">
+        <img src="images/logo.jpg" class="logo">
         <h1>THE INFANTRY SCHOOL MHOW</h1>
     </div>
 </div>

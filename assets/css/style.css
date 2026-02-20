@@ -156,34 +156,50 @@ label{
     background:#000;
     display:flex;
     align-items:center;
-    padding:12px 40px;
-    gap:30px;
+    justify-content:flex-start;
+    padding:15px 60px;
+    gap:40px;
+    font-size:15px;
 }
 
 .navbar a,
 .dropbtn{
-    color:#fff;
-    text-decoration:none;
+    display:flex;
+    align-items:center;
+    gap:6px;
     background:none;
     border:none;
-    font-size:14px;
-    font-weight:500;
+    color:#fff;
+    font-size:15px;
+    font-weight:600;
     cursor:pointer;
+}
+.dropdown{
+    position:relative;
+    display:flex;
+    align-items:center;
 }
 
 .navbar a:hover,
 .dropbtn:hover{
     color:#ffd700;
 }
-
+/* Prevent navbar text wrapping */
+.navbar a,
+.dropbtn{
+    white-space: nowrap;
+}
+/* Home icon */
 .home-icon{
     font-size:18px;
+    margin-right:10px;
 }
 
+/* Right side buttons */
 .nav-right{
     margin-left:auto;
     display:flex;
-    gap:20px;
+    gap:15px;
 }
 
 /* DROPDOWN */
@@ -255,16 +271,27 @@ label{
     position:absolute;
     top:50%;
     transform:translateY(-50%);
-    background:#ffd700;
-    border:none;
-    padding:12px 15px;
-    cursor:pointer;
-    font-size:18px;
+    background:rgba(0,0,0,0.6);
+    color:#ffd700;
+    border:2px solid #ffd700;
+    width:45px;
+    height:45px;
     border-radius:50%;
+    font-size:20px;
+    cursor:pointer;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    z-index:10;
 }
 
 .prev{ left:15px; }
 .next{ right:15px; }
+
+.prev:hover, .next:hover{
+    background:#ffd700;
+    color:#000;
+}
 
 /* ================= RIGHT PANEL ================= */
 
@@ -344,4 +371,26 @@ label{
     .right-panel{
         width:100%;
     }
+}
+
+.nav-right a{
+    padding:8px 18px;
+    border-radius:4px;
+    font-weight:600;
+}
+
+/* Login button */
+.nav-right a:first-child{
+    background:#1e3c72;
+    border:1px solid #ffd700;
+}
+
+/* Sign Up button */
+.nav-right a:last-child{
+    background:#ffd700;
+    color:#000;
+}
+
+.nav-right a:last-child:hover{
+    background:#e6c200;
 }
