@@ -104,7 +104,7 @@ a{color:#2a5298;text-decoration:none;font-weight:bold;}
 <body>
 
 <div class="card">
-<h2>Self Registration</h2>
+<h2>New User - Self Registration</h2>
 
 <?php if ($message!="") { ?>
 <p class="<?php echo str_contains($message,'✅')?'success':'error'; ?>">

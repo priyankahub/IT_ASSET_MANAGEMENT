@@ -9,8 +9,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $username = mysqli_real_escape_string($conn, $_POST['username']);
     $password = $_POST['password'];
 
-    $query = mysqli_query(
-        $conn,
+    $query = mysqli_query($conn,
         "SELECT * FROM users WHERE username='$username'"
     );
 
@@ -19,10 +18,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $user = mysqli_fetch_assoc($query);
 
         if ($password === $user['password']) {
-            $_SESSION['rank'] = $user['rank'];
-            $_SESSION['name'] = $user['name'];
+
+            $_SESSION['rank']     = $user['rank'];
+            $_SESSION['name']     = $user['name'];
             $_SESSION['username'] = $user['username'];
-            $_SESSION['army_no'] = $user['army_no'];
+            $_SESSION['army_no']  = $user['army_no'];
 
             header("Location: ../dashboard.php");
             exit;
@@ -33,9 +33,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     } else {
 
-        $checkPending = mysqli_query(
-            $conn,
-            "SELECT id FROM user_requests WHERE username='$username' AND status='Pending'"
+        $checkPending = mysqli_query($conn,
+            "SELECT id FROM user_requests 
+             WHERE username='$username' AND status='Pending'"
         );
 
         if (mysqli_num_rows($checkPending) == 1) {
@@ -50,63 +50,105 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Login Status</title>
+<title>Login | THE INFANTRY SCHOOL MHOW</title>
 
-    <style>
-        body {
-            margin: 0;
-            height: 100vh;
-            font-family: Arial, sans-serif;
-            background: linear-gradient(135deg, #1e3c72, #2a5298);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
+<style>
+body{
+    margin:0;
+    height:100vh;
+    font-family:Arial,sans-serif;
+    background:linear-gradient(135deg,#1e3c72,#2a5298);
+    display:flex;
+    align-items:center;
+    justify-content:center;
+}
 
-        .status-card {
-            background: #ffffff;
-            padding: 30px 35px;
-            width: 380px;
-            border-radius: 10px;
-            box-shadow: 0 8px 20px rgba(0,0,0,0.25);
-            text-align: center;
-        }
+.login-card{
+    background:#fff;
+    padding:35px;
+    width:400px;
+    border-radius:12px;
+    box-shadow:0 10px 25px rgba(0,0,0,0.25);
+    text-align:center;
+}
 
-        .status-card h2 {
-            margin-bottom: 15px;
-            color: #2a5298;
-        }
+.login-card h2{
+    margin-bottom:20px;
+    color:#2a5298;
+}
 
-        .error {
-            color: #e74c3c;
-            font-weight: bold;
-        }
+input{
+    width:100%;
+    padding:10px;
+    margin:10px 0;
+    border-radius:6px;
+    border:1px solid #ccc;
+}
 
-        .retry-btn {
-            display: inline-block;
-            margin-top: 15px;
-            padding: 8px 15px;
-            background: #2a5298;
-            color: white;
-            text-decoration: none;
-            border-radius: 5px;
-        }
+button{
+    width:100%;
+    padding:10px;
+    background:#2a5298;
+    color:#fff;
+    border:none;
+    border-radius:6px;
+    cursor:pointer;
+    font-weight:bold;
+}
 
-        .retry-btn:hover {
-            background: #1e3c72;
-        }
-    </style>
+button:hover{
+    background:#1e3c72;
+}
+
+.error{
+    color:#e74c3c;
+    font-weight:bold;
+    margin-bottom:10px;
+}
+
+.success{
+    color:#155724;
+    font-weight:bold;
+    margin-bottom:10px;
+}
+
+.links{
+    margin-top:15px;
+}
+
+.links a{
+    text-decoration:none;
+    color:#2a5298;
+    font-weight:bold;
+    margin:0 8px;
+}
+
+.links a:hover{
+    text-decoration:underline;
+}
+</style>
 </head>
 
 <body>
 
-<div class="status-card">
-    <h2>Login Status</h2>
+<div class="login-card">
 
-    <?php if (!empty($message)) { ?>
-        <p class="error"><?php echo $message; ?></p>
-        <a href="../index.php" class="retry-btn">⬅ Try Again</a>
-    <?php } ?>
+<h2>User Login</h2>
+
+<?php if (!empty($message)) { ?>
+    <div class="error"><?php echo $message; ?></div>
+<?php } ?>
+
+<form method="POST">
+    <input type="text" name="username" placeholder="Username" required>
+    <input type="password" name="password" placeholder="Password" required>
+    <button type="submit">Login</button>
+</form>
+
+<div class="links">
+    <a href="../index.php">⬅ Back to Home</a> |
+    <a href="register.php">New User? Create Account</a>
+</div>
 
 </div>
 
