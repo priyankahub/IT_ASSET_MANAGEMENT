@@ -2,32 +2,56 @@
 session_start();
 include("../config/db.php");
 
-if (!isset($_SESSION['role']) || $_SESSION['role'] != 'CLERK') {
+if (!isset($_SESSION['rank']) || $_SESSION['rank'] != 'CLERK') {
     die("Access Denied");
 }
 
 $message = "";
 
-/* ===== HANDLE CREATE / EDIT / DELETE REQUEST ===== */
 if (isset($_POST['submit_request'])) {
 
     $request_type = $_POST['request_type'];
-    $full_name    = $_POST['full_name'];
-    $username     = $_POST['username'];
-    $password     = $_POST['password'];
-    $id_number    = $_POST['id_number'];
-    $rank         = $_POST['rank'];
+    $full_name    = mysqli_real_escape_string($conn, $_POST['full_name']);
+    $username     = mysqli_real_escape_string($conn, $_POST['username']);
+    $army_no      = mysqli_real_escape_string($conn, $_POST['army_no']);
+    $rank         = mysqli_real_escape_string($conn, $_POST['rank']);
     $requested_by = $_SESSION['username'];
     $today        = date('Y-m-d');
 
-    mysqli_query($conn,"
-        INSERT INTO user_requests
-        (request_type, full_name, username, password, id_number, rank, requested_by, request_date, status)
-        VALUES
-        ('$request_type','$full_name','$username','$password','$id_number','$rank','$requested_by','$today','Pending')
+    // Default password for clerk-created users
+    $password = "Password@#123";
+
+    // Username uniqueness
+    $checkUser = mysqli_query($conn,"
+        SELECT id FROM users WHERE username='$username'
+        UNION
+        SELECT id FROM user_requests WHERE username='$username'
     ");
 
-    $message = "✅ Request sent to Admin for approval.";
+    // Army No uniqueness
+    $checkArmy = mysqli_query($conn,"
+        SELECT id FROM users WHERE army_no='$army_no'
+        UNION
+        SELECT id FROM user_requests WHERE army_no='$army_no'
+    ");
+
+    if (mysqli_num_rows($checkUser) > 0) {
+        $message = "❌ Username already exists.";
+    }
+    elseif (mysqli_num_rows($checkArmy) > 0) {
+        $message = "❌ Army Number already exists.";
+    }
+    else {
+
+        mysqli_query($conn,"
+            INSERT INTO user_requests
+            (request_type, full_name, username, password, army_no, rank, requested_by, request_date, status)
+            VALUES
+            ('$request_type','$full_name','$username','$password','$army_no','$rank','$requested_by','$today','Pending')
+        ");
+
+        $message = "✅ Request sent to Admin for approval.";
+    }
 }
 ?>
 
@@ -145,11 +169,8 @@ button:hover{
 <label>Username</label>
 <input type="text" name="username" required>
 
-<label>Password</label>
-<input type="text" name="password">
-
-<label>ID Number</label>
-<input type="text" name="id_number">
+<label>Army Number</label>
+<input type="text" name="army_no" required>
 
 <label>Rank</label>
 <select name="rank" required>

@@ -5,23 +5,49 @@ $message = "";
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
-    $name = $_POST['name'];
-    $username = $_POST['username'];
+    $name     = mysqli_real_escape_string($conn, $_POST['name']);
+    $username = mysqli_real_escape_string($conn, $_POST['username']);
     $password = $_POST['password'];
+    $army_no  = mysqli_real_escape_string($conn, $_POST['army_no']);
+    $rank     = mysqli_real_escape_string($conn, $_POST['rank']);
 
-    // Check if username already exists
-    $check = mysqli_query($conn,
-        "SELECT * FROM users WHERE username='$username'"
-    );
+    // Password Policy
+    if (!preg_match('/^(?=.*[A-Z])(?=.*[\W_]).{6,20}$/', $password)) {
+        $message = "❌ Password must be 6-20 chars, include 1 Capital & 1 Special character.";
+    }
+    else {
 
-    if (mysqli_num_rows($check) > 0) {
-        $message = "❌ Username already exists";
-    } else {
-        mysqli_query($conn,"
-            INSERT INTO users (name, username, password, role)
-            VALUES ('$name','$username','$password','USER')
+        // Username uniqueness
+        $checkUser = mysqli_query($conn,"
+            SELECT id FROM users WHERE username='$username'
+            UNION
+            SELECT id FROM user_requests WHERE username='$username'
         ");
-        $message = "✅ Account created successfully";
+
+        // Army No uniqueness
+        $checkArmy = mysqli_query($conn,"
+            SELECT id FROM users WHERE army_no='$army_no'
+            UNION
+            SELECT id FROM user_requests WHERE army_no='$army_no'
+        ");
+
+        if (mysqli_num_rows($checkUser) > 0) {
+            $message = "❌ Username already exists.";
+        }
+        elseif (mysqli_num_rows($checkArmy) > 0) {
+            $message = "❌ Army Number already exists.";
+        }
+        else {
+
+            mysqli_query($conn,"
+                INSERT INTO user_requests
+                (request_type, full_name, username, password, army_no, rank, requested_by, request_date, status)
+                VALUES
+                ('CREATE','$name','$username','$password','$army_no','$rank','SELF',CURDATE(),'Pending')
+            ");
+
+            $message = "✅ Registration request sent for Admin approval.";
+        }
     }
 }
 ?>
@@ -44,13 +70,13 @@ body{
 .card{
     background:#fff;
     padding:30px;
-    width:380px;
+    width:400px;
     border-radius:10px;
     box-shadow:0 8px 20px rgba(0,0,0,.25);
     text-align:center;
 }
 h2{color:#2a5298;}
-input{
+input,select{
     width:100%;
     padding:10px;
     margin:10px 0;
@@ -64,6 +90,10 @@ button{
     color:#fff;
     border:none;
     border-radius:5px;
+    cursor:pointer;
+}
+button:hover{
+    background:#1e3c72;
 }
 .success{color:green;font-weight:bold;}
 .error{color:#e74c3c;font-weight:bold;}
@@ -74,7 +104,7 @@ a{color:#2a5298;text-decoration:none;font-weight:bold;}
 <body>
 
 <div class="card">
-<h2>Create New Account</h2>
+<h2>Self Registration</h2>
 
 <?php if ($message!="") { ?>
 <p class="<?php echo str_contains($message,'✅')?'success':'error'; ?>">
@@ -83,9 +113,24 @@ a{color:#2a5298;text-decoration:none;font-weight:bold;}
 <?php } ?>
 
 <form method="POST">
+
     <input type="text" name="name" placeholder="Full Name" required>
+
     <input type="text" name="username" placeholder="Username" required>
+
     <input type="password" name="password" placeholder="Password" required>
+
+    <input type="text" name="army_no" placeholder="Army Number" required>
+
+    <select name="rank" required>
+        <option value="">Select Rank</option>
+        <option value="USER">USER</option>
+        <option value="CLERK">CLERK</option>
+        <option value="ITJCO">ITJCO</option>
+        <option value="CO">CO</option>
+        <option value="ADMIN">ADMIN</option>
+    </select>
+
     <button type="submit">Register</button>
 </form>
 

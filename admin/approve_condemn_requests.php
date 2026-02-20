@@ -2,7 +2,7 @@
 session_start();
 include("../config/db.php");
 
-if ($_SESSION['role'] != 'ADJQM') die("Access Denied");
+if ($_SESSION['rank'] != 'ADMIN') die("Access Denied");
 
 if(isset($_POST['approve'])){
 $id=$_POST['id'];

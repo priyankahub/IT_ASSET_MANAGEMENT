@@ -6,28 +6,43 @@ $message = "";
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
-    $username = $_POST['username'];
+    $username = mysqli_real_escape_string($conn, $_POST['username']);
     $password = $_POST['password'];
 
     $query = mysqli_query(
         $conn,
-        "SELECT * FROM users WHERE username='$username' AND password='$password'"
+        "SELECT * FROM users WHERE username='$username'"
     );
 
     if (mysqli_num_rows($query) == 1) {
 
         $user = mysqli_fetch_assoc($query);
 
-        // ✅ STORE ALL REQUIRED SESSION VALUES
-        $_SESSION['role'] = $user['role'];
-        $_SESSION['name'] = $user['name'];
-        $_SESSION['username'] = $user['username'];   
+        if ($password === $user['password']) {
+            $_SESSION['rank'] = $user['rank'];
+            $_SESSION['name'] = $user['name'];
+            $_SESSION['username'] = $user['username'];
+            $_SESSION['army_no'] = $user['army_no'];
 
-        header("Location: ../dashboard.php");
-        exit;
+            header("Location: ../dashboard.php");
+            exit;
+
+        } else {
+            $message = "❌ Invalid username or password";
+        }
 
     } else {
-        $message = "❌ Invalid username or password";
+
+        $checkPending = mysqli_query(
+            $conn,
+            "SELECT id FROM user_requests WHERE username='$username' AND status='Pending'"
+        );
+
+        if (mysqli_num_rows($checkPending) == 1) {
+            $message = "⏳ Your account is pending Admin approval.";
+        } else {
+            $message = "❌ Invalid username or password";
+        }
     }
 }
 ?>
@@ -51,7 +66,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         .status-card {
             background: #ffffff;
             padding: 30px 35px;
-            width: 360px;
+            width: 380px;
             border-radius: 10px;
             box-shadow: 0 8px 20px rgba(0,0,0,0.25);
             text-align: center;
@@ -69,7 +84,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
         .retry-btn {
             display: inline-block;
-            margin-top: 10px;
+            margin-top: 15px;
             padding: 8px 15px;
             background: #2a5298;
             color: white;
@@ -86,9 +101,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 <body>
 
 <div class="status-card">
-    <h2>Login Failed</h2>
-    <p class="error"><?php echo $message; ?></p>
-    <a href="../index.php" class="retry-btn">⬅ Try Again</a>
+    <h2>Login Status</h2>
+
+    <?php if (!empty($message)) { ?>
+        <p class="error"><?php echo $message; ?></p>
+        <a href="../index.php" class="retry-btn">⬅ Try Again</a>
+    <?php } ?>
+
 </div>
 
 </body>

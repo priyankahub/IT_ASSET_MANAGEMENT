@@ -2,7 +2,7 @@
 session_start();
 include("../config/db.php");
 
-if ($_SESSION['role'] != 'CLERK') die("Access Denied");
+if ($_SESSION['rank'] != 'CLERK') die("Access Denied");
 
 if(isset($_POST['submit'])){
 foreach($_POST['equipment_ids'] as $eid){

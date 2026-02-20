@@ -2,29 +2,41 @@
 session_start();
 include("../config/db.php");
 
-if (!isset($_SESSION['role']) || $_SESSION['role'] != 'ADJQM') {
+if (!isset($_SESSION['rank']) || $_SESSION['rank'] != 'ADMIN') {
     die("Access Denied");
 }
-
+if (isset($_GET['created'])) {
+    echo "<div class='success'>✅ User request created successfully. Please approve or modify below.</div>";
+}
 $admin = $_SESSION['username'];
 
 /* ================= APPROVE ================= */
 if (isset($_POST['approve'])) {
 
-    $id = $_POST['id'];
+    $id = mysqli_real_escape_string($conn, $_POST['id']);
 
     $req = mysqli_fetch_assoc(mysqli_query($conn,"
         SELECT * FROM user_requests WHERE id='$id'
     "));
 
+    if (!$req) {
+        die("Invalid request ID.");
+    }
+
     if ($req['request_type'] == 'CREATE') {
 
+        // 🔥 Safety check
+        if (empty($req['army_no'])) {
+            die("Army Number cannot be empty. Please update before approving.");
+        }
+
         mysqli_query($conn,"
-            INSERT INTO users (name, username, password, role)
+            INSERT INTO users (name, username, password, army_no, rank)
             VALUES (
                 '{$req['full_name']}',
                 '{$req['username']}',
                 '{$req['password']}',
+                '{$req['army_no']}',
                 '{$req['rank']}'
             )
         ");
@@ -39,12 +51,12 @@ if (isset($_POST['approve'])) {
     mysqli_query($conn,"
         UPDATE user_requests
         SET status='Approved',
-            approved_by='$admin',
+            approved_by='{$_SESSION['username']}',
             approval_date=CURDATE()
         WHERE id='$id'
     ");
 
-    header("Location: approve_user_requests.php");
+    header("Location: approve_user_requests.php?msg=approved");
     exit;
 }
 
@@ -73,13 +85,13 @@ if (isset($_POST['save_update'])) {
     $id = $_POST['id'];
     $full_name = $_POST['full_name'];
     $rank = $_POST['rank'];
-    $id_number = $_POST['id_number'];
+    $army_no = $_POST['army_no'];
 
     mysqli_query($conn,"
         UPDATE user_requests
         SET full_name='$full_name',
             rank='$rank',
-            id_number='$id_number'
+            army_no='$army_no'
         WHERE id='$id'
     ");
 
@@ -221,7 +233,7 @@ while($r = mysqli_fetch_assoc($requests)){
 
         echo "<td><input type='text' name='full_name' value='{$r['full_name']}' required></td>";
         echo "<td>{$r['username']}</td>";
-        echo "<td><input type='text' name='id_number' value='{$r['id_number']}' required></td>";
+        echo "<td><input type='text' name='army_no' value='{$r['army_no']}' required></td>";
 
         echo "<td>
             <select name='rank'>
@@ -247,7 +259,7 @@ while($r = mysqli_fetch_assoc($requests)){
 
         echo "<td>{$r['full_name']}</td>";
         echo "<td>{$r['username']}</td>";
-        echo "<td>{$r['id_number']}</td>";
+        echo "<td>{$r['army_no']}</td>";
         echo "<td>{$r['rank']}</td>";
         echo "<td>{$r['requested_by']}</td>";
 

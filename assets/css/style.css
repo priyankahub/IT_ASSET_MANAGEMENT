@@ -32,3 +32,48 @@ th,td{
 th{
     background:#f4f6f9;
 }
+label{
+    display:block;
+    font-weight:bold;
+    margin-bottom:5px;
+    color:#333;
+}
+.form-grid div{
+    display:flex;
+    flex-direction:column;
+}
+.edit-card{
+    background:#fff;
+    padding:25px;
+    border-radius:10px;
+    box-shadow:0 6px 15px rgba(0,0,0,0.15);
+    margin-bottom:25px;
+}
+.edit-card input,
+.edit-card select{
+    width:100%;
+    padding:8px;
+    margin:6px 0 12px;
+}
+.edit-card button{
+    background:#2a5298;
+    color:#fff;
+    padding:10px;
+    border:none;
+    border-radius:6px;
+}
+.edit-btn{
+    background:#ffc107;
+    padding:6px 10px;
+    color:#000;
+    text-decoration:none;
+    border-radius:5px;
+    margin-right:6px;
+}
+.delete-btn{
+    background:#dc3545;
+    color:#fff;
+    padding:6px 10px;
+    border:none;
+    border-radius:5px;
+}

@@ -2,43 +2,62 @@
 session_start();
 include("../config/db.php");
 
-if (!isset($_SESSION['role']) || $_SESSION['role'] != 'ADJQM') {
+if (!isset($_SESSION['rank']) || $_SESSION['rank'] != 'ADMIN') {
     die("Access Denied");
 }
 
 $message = "";
 
-if (isset($_POST['create'])) {
+if (isset($_POST['submit_request'])) {
 
-    $name       = $_POST['name'];
-    $username   = $_POST['username'];
-    $password   = $_POST['password'];
-    $role       = $_POST['role'];
-    $id_number  = $_POST['id_number'];
+    $full_name    = mysqli_real_escape_string($conn, $_POST['full_name']);
+    $username     = mysqli_real_escape_string($conn, $_POST['username']);
+    $army_no      = mysqli_real_escape_string($conn, $_POST['army_no']);
+    $rank         = mysqli_real_escape_string($conn, $_POST['rank']);
+    $requested_by = $_SESSION['username'];
+    $today        = date('Y-m-d');
 
-    // Check duplicate username
-    $check = mysqli_query($conn,"SELECT * FROM users WHERE username='$username'");
+    $password = "Password@#123";
 
-    if(mysqli_num_rows($check) > 0){
-        $message = "❌ Username already exists";
-    } else {
+    // Username uniqueness
+    $checkUser = mysqli_query($conn,"
+        SELECT id FROM users WHERE username='$username'
+        UNION
+        SELECT id FROM user_requests WHERE username='$username'
+    ");
+
+    // Army No uniqueness
+    $checkArmy = mysqli_query($conn,"
+        SELECT id FROM users WHERE army_no='$army_no'
+        UNION
+        SELECT id FROM user_requests WHERE army_no='$army_no'
+    ");
+
+    if (mysqli_num_rows($checkUser) > 0) {
+        $message = "❌ Username already exists.";
+    }
+    elseif (mysqli_num_rows($checkArmy) > 0) {
+        $message = "❌ Army Number already exists.";
+    }
+    else {
 
         mysqli_query($conn,"
-            INSERT INTO users
-            (name, username, password, role, id_number)
+            INSERT INTO user_requests
+            (request_type, full_name, username, password, army_no, rank, requested_by, request_date, status)
             VALUES
-            ('$name','$username','$password','$role','$id_number')
+            ('CREATE','$full_name','$username','$password','$army_no','$rank','$requested_by','$today','Pending')
         ");
 
-        $message = "✅ User Created Successfully";
+        // 🔥 Redirect directly to approval page
+        header("Location: approve_user_requests.php?created=1");
+        exit;
     }
 }
 ?>
-
 <!DOCTYPE html>
 <html>
 <head>
-<title>Create User</title>
+<title>Create User (Admin)</title>
 
 <style>
 body{
@@ -48,41 +67,37 @@ body{
 }
 .container{
     width:95%;
-    max-width:600px;
-    margin:50px auto;
+    max-width:700px;
+    margin:40px auto;
 }
 .card{
     background:#fff;
     padding:30px;
     border-radius:12px;
-    box-shadow:0 8px 20px rgba(0,0,0,.2);
+    box-shadow:0 6px 20px rgba(0,0,0,.2);
 }
 h2{
     color:#2a5298;
     margin-bottom:20px;
-    text-align:center;
 }
 label{
     font-weight:bold;
-    display:block;
-    margin-top:15px;
 }
 input, select{
     width:100%;
     padding:10px;
     margin-top:6px;
+    margin-bottom:15px;
     border-radius:6px;
     border:1px solid #ccc;
 }
 button{
-    margin-top:20px;
     width:100%;
-    padding:12px;
+    padding:10px;
+    background:#2a5298;
+    color:#fff;
     border:none;
     border-radius:6px;
-    background:#2a5298;
-    color:white;
-    font-size:15px;
     cursor:pointer;
 }
 button:hover{
@@ -94,7 +109,6 @@ button:hover{
     padding:10px;
     border-radius:6px;
     margin-bottom:15px;
-    text-align:center;
 }
 .error{
     background:#f8d7da;
@@ -102,23 +116,6 @@ button:hover{
     padding:10px;
     border-radius:6px;
     margin-bottom:15px;
-    text-align:center;
-}
-.footer{
-    margin-top:25px;
-    text-align:center;
-}
-.footer a{
-    text-decoration:none;
-    padding:8px 16px;
-    border-radius:20px;
-    background:rgba(255,255,255,0.3);
-    color:white;
-    margin:8px;
-    font-weight:bold;
-}
-.footer a:hover{
-    background:rgba(255,255,255,0.5);
 }
 </style>
 </head>
@@ -126,55 +123,43 @@ button:hover{
 <body>
 
 <div class="container">
-
 <div class="card">
 
-<h2>Create User (Direct - Admin)</h2>
+<h2>Create User (Admin)</h2>
 
-<?php
-if($message!=""){
-    if(strpos($message,"❌")!==false)
-        echo "<div class='error'>$message</div>";
-    else
-        echo "<div class='success'>$message</div>";
-}
-?>
+<?php if($message!=""){ ?>
+<div class="<?php echo (strpos($message,'❌') !== false) ? 'error' : 'success'; ?>">
+<?php echo $message; ?>
+</div>
+<?php } ?>
 
 <form method="POST">
 
 <label>Full Name</label>
-<input type="text" name="name" required>
+<input type="text" name="full_name" required>
 
 <label>Username</label>
 <input type="text" name="username" required>
 
-<label>Password</label>
-<input type="password" name="password" required>
-
-<label>ID Card Number</label>
-<input type="text" name="id_number" required>
+<label>Army Number</label>
+<input type="text" name="army_no" required>
 
 <label>Rank</label>
-<select name="role" required>
-    <option value="ADJQM">ADMIN</option>
+<select name="rank" required>
+    <option value="ADMIN">ADMIN</option>
     <option value="CO">CO</option>
-    <option value="ITJCO">IT JCO</option>
+    <option value="ITJCO">ITJCO</option>
     <option value="CLERK">CLERK</option>
     <option value="USER">USER</option>
 </select>
 
-<button type="submit" name="create">Create User</button>
+<button type="submit" name="submit_request">
+Create
+</button>
 
 </form>
 
 </div>
-
-<div class="footer">
-    <a href="../dashboard.php">← Back to Dashboard</a>
-    <a href="manage_users.php">Manage Users</a>
-    <a href="../logout.php">Logout</a>
-</div>
-
 </div>
 
 </body>

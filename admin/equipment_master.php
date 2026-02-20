@@ -2,7 +2,7 @@
 session_start();
 include("../config/db.php");
 
-if (!isset($_SESSION['role']) || $_SESSION['role'] != 'ADJQM') {
+if (!isset($_SESSION['rank']) || $_SESSION['rank'] != 'ADMIN') {
     die("Access Denied");
 }
 
@@ -22,10 +22,10 @@ if (isset($_POST['add'])) {
     $today = date('Y-m-d');
 
     if ($purchase > $today) {
-        $message = "Cannot add equipment: Purchase date is from future";
+        $message = "Purchase date cannot be in the future.";
         $msgClass = "error";
     } elseif ($warranty < $purchase) {
-        $message = "Expiry date cannot be older than Purchase date";
+        $message = "Expiry date cannot be older than Purchase date.";
         $msgClass = "error";
     } else {
         mysqli_query($conn, "
@@ -34,7 +34,7 @@ if (isset($_POST['add'])) {
             VALUES
             ('$type','$make','$model','$serial','$purchase','$warranty','$cost','Serviceable')
         ");
-        $message = "Equipment added successfully";
+        $message = "Equipment added successfully.";
         $msgClass = "success";
     }
 }
@@ -44,65 +44,156 @@ if (isset($_POST['add'])) {
 <html>
 <head>
 <title>Equipment Master</title>
-<script src="../assets/js/script.js"></script>
 
 <style>
 body{
     margin:0;
-    font-family:Arial,sans-serif;
-    background:linear-gradient(135deg,#1e3c72,#2a5298);
+    font-family: 'Segoe UI', sans-serif;
+    background: linear-gradient(135deg,#1e3c72,#2a5298);
 }
+
 .container{
     width:95%;
-    max-width:1100px;
-    margin:30px auto;
+    max-width:1150px;
+    margin:40px auto;
 }
+
 .card{
-    background:#fff;
-    padding:25px;
-    border-radius:10px;
-    box-shadow:0 6px 15px rgba(0,0,0,.2);
-    margin-bottom:25px;
+    background:#ffffff;
+    padding:30px;
+    border-radius:12px;
+    box-shadow:0 8px 20px rgba(0,0,0,.15);
+    margin-bottom:30px;
 }
-h2,h3{
+
+.page-title{
+    font-size:24px;
+    font-weight:600;
+    color:#2a5298;
+    margin-bottom:20px;
+}
+
+/* FORM GRID */
+.form-grid{
+    display:grid;
+    grid-template-columns:repeat(2,1fr);
+    gap:20px;
+}
+
+.form-group{
+    display:flex;
+    flex-direction:column;
+}
+
+.form-group label{
+    font-size:13px;
+    font-weight:600;
+    margin-bottom:6px;
+    color:#333;
+}
+
+.form-group input{
+    padding:10px;
+    border-radius:6px;
+    border:1px solid #ccc;
+    font-size:14px;
+    transition:.3s;
+}
+
+.form-group input:focus{
+    border-color:#2a5298;
+    outline:none;
+    box-shadow:0 0 4px rgba(42,82,152,.4);
+}
+
+.submit-btn{
+    margin-top:20px;
+    padding:12px;
+    width:200px;
+    border:none;
+    border-radius:6px;
+    background:#2a5298;
+    color:white;
+    font-weight:600;
+    cursor:pointer;
+    transition:.3s;
+}
+
+.submit-btn:hover{
+    background:#1e3c72;
+}
+
+/* MESSAGE STYLES */
+.success{
+    padding:12px;
+    border-radius:6px;
+    background:#e8f5e9;
+    color:#2e7d32;
+    margin-bottom:15px;
+}
+
+.error{
+    padding:12px;
+    border-radius:6px;
+    background:#fdecea;
+    color:#c62828;
+    margin-bottom:15px;
+}
+
+/* TABLE */
+.table-title{
+    font-size:20px;
+    font-weight:600;
     color:#2a5298;
     margin-bottom:15px;
 }
-.form-grid{
-    display:grid;
-    grid-template-columns:1fr 1fr;
-    gap:15px;
-}
-input,button{
-    padding:10px;
-    border-radius:5px;
-    border:1px solid #ccc;
-}
-button{
-    background:#2a5298;
-    color:#fff;
-    border:none;
-    cursor:pointer;
-}
-button:hover{background:#1e3c72;}
+
 table{
     width:100%;
     border-collapse:collapse;
+    font-size:14px;
 }
-th,td{
-    padding:10px;
-    border-bottom:1px solid #ddd;
+
+th{
+    background:#f4f6f9;
+    padding:12px;
     text-align:left;
+    font-weight:600;
 }
-th{background:#f4f6f9;}
-.success{color:green;font-weight:bold;}
-.error{color:red;font-weight:bold;}
+
+td{
+    padding:12px;
+    border-bottom:1px solid #eee;
+}
+
+tr:hover{
+    background:#f9fbff;
+}
+
+.status-serviceable{
+    color:#2e7d32;
+    font-weight:600;
+}
+
+.status-condemned{
+    color:#c62828;
+    font-weight:600;
+}
+
 .back{
     text-align:center;
+    margin-top:20px;
 }
+
 .back a{
-    color:#fff;
     text-decoration:none;
+    padding:10px 18px;
+    background:rgba(255,255,255,.25);
+    color:white;
+    border-radius:20px;
+}
+.back a:hover{
+    background:rgba(255,255,255,.4);
 }
 </style>
 </head>
@@ -111,45 +202,87 @@ th{background:#f4f6f9;}
 
 <div class="container">
 
+<!-- FORM CARD -->
 <div class="card">
-<h2>Equipment Master – Admin</h2>
+<div class="page-title">Equipment Registration</div>
 
 <?php if($message!=""){ ?>
-<p class="<?php echo $msgClass; ?>"><?php echo $message; ?></p>
+<div class="<?php echo $msgClass; ?>">
+    <?php echo $message; ?>
+</div>
 <?php } ?>
 
-<form method="POST" onsubmit="return confirmAction('Add this equipment?')">
+<form method="POST">
+
 <div class="form-grid">
-    <input type="text" name="type" placeholder="Equipment Type" required>
-    <input type="text" name="make" placeholder="Make" required>
-    <input type="text" name="model" placeholder="Model" required>
-    <input type="text" name="serial_no" placeholder="Serial Number" required>
 
-    <input type="date" name="purchase_date"
-           max="<?php echo date('Y-m-d'); ?>" required>
-
-    <input type="date" name="warranty_end" required>
-
-    <input type="number" step="0.00001" name="cost"
-           placeholder="Cost" required>
+<div class="form-group">
+<label>Equipment Type</label>
+<input type="text" name="type" required>
 </div>
-<br>
-<button name="add">Add Equipment</button>
+
+<div class="form-group">
+<label>Make</label>
+<input type="text" name="make" required>
+</div>
+
+<div class="form-group">
+<label>Model</label>
+<input type="text" name="model" required>
+</div>
+
+<div class="form-group">
+<label>Serial Number</label>
+<input type="text" name="serial_no" required>
+</div>
+
+<div class="form-group">
+<label>Purchase Date</label>
+<input type="date" name="purchase_date"
+       max="<?php echo date('Y-m-d'); ?>" required>
+</div>
+
+<div class="form-group">
+<label>Warranty / Expiry Date</label>
+<input type="date" name="warranty_end" required>
+</div>
+
+<div class="form-group">
+<label>Cost</label>
+<input type="number" step="0.00001" name="cost" required>
+</div>
+
+</div>
+
+<button class="submit-btn" name="add">Add Equipment</button>
+
 </form>
 </div>
 
+<!-- TABLE CARD -->
 <div class="card">
-<h3>Registered Equipment</h3>
+
+<div class="table-title">Registered Equipment</div>
 
 <table>
 <tr>
-<th>ID</th><th>Type</th><th>Make</th><th>Model</th>
-<th>Purchase</th><th>Expiry</th><th>Status</th>
+<th>ID</th>
+<th>Type</th>
+<th>Make</th>
+<th>Model</th>
+<th>Purchase Date</th>
+<th>Expiry Date</th>
+<th>Status</th>
 </tr>
 
 <?php
-$res=mysqli_query($conn,"SELECT * FROM equipment");
+$res=mysqli_query($conn,"SELECT * FROM equipment ORDER BY id DESC");
 while($r=mysqli_fetch_assoc($res)){
+
+$statusClass = ($r['status']=='Serviceable')
+                ? "status-serviceable"
+                : "status-condemned";
+
 echo "<tr>
 <td>{$r['id']}</td>
 <td>{$r['type']}</td>
@@ -157,11 +290,12 @@ echo "<tr>
 <td>{$r['model']}</td>
 <td>{$r['purchase_date']}</td>
 <td>{$r['warranty_end']}</td>
-<td>{$r['status']}</td>
+<td class='$statusClass'>{$r['status']}</td>
 </tr>";
 }
 ?>
 </table>
+
 </div>
 
 <div class="back">
@@ -169,5 +303,6 @@ echo "<tr>
 </div>
 
 </div>
+
 </body>
 </html>
