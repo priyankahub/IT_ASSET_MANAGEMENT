@@ -16,39 +16,84 @@ $name = $_SESSION['name'];
 <title>Dashboard</title>
 
 <style>
+
+/* ===== BODY ===== */
 body{
     margin:0;
-    padding:40px 0;
-    min-height:30vh;
+    padding:0;
+    min-height:100vh;
     font-family:'Segoe UI',sans-serif;
-    background:radial-gradient(circle at center,#0a1f44 0%,#000814 85%);
+    background:
+        radial-gradient(circle at top left,#0f2027,#203a43 60%,#0a1923);
     display:flex;
     align-items:center;
     justify-content:center;
+    color:#fff;
+}
+
+/* Tech grid overlay */
+body::before{
+    content:"";
+    position:fixed;
+    width:100%;
+    height:100%;
+    background-image:
+        linear-gradient(rgba(0,198,255,0.05) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(0,198,255,0.05) 1px, transparent 1px);
+    background-size:40px 40px;
+    pointer-events:none;
 }
 
 /* ===== Container ===== */
 .container{
     width:92%;
     max-width:1200px;
-    margin:120px auto 60px auto;
+    margin:140px auto 60px auto;
 }
 
-/* ===== Header Card ===== */
+/* ===== Army Header ===== */
+.top-header{
+    text-align:center;
+    margin-bottom:30px;
+}
+
+.top-header img{
+    height:70px;
+    transition:0.4s ease;
+}
+
+.top-header img:hover{
+    transform:scale(1.1) rotate(-2deg);
+}
+
+.top-header h1{
+    margin:10px 0 0;
+    font-size:22px;
+    letter-spacing:2px;
+    color:#00c6ff;
+}
+
+/* ===== Welcome Header Card ===== */
 .header{
-    background:#f4f4f4;
+    background:rgba(10,25,40,0.9);
     padding:30px;
-    border-radius:14px;
-    box-shadow:0 15px 40px rgba(0,0,0,0.5);
+    border-radius:16px;
+    box-shadow:0 15px 40px rgba(0,0,0,0.6);
     margin-bottom:35px;
-    border-left:6px solid #FFD700;
+    border:1px solid rgba(0,198,255,0.3);
+    backdrop-filter:blur(8px);
+    transition:0.3s;
+}
+
+.header:hover{
+    box-shadow:0 20px 50px rgba(0,0,0,0.8);
 }
 
 .header h2{
     margin:0;
-    color:#001f54;
     font-weight:700;
     letter-spacing:1px;
+    color:#ffffff;
 }
 
 /* Role Badge */
@@ -58,8 +103,8 @@ body{
     padding:6px 18px;
     border-radius:20px;
     font-size:13px;
-    background:#001f54;
-    color:#FFD700;
+    background:#00c6ff;
+    color:#001f54;
     font-weight:bold;
     letter-spacing:1px;
 }
@@ -73,23 +118,43 @@ body{
 
 /* ===== Card Styling ===== */
 .card{
-    background:#f4f4f4;
+    background:rgba(10,25,40,0.88);
     padding:28px;
-    border-radius:14px;
-    box-shadow:0 10px 30px rgba(0,0,0,0.4);
-    transition:0.3s ease;
-    border-top:4px solid #FFD700;
+    border-radius:16px;
+    box-shadow:0 10px 30px rgba(0,0,0,0.5);
+    transition:0.4s ease;
+    border:1px solid rgba(0,198,255,0.25);
+    backdrop-filter:blur(6px);
+    position:relative;
+    overflow:hidden;
 }
 
 .card:hover{
-    transform:translateY(-6px);
-    box-shadow:0 20px 45px rgba(0,0,0,0.6);
+    transform:translateY(-8px);
+    box-shadow:0 20px 50px rgba(0,0,0,0.9);
+    border-color:#00c6ff;
+}
+
+/* glow animation sweep */
+.card::before{
+    content:"";
+    position:absolute;
+    top:0;
+    left:-100%;
+    width:100%;
+    height:100%;
+    background:linear-gradient(120deg,transparent,rgba(0,198,255,0.2),transparent);
+    transition:0.6s;
+}
+
+.card:hover::before{
+    left:100%;
 }
 
 .card h3{
     margin-bottom:18px;
-    color:#001f54;
     font-weight:700;
+    color:#ffffff;
 }
 
 /* ===== Buttons ===== */
@@ -97,23 +162,26 @@ body{
     display:block;
     margin:10px 0;
     padding:11px;
-    background:#001f54;
-    color:#FFD700;
+    background:#102a3a;
+    color:#00c6ff;
     text-decoration:none;
     border-radius:8px;
     font-size:14px;
     font-weight:bold;
-    transition:0.3s;
+    transition:0.3s ease;
+    border:1px solid rgba(0,198,255,0.3);
 }
 
 .card a:hover{
-    background:#FFD700;
+    background:#00c6ff;
     color:#001f54;
+    box-shadow:0 5px 15px rgba(0,198,255,0.6);
+    transform:translateX(4px);
 }
 
 /* ===== Logout ===== */
 .logout{
-    margin-top:50px;
+    margin-top:60px;
     text-align:center;
 }
 
@@ -121,17 +189,20 @@ body{
     color:#001f54;
     font-size:14px;
     text-decoration:none;
-    background:#FFD700;
-    padding:10px 22px;
+    background:#00c6ff;
+    padding:10px 24px;
     border-radius:25px;
     font-weight:bold;
     transition:0.3s;
 }
 
 .logout a:hover{
-    background:#e6c200;
+    background:#0099cc;
+    box-shadow:0 5px 20px rgba(0,198,255,0.8);
 }
+
 </style>
+
 </head>
 
 <body>
