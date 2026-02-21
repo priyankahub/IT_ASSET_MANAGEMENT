@@ -12,7 +12,7 @@ session_start();
 
 <!-- ================= HEADER ================= -->
 <div class="header-banner">
-    <img src="images/header-bg.jpg" class="banner-img">
+    <img src="images/bannerpic.png" class="banner-img">
     <div class="banner-overlay"></div>
 
     <div class="banner-content">
