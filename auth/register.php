@@ -97,6 +97,37 @@ body::before{
     text-align:center;
     backdrop-filter: blur(15px);
     animation: fadeIn 1s ease;
+    transition:all 0.35s ease;
+    overflow:hidden;
+}
+
+/* Hover Lift + Glow */
+.card:hover{
+    transform:translateY(-12px) scale(1.02);
+    box-shadow:
+        0 0 35px rgba(77,163,255,0.5),
+        0 40px 80px rgba(0,0,0,0.9);
+}
+
+/* Sweep animation */
+.card::before{
+    content:"";
+    position:absolute;
+    top:0;
+    left:-100%;
+    width:100%;
+    height:100%;
+    background:linear-gradient(
+        120deg,
+        transparent,
+        rgba(255,255,255,0.06),
+        transparent
+    );
+    transition:0.6s;
+}
+
+.card:hover::before{
+    left:100%;
 }
 
 @keyframes fadeIn{
@@ -125,42 +156,61 @@ input,select{
     width:100%;
     padding:13px;
     margin:12px 0;
-    border-radius:10px;
+    border-radius:12px;
     border:1px solid rgba(65,105,225,0.3);
     background:#1b263b;
     color:#fff;
     font-size:14px;
-    transition:0.3s;
+    transition:all 0.3s ease;
 }
 
-input::placeholder{
-    color:#8faed6;
+/* Hover effect */
+input:hover,
+select:hover{
+    border-color:#3b82f6;
+    box-shadow:0 0 12px rgba(77,163,255,0.3);
 }
 
-input:focus,select:focus{
+/* Focus effect */
+input:focus,
+select:focus{
     outline:none;
     border-color:#4da3ff;
-    box-shadow:0 0 15px #4da3ff;
+    box-shadow:
+        0 0 15px rgba(77,163,255,0.7),
+        0 0 25px rgba(77,163,255,0.3);
+    background:#213654;
+    transform:scale(1.02);
 }
 
 /* ============ BUTTON ============ */
 button{
     width:100%;
     padding:14px;
-    background:linear-gradient(90deg,#1f3a5f,#2f5e99);
+    margin-top:12px;
+    background:linear-gradient(135deg,#2563eb,#1d4ed8);
     color:#fff;
     border:none;
-    border-radius:10px;
+    border-radius:12px;
     font-weight:bold;
     letter-spacing:1px;
     cursor:pointer;
-    transition:0.3s;
-    margin-top:10px;
+    transition:all 0.3s ease;
+    position:relative;
+    overflow:hidden;
 }
 
+/* Hover Lift + Glow */
 button:hover{
-    transform:scale(1.05);
-    box-shadow:0 0 20px #2f5e99;
+    transform:translateY(-5px);
+    box-shadow:
+        0 0 25px rgba(77,163,255,0.6),
+        0 15px 35px rgba(0,0,0,0.7);
+}
+
+/* Click Press */
+button:active{
+    transform:scale(0.96);
 }
 
 /* ============ MESSAGE ============ */
