@@ -12,7 +12,7 @@ session_start();
 
 <!-- ================= HEADER ================= -->
 <div class="header-banner">
-    <img src="images/header-bg.jpg" class="banner-img">
+    <img src="images/bannerpic.png" class="banner-img">
     <div class="banner-overlay"></div>
 
     <div class="banner-content">
@@ -42,9 +42,9 @@ session_start();
     <div class="dropdown">
         <button class="dropbtn">About Us ▾</button>
         <div class="dropdown-content">
-            <a href="#">History</a>
-            <a href="#">Mission & Vision</a>
-            <a href="#">Leadership</a>
+            <a href="https://indianarmy.nic.in/KnowYourArmy/know-your-army-main/history" target="_blank">History</a>
+            <a href="https://nda.nic.in/site-page-viewer/21" target="_blank">Mission & Vision</a>
+            <a href="https://indianarmy.nic.in/leaders/leaders-site-main/chief-of-the-army-staff-leaders-site-main" target="_blank">Leadership</a>
         </div>
     </div>
 
@@ -52,13 +52,16 @@ session_start();
     <div class="dropdown">
         <button class="dropbtn">Know Your Army ▾</button>
         <div class="dropdown-content">
-            <a href="#">Infantry</a>
-            <a href="#">Artillery</a>
-            <a href="#">Armoured Corps</a>
+            <a href="https://indianarmy.nic.in/KnowYourArmy/know-your-army-main/combat-edge" target="_blank">Combat Edge</a>
+            <a href="https://indianarmy.nic.in/KnowYourArmy/know-your-army-main/command-and-control" target="_blank">Command & Control</a>
+            <a href="https://indianarmy.nic.in/KnowYourArmy/know-your-army-main/leadership" target="_blank">Leadership</a>
+            <a href="https://indianarmy.nic.in/KnowYourArmy/know-your-army-main/operations-un-mission" target="_blank">Operations UN Mission</a>
+            <a href="https://indianarmy.nic.in/KnowYourArmy/know-your-army-main/afspa" target="_blank">AFSPA</a>
         </div>
     </div>
 
-    <a href="#">Contact Us</a>
+    <!-- Contact Us -->
+    <a href="https://joinindianarmy.nic.in/contact-us.htm" target="_blank">Contact Us</a>
 
     <!-- LOGIN + SIGNUP (Correct Paths) -->
     <div class="nav-right">
