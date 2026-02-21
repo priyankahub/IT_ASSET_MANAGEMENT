@@ -47,6 +47,20 @@ body.homepage{
 }
 
 /* =========================================================
+   HEADER BACKGROUND IMAGE FIX (Homepage Only)
+========================================================= */
+body.homepage .banner-img{
+    width:100%;
+    height:40vh; /* Only top 40% visible */
+    background:url("../images/header-bg.jpg") no-repeat;
+    background-size:cover;
+    background-position:top center; /* Force crop from top */
+    display:flex;
+    align-items:center;
+    justify-content:center;
+}
+
+/* =========================================================
    MOVING NEWS RIBBON
    - Continuous scrolling
    - Hover highlight

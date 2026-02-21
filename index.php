@@ -27,7 +27,7 @@ session_start();
         🔔 System Maintenance on Sunday 02:00 AM |
         🚀 New Asset Tracking Module Launched |
         🔐 Security Upgrade Completed Successfully |
-        📢 Welcome to IT Asset Lifecycle Management Portal
+        📢 Welcome to IT Equipment Lifecycle Management Portal
     </div>
 </div>
 
