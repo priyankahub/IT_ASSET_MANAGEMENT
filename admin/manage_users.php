@@ -66,94 +66,178 @@ $users = mysqli_query($conn,"
 <style>
 body{
     margin:0;
-    font-family:Arial,sans-serif;
-    background:linear-gradient(135deg,#1e3c72,#2a5298);
+    font-family:Segoe UI, sans-serif;
+    background:#0f223a;
+    color:#f5f7fa;
 }
+
+/* HEADER */
+.header{
+    padding:25px 0;
+    font-size:22px;
+    font-weight:600;
+    background:#122944;
+    border-bottom:3px solid #d4af37;
+    text-align:center;
+}
+
+/* CONTAINER */
 .container{
     width:95%;
-    max-width:1100px;
-    margin:40px auto;
+    max-width:1200px;
+    margin:50px auto;
 }
+
+/* CARD */
 .card{
-    background:#fff;
-    padding:25px;
-    border-radius:12px;
-    box-shadow:0 6px 20px rgba(0,0,0,0.2);
+    background:#162f4f;
+    padding:30px;
+    border-radius:6px;
+    border-left:4px solid #d4af37;
 }
+
 h2{
-    color:#2a5298;
+    margin-bottom:25px;
+    font-weight:600;
 }
+
+/* MESSAGE */
+.message{
+    background:#1e4d2b;
+    color:#a8e6a1;
+    padding:12px;
+    border-radius:4px;
+    margin-bottom:20px;
+}
+
+/* EDIT CARD */
+.edit-card{
+    background:#1b3557;
+    padding:20px;
+    border-radius:6px;
+    margin-bottom:30px;
+    border-left:3px solid #d4af37;
+}
+
+.edit-card h3{
+    margin-bottom:15px;
+}
+
+.edit-card label{
+    font-size:13px;
+    color:#b8c6db;
+    display:block;
+    margin-top:10px;
+}
+
+.edit-card input,
+.edit-card select{
+    width:100%;
+    padding:10px;
+    margin-top:6px;
+    border-radius:4px;
+    border:1px solid #2c4c73;
+    background:#0f223a;
+    color:#fff;
+}
+
+.edit-card input:focus,
+.edit-card select:focus{
+    border-color:#d4af37;
+    outline:none;
+}
+
+.edit-card button{
+    margin-top:15px;
+    padding:10px 18px;
+    background:#d4af37;
+    color:#0f223a;
+    border:none;
+    border-radius:4px;
+    font-weight:600;
+    cursor:pointer;
+}
+
+.edit-card button:hover{
+    background:#c39c2d;
+}
+
+/* TABLE */
 table{
     width:100%;
     border-collapse:collapse;
 }
-th, td{
+
+th{
+    background:#122944;
     padding:12px;
     text-align:center;
+    font-weight:600;
 }
-th{
-    background:#f2f2f2;
+
+td{
+    padding:12px;
+    text-align:center;
+    border-bottom:1px solid #2c4c73;
 }
-tr:nth-child(even){
-    background:#fafafa;
+
+tr:hover{
+    background:#1a355a;
 }
+
+/* BUTTONS */
 .edit-btn{
-    background:#ffc107;
-    padding:6px 10px;
+    background:#ffd166;
+    color:#000;
+    padding:6px 12px;
     border:none;
-    border-radius:5px;
+    border-radius:4px;
     cursor:pointer;
 }
+
+.edit-btn:hover{
+    background:#f4b942;
+}
+
 .delete-btn{
-    background:#dc3545;
-    color:#fff;
-    padding:6px 10px;
+    background:#ff8fa3;
+    color:#000;
+    padding:6px 12px;
     border:none;
-    border-radius:5px;
+    border-radius:4px;
     cursor:pointer;
 }
-.edit-card{
-    background:#fff;
-    padding:20px;
-    border-radius:10px;
-    margin-bottom:20px;
-    box-shadow:0 4px 12px rgba(0,0,0,0.15);
+
+.delete-btn:hover{
+    background:#ff6f91;
 }
-.edit-card input,
-.edit-card select{
-    width:100%;
-    padding:8px;
-    margin:8px 0 12px;
-}
-.edit-card button{
-    background:#2a5298;
-    color:#fff;
-    padding:10px;
-    border:none;
-    border-radius:6px;
-}
-.message{
-    background:#d4edda;
-    color:#155724;
-    padding:10px;
-    border-radius:6px;
-    margin-bottom:15px;
-}
+
+/* FOOTER */
 .footer{
-    margin-top:20px;
+    margin-top:40px;
     text-align:center;
 }
+
 .footer a{
-    color:#fff;
     text-decoration:none;
-    padding:8px 15px;
-    background:rgba(255,255,255,0.2);
-    border-radius:20px;
+    padding:12px 24px;
+    background:#d4af37;
+    color:#0f223a;
+    border-radius:6px;
+    font-weight:600;
+}
+
+.footer a:hover{
+    background:#c39c2d;
 }
 </style>
 </head>
 
 <body>
+
+<div class="header">
+INF BN – USER MANAGEMENT CONTROL
+</div>
 
 <div class="container">
 
@@ -162,7 +246,7 @@ tr:nth-child(even){
 <h2>Manage Users</h2>
 
 <?php if (isset($_GET['msg']) && $_GET['msg']=='updated') { ?>
-<div class="message">✅ User updated successfully.</div>
+<div class="message">User updated successfully.</div>
 <?php } ?>
 
 <?php if ($editUser) { ?>
@@ -211,6 +295,7 @@ tr:nth-child(even){
 <td><?php echo $row['rank']; ?></td>
 <td><?php echo $row['army_no']; ?></td>
 <td>
+
 <a href="manage_users.php?edit=<?php echo $row['id']; ?>">
 <button class="edit-btn">Edit</button>
 </a>
@@ -219,6 +304,7 @@ tr:nth-child(even){
 <input type="hidden" name="id" value="<?php echo $row['id']; ?>">
 <button type="submit" name="delete_user" class="delete-btn">Delete</button>
 </form>
+
 </td>
 </tr>
 <?php } ?>
