@@ -2,6 +2,9 @@
 session_start();
 include("../config/db.php");
 
+error_reporting(E_ALL);
+ini_set('display_errors', 1);
+
 if (!isset($_SESSION['rank']) || $_SESSION['rank'] != 'CLERK') {
     die("Access Denied");
 }
@@ -48,6 +51,18 @@ if (isset($_POST['submit_request'])) {
             (request_type, full_name, username, password, army_no, rank, requested_by, request_date, status)
             VALUES
             ('$request_type','$full_name','$username','$password','$army_no','$rank','$requested_by','$today','Pending')
+        ");
+
+        /* =========================
+        ACTIVITY LOG ENTRY
+        ========================= */
+        mysqli_query($conn,"
+            INSERT INTO activity_logs
+            (user_username, action_tag, description)
+            VALUES
+            ('{$_SESSION['username']}',
+            'New User Creation',
+            'Requested CREATE for user: $full_name (Army No: $army_no)')
         ");
 
         $message = "✅ Request sent to Admin for approval.";

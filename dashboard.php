@@ -219,7 +219,7 @@ body::before{
 <?php if ($r === 'ADMIN') { ?>
     <div class="card">
         <h3>Equipment Management</h3>
-        <a href="admin/equipment_master.php">New Equipment Registration</a>
+        <a href="admin/equipment_master.php">Update Equipment Status</a>
         <a href="admin/disposal.php">Direct Condemnation</a>
     </div>
 
@@ -258,7 +258,7 @@ body::before{
 <?php if ($r === 'CLERK') { ?>
     <div class="card">
         <h3>Equipment Registration</h3>
-        <a href="admin/equipment_master.php">New Equipment Registration</a>
+        <a href="admin/equipment_master.php">Update Equipment Status</a>
     </div>
 
     <div class="card">

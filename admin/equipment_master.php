@@ -19,6 +19,7 @@ if (isset($_POST['add'])) {
     $purchase = $_POST['purchase_date'];
     $warranty = $_POST['warranty_end'];
     $cost = $_POST['cost'];
+    $selected_status = $_POST['status'];
 
     $today = date('Y-m-d');
 
@@ -29,14 +30,68 @@ if (isset($_POST['add'])) {
         $message = "Expiry date cannot be older than Purchase date.";
         $msgClass = "error";
     } else {
-        mysqli_query($conn, "
-            INSERT INTO equipment
-            (type, make, model, serial_no, purchase_date, warranty_end, cost, status)
-            VALUES
-            ('$type','$make','$model','$serial','$purchase','$warranty','$cost','Serviceable')
-        ");
-        $message = "Equipment added successfully.";
-        $msgClass = "success";
+
+        mysqli_begin_transaction($conn);
+
+        try {
+
+            // Determine actual stored status
+            $actual_status = ($selected_status == 'Serviceable') 
+                             ? 'Serviceable' 
+                             : 'Pending Approval';
+
+            // Insert Equipment
+            mysqli_query($conn, "
+                INSERT INTO equipment
+                (type, make, model, serial_no, purchase_date, warranty_end, cost, status)
+                VALUES
+                ('$type','$make','$model','$serial','$purchase','$warranty','$cost','$actual_status')
+            ");
+
+            $equipment_id = mysqli_insert_id($conn);
+
+            // If status requires approval
+            if ($selected_status != 'Serviceable') {
+
+                mysqli_query($conn, "
+                    INSERT INTO equipment_status_requests
+                    (equipment_id, requested_status, requested_by, request_date)
+                    VALUES
+                    ('$equipment_id','$selected_status','{$_SESSION['username']}',CURDATE())
+                ");
+            }
+
+            /* =========================
+            ACTIVITY LOG ENTRY
+            ========================= */
+
+            $log_user = $_SESSION['username'];
+
+            if($selected_status == 'Serviceable'){
+                $tag = "Equipment Registration";
+                $desc = "Registered $type | Serial: $serial";
+            } else {
+                $tag = "Equipment Status Request";
+                $desc = "Registered $type | Serial: $serial | Requested Status: $selected_status";
+            }
+
+            mysqli_query($conn,"
+                INSERT INTO activity_logs
+                (user_username, action_tag, description)
+                VALUES
+                ('$log_user', '$tag', '$desc')
+            ");
+
+            mysqli_commit($conn);
+
+            $message = "Equipment added successfully.";
+            $msgClass = "success";
+
+        } catch (Exception $e) {
+            mysqli_rollback($conn);
+            $message = "Error occurred. Serial number may already exist.";
+            $msgClass = "error";
+        }
     }
 }
 ?>
@@ -52,8 +107,6 @@ body{
     background:#0f223a;
     color:#f5f7fa;
 }
-
-/* HEADER */
 .header{
     padding:25px 0;
     font-size:22px;
@@ -62,15 +115,11 @@ body{
     border-bottom:3px solid #d4af37;
     text-align:center;
 }
-
-/* CONTAINER */
 .container{
     width:95%;
     max-width:1300px;
     margin:50px auto;
 }
-
-/* CARD */
 .card{
     background:#162f4f;
     padding:30px;
@@ -78,35 +127,28 @@ body{
     margin-bottom:40px;
     border-left:4px solid #d4af37;
 }
-
-/* TITLES */
 .page-title,
 .table-title{
     font-size:20px;
     font-weight:600;
     margin-bottom:20px;
-    color:#ffffff;
 }
-
-/* FORM GRID */
 .form-grid{
     display:grid;
     grid-template-columns:repeat(2,1fr);
     gap:25px;
 }
-
 .form-group{
     display:flex;
     flex-direction:column;
 }
-
 .form-group label{
     font-size:13px;
     margin-bottom:6px;
     color:#b8c6db;
 }
-
-.form-group input{
+.form-group input,
+.form-group select{
     padding:10px;
     border-radius:4px;
     border:1px solid #2c4c73;
@@ -114,13 +156,11 @@ body{
     color:#ffffff;
     font-size:14px;
 }
-
-.form-group input:focus{
+.form-group input:focus,
+.form-group select:focus{
     outline:none;
     border-color:#d4af37;
 }
-
-/* BUTTON */
 .submit-btn{
     margin-top:25px;
     padding:12px 20px;
@@ -131,14 +171,10 @@ body{
     color:#0f223a;
     font-weight:600;
     cursor:pointer;
-    transition:.3s;
 }
-
 .submit-btn:hover{
     background:#c39c2d;
 }
-
-/* MESSAGE STYLES */
 .success{
     padding:12px;
     border-radius:4px;
@@ -146,7 +182,6 @@ body{
     color:#a5d6a7;
     margin-bottom:20px;
 }
-
 .error{
     padding:12px;
     border-radius:4px;
@@ -154,47 +189,33 @@ body{
     color:#ffb3b3;
     margin-bottom:20px;
 }
-
-/* TABLE */
 table{
     width:100%;
     border-collapse:collapse;
-    font-size:14px;
 }
-
 th{
     background:#122944;
     padding:12px;
-    text-align:left;
-    font-weight:600;
-    color:#f5f7fa;
 }
-
 td{
     padding:12px;
     border-bottom:1px solid #2c4c73;
 }
-
 tr:hover{
     background:#1a355a;
 }
 
-.status-serviceable{
-    color:#6dd3ce;
-    font-weight:600;
-}
+/* Status Colors */
+.status-Serviceable { color:#6dd3ce; font-weight:600; }
+.status-Non-Serviceable { color:#ffa726; font-weight:600; }
+.status-Under-Maintenance { color:#ffd54f; font-weight:600; }
+.status-Condemned { color:#ff8fa3; font-weight:600; }
+.status-Pending-Approval { color:#64b5f6; font-weight:600; }
 
-.status-condemned{
-    color:#ff8fa3;
-    font-weight:600;
-}
-
-/* BACK BUTTON */
 .back{
     text-align:center;
     margin-top:40px;
 }
-
 .back a{
     text-decoration:none;
     padding:12px 24px;
@@ -202,10 +223,6 @@ tr:hover{
     color:#0f223a;
     border-radius:4px;
     font-weight:600;
-}
-
-.back a:hover{
-    background:#c39c2d;
 }
 </style>
 </head>
@@ -218,7 +235,6 @@ INF BN – EQUIPMENT REGISTRATION CONTROL
 
 <div class="container">
 
-<!-- FORM CARD -->
 <div class="card">
 <div class="page-title">Equipment Registration</div>
 
@@ -234,7 +250,14 @@ INF BN – EQUIPMENT REGISTRATION CONTROL
 
 <div class="form-group">
 <label>Equipment Type</label>
-<input type="text" name="type" required>
+<select name="type" required>
+<?php
+$types = mysqli_query($conn,"SELECT type_name FROM equipment_types WHERE is_active=1");
+while($t=mysqli_fetch_assoc($types)){
+echo "<option value='{$t['type_name']}'>{$t['type_name']}</option>";
+}
+?>
+</select>
 </div>
 
 <div class="form-group">
@@ -255,7 +278,7 @@ INF BN – EQUIPMENT REGISTRATION CONTROL
 <div class="form-group">
 <label>Purchase Date</label>
 <input type="date" name="purchase_date"
-       max="<?php echo date('Y-m-d'); ?>" required>
+max="<?php echo date('Y-m-d'); ?>" required>
 </div>
 
 <div class="form-group">
@@ -265,7 +288,17 @@ INF BN – EQUIPMENT REGISTRATION CONTROL
 
 <div class="form-group">
 <label>Cost</label>
-<input type="number" step="0.00001" name="cost" required>
+<input type="number" step="0.01" name="cost" required>
+</div>
+
+<div class="form-group">
+<label>Status</label>
+<select name="status" required>
+<option value="Serviceable">Serviceable</option>
+<option value="Non-Serviceable">Non-Serviceable</option>
+<option value="Under-Maintenance">Under-Maintenance</option>
+<option value="Condemned">Condemned</option>
+</select>
 </div>
 
 </div>
@@ -275,9 +308,7 @@ INF BN – EQUIPMENT REGISTRATION CONTROL
 </form>
 </div>
 
-<!-- TABLE CARD -->
 <div class="card">
-
 <div class="table-title">Registered Equipment</div>
 
 <table>
@@ -295,9 +326,7 @@ INF BN – EQUIPMENT REGISTRATION CONTROL
 $res=mysqli_query($conn,"SELECT * FROM equipment ORDER BY id DESC");
 while($r=mysqli_fetch_assoc($res)){
 
-$statusClass = ($r['status']=='Serviceable')
-                ? "status-serviceable"
-                : "status-condemned";
+$class = "status-" . str_replace(" ","-",$r['status']);
 
 echo "<tr>
 <td>{$r['id']}</td>
@@ -306,7 +335,7 @@ echo "<tr>
 <td>{$r['model']}</td>
 <td>{$r['purchase_date']}</td>
 <td>{$r['warranty_end']}</td>
-<td class='$statusClass'>{$r['status']}</td>
+<td class='$class'>{$r['status']}</td>
 </tr>";
 }
 ?>
@@ -319,6 +348,5 @@ echo "<tr>
 </div>
 
 </div>
-
 </body>
 </html>
