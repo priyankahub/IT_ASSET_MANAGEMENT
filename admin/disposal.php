@@ -20,76 +20,177 @@ if (isset($_POST['condemn']) && !empty($_POST['equipment_ids'])) {
 <!DOCTYPE html>
 <html>
 <head>
-<title>Condemnation</title>
+<title>Condemnation Control</title>
 <script src="../assets/js/script.js"></script>
 
 <style>
 body{
     margin:0;
-    font-family:Arial,sans-serif;
-    background:linear-gradient(135deg,#1e3c72,#2a5298);
+    font-family:Segoe UI, sans-serif;
+    background:#0f223a;
+    color:#f5f7fa;
 }
+
+/* HEADER */
+.header{
+    padding:25px 0;
+    font-size:22px;
+    font-weight:600;
+    background:#122944;
+    border-bottom:3px solid #d4af37;
+    text-align:center;
+}
+
+/* CONTAINER */
 .container{
     width:95%;
-    max-width:1100px;
-    margin:30px auto;
+    max-width:1300px;
+    margin:50px auto;
 }
+
+/* CARD */
 .card{
-    background:#fff;
-    padding:25px;
-    border-radius:10px;
-    box-shadow:0 6px 15px rgba(0,0,0,.2);
-    margin-bottom:25px;
+    background:#162f4f;
+    padding:30px;
+    border-radius:6px;
+    margin-bottom:40px;
+    border-left:4px solid #d4af37;
 }
-h2,h3{color:#2a5298;}
-select,button{
-    padding:8px;
-    border-radius:5px;
+
+/* TITLES */
+h2,h3{
+    margin-bottom:20px;
+    font-weight:600;
+    color:#ffffff;
 }
+
+/* FORM CONTROLS */
+select{
+    padding:8px 10px;
+    border-radius:4px;
+    border:1px solid #2c4c73;
+    background:#0f223a;
+    color:#ffffff;
+    margin-right:10px;
+}
+
 button{
-    background:#2a5298;
-    color:#fff;
+    padding:10px 18px;
     border:none;
+    border-radius:4px;
+    background:#d4af37;
+    color:#0f223a;
+    font-weight:600;
+    cursor:pointer;
+    transition:.3s;
 }
+
+button:hover{
+    background:#c39c2d;
+}
+
+/* TABLE */
 table{
     width:100%;
     border-collapse:collapse;
+    font-size:14px;
 }
-th,td{
-    padding:10px;
-    border-bottom:1px solid #ddd;
+
+th{
+    background:#122944;
+    padding:12px;
+    text-align:left;
+    font-weight:600;
+    color:#f5f7fa;
 }
-th{background:#f4f6f9;}
-.back{text-align:center;}
-.back a{color:#fff;text-decoration:none;}
+
+td{
+    padding:12px;
+    border-bottom:1px solid #2c4c73;
+}
+
+tr:hover{
+    background:#1a355a;
+}
+
+input[type="checkbox"]{
+    transform:scale(1.2);
+}
+
+/* BACK BUTTON */
+.back{
+    text-align:center;
+    margin-top:40px;
+}
+
+.back a{
+    text-decoration:none;
+    padding:12px 24px;
+    background:#d4af37;
+    color:#0f223a;
+    border-radius:6px;
+    font-weight:600;
+}
+
+.back a:hover{
+    background:#c39c2d;
+}
 </style>
 </head>
 
 <body>
 
+<div class="header">
+INF BN – CONDEMNATION & DISPOSAL CONTROL
+</div>
+
 <div class="container">
 
+<!-- FILTER CARD -->
 <div class="card">
 <h2>Condemnation & Disposal</h2>
 
 <form method="GET">
+
 <select name="status">
-<option value="">All</option>
-<option>Serviceable</option>
-<option>Under Repair</option>
-<option>Unserviceable</option>
+<option value="">All Status</option>
+
+<option value="Serviceable"
+<?php if(isset($_GET['status']) && $_GET['status']=="Serviceable") echo "selected"; ?>>
+Serviceable
+</option>
+
+<option value="Under Repair"
+<?php if(isset($_GET['status']) && $_GET['status']=="Under Repair") echo "selected"; ?>>
+Under Repair
+</option>
+
+<option value="Unserviceable"
+<?php if(isset($_GET['status']) && $_GET['status']=="Unserviceable") echo "selected"; ?>>
+Unserviceable
+</option>
+
 </select>
+
 <button type="submit">Filter</button>
+
 </form>
+
 </div>
 
+<!-- NEAR EXPIRY / SELECTION -->
 <div class="card">
-<h3>Equipment Near Expiry</h3>
+<h3>Equipment Near Expiry / Pending Disposal</h3>
 
 <form method="POST" onsubmit="return confirmAction('Condemn selected equipment?')">
 <table>
 <tr>
-<th>Select</th><th>ID</th><th>Type</th><th>Make</th><th>Expiry</th><th>Status</th>
+<th>Select</th>
+<th>ID</th>
+<th>Type</th>
+<th>Make</th>
+<th>Expiry</th>
+<th>Status</th>
 </tr>
 
 <?php
@@ -114,17 +215,23 @@ echo "<tr>
 }
 ?>
 </table>
+
 <br>
 <button name="condemn">Condemn Selected</button>
 </form>
 </div>
 
+<!-- HISTORY -->
 <div class="card">
 <h3>Condemned Equipment History</h3>
 
 <table>
 <tr>
-<th>ID</th><th>Type</th><th>Make</th><th>Date</th><th>Reason</th>
+<th>ID</th>
+<th>Type</th>
+<th>Make</th>
+<th>Disposal Date</th>
+<th>Reason</th>
 </tr>
 
 <?php
@@ -148,9 +255,10 @@ echo "<tr>
 </div>
 
 <div class="back">
-<a href="../dashboard.php">⬅ Back to Dashboard</a>
+<a href="../dashboard.php">Return to Dashboard</a>
 </div>
 
 </div>
+
 </body>
 </html>
