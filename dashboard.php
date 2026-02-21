@@ -18,82 +18,118 @@ $name = $_SESSION['name'];
 <style>
 body{
     margin:0;
-    padding:0;
-    min-height:100vh;
-    font-family:Arial,sans-serif;
-    background:linear-gradient(135deg,#1e3c72,#2a5298);
+    padding:40px 0;
+    min-height:30vh;
+    font-family:'Segoe UI',sans-serif;
+    background:radial-gradient(circle at center,#0a1f44 0%,#000814 85%);
+    display:flex;
+    align-items:center;
+    justify-content:center;
 }
+
+/* ===== Container ===== */
 .container{
-    width:90%;
-    max-width:1100px;
-    margin:40px auto;
+    width:92%;
+    max-width:1200px;
+    margin:120px auto 60px auto;
 }
+
+/* ===== Header Card ===== */
 .header{
-    background:#fff;
-    padding:25px;
-    border-radius:12px;
-    box-shadow:0 6px 20px rgba(0,0,0,0.2);
-    margin-bottom:30px;
+    background:#f4f4f4;
+    padding:30px;
+    border-radius:14px;
+    box-shadow:0 15px 40px rgba(0,0,0,0.5);
+    margin-bottom:35px;
+    border-left:6px solid #FFD700;
 }
+
 .header h2{
     margin:0;
-    color:#2a5298;
+    color:#001f54;
+    font-weight:700;
+    letter-spacing:1px;
 }
+
+/* Role Badge */
 .role-badge{
     display:inline-block;
-    margin-top:10px;
-    padding:6px 16px;
+    margin-top:12px;
+    padding:6px 18px;
     border-radius:20px;
     font-size:13px;
-    background:#2a5298;
-    color:#fff;
+    background:#001f54;
+    color:#FFD700;
+    font-weight:bold;
+    letter-spacing:1px;
 }
+
+/* ===== Cards Layout ===== */
 .cards{
     display:grid;
-    grid-template-columns:repeat(auto-fit,minmax(260px,1fr));
-    gap:20px;
+    grid-template-columns:repeat(auto-fit,minmax(270px,1fr));
+    gap:25px;
 }
+
+/* ===== Card Styling ===== */
 .card{
-    background:#fff;
-    padding:25px;
-    border-radius:12px;
-    box-shadow:0 6px 15px rgba(0,0,0,0.15);
-    transition:0.3s;
+    background:#f4f4f4;
+    padding:28px;
+    border-radius:14px;
+    box-shadow:0 10px 30px rgba(0,0,0,0.4);
+    transition:0.3s ease;
+    border-top:4px solid #FFD700;
 }
+
 .card:hover{
-    transform:translateY(-5px);
+    transform:translateY(-6px);
+    box-shadow:0 20px 45px rgba(0,0,0,0.6);
 }
+
 .card h3{
-    margin-bottom:15px;
-    color:#2a5298;
+    margin-bottom:18px;
+    color:#001f54;
+    font-weight:700;
 }
+
+/* ===== Buttons ===== */
 .card a{
     display:block;
-    margin:8px 0;
-    padding:10px;
-    background:#2a5298;
-    color:#fff;
+    margin:10px 0;
+    padding:11px;
+    background:#001f54;
+    color:#FFD700;
     text-decoration:none;
-    border-radius:6px;
+    border-radius:8px;
     font-size:14px;
+    font-weight:bold;
+    transition:0.3s;
 }
+
 .card a:hover{
-    background:#1e3c72;
+    background:#FFD700;
+    color:#001f54;
 }
+
+/* ===== Logout ===== */
 .logout{
-    margin-top:30px;
+    margin-top:50px;
     text-align:center;
 }
+
 .logout a{
-    color:#fff;
+    color:#001f54;
     font-size:14px;
     text-decoration:none;
-    background:rgba(255,255,255,0.2);
-    padding:8px 15px;
-    border-radius:20px;
+    background:#FFD700;
+    padding:10px 22px;
+    border-radius:25px;
+    font-weight:bold;
+    transition:0.3s;
 }
+
 .logout a:hover{
-    background:rgba(255,255,255,0.35);
+    background:#e6c200;
 }
 </style>
 </head>
