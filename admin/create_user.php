@@ -59,92 +59,116 @@ if (isset($_POST['submit_request'])) {
 <style>
 
 /* ================= BODY ================= */
-
 body{
     margin:0;
-    font-family: 'Segoe UI', sans-serif;
+    font-family:'Segoe UI',sans-serif;
     background:
-        radial-gradient(circle at top left, #0f2027, #203a43 60%, #0a1923);
+        radial-gradient(circle at top left,#0f2027,#203a43 60%,#0a1923);
     color:#f5f5f5;
 }
 
-/* subtle tech grid overlay */
+/* Subtle Grid */
 body::before{
     content:"";
     position:fixed;
     width:100%;
     height:100%;
     background-image:
-        linear-gradient(rgba(0,150,255,0.06) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(0,150,255,0.06) 1px, transparent 1px);
+        linear-gradient(rgba(212,175,55,0.05) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(212,175,55,0.05) 1px, transparent 1px);
     background-size:40px 40px;
     pointer-events:none;
 }
 
-/* ================= HEADER ================= */
-
-.header{
+/* ================= RIBBON ================= */
+.ribbon{
+    width:100%;
+    background:#0c1f33;
+    border-bottom:3px solid #d4af37;
+    padding:18px 0;
     text-align:center;
-    padding:25px 0;
+    box-shadow:0 5px 25px rgba(0,0,0,0.6);
 }
 
-.header img{
-    height:70px;
-    margin-bottom:10px;
-    transition:transform 0.4s ease;
-}
-
-.header img:hover{
-    transform:scale(1.08) rotate(-2deg);
-}
-
-.header h1{
+.ribbon h1{
     margin:0;
-    font-size:26px;
+    font-size:22px;
     letter-spacing:2px;
-    color:#00c6ff; /* Electric Blue */
+    font-weight:700;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    gap:18px;
+}
+
+.ribbon img{
+    height:45px;
+    transition:0.3s ease;
+}
+
+.ribbon img:hover{
+    transform:scale(1.1);
 }
 
 /* ================= CONTAINER ================= */
-
 .container{
     width:95%;
     max-width:650px;
-    margin:20px auto 60px auto;
+    margin:60px auto;
 }
 
 /* ================= CARD ================= */
-
 .card{
-    background:rgba(10,25,40,0.88);
-    padding:35px;
-    border-radius:15px;
-    backdrop-filter: blur(10px);
-    border:1px solid rgba(0,198,255,0.3);
-    box-shadow:0 10px 30px rgba(0,0,0,0.7);
-    transition: all 0.4s ease;
+    background:rgba(10,25,40,0.92);
+    padding:40px;
+    border-radius:20px;
+    border-left:4px solid #d4af37;
+    box-shadow:0 15px 40px rgba(0,0,0,0.6);
+    transition:0.4s ease;
+    position:relative;
+    overflow:hidden;
 }
 
+/* Lift + Glow */
 .card:hover{
-    transform:translateY(-5px);
-    box-shadow:0 15px 40px rgba(0,0,0,0.9);
+    transform:translateY(-12px) scale(1.01);
+    box-shadow:
+        0 0 30px rgba(212,175,55,0.6),
+        0 25px 60px rgba(0,0,0,0.9);
+}
+
+/* Sweep Animation */
+.card::before{
+    content:"";
+    position:absolute;
+    top:0;
+    left:-100%;
+    width:100%;
+    height:100%;
+    background:linear-gradient(
+        120deg,
+        transparent,
+        rgba(255,255,255,0.08),
+        transparent
+    );
+    transition:0.7s;
+}
+
+.card:hover::before{
+    left:100%;
 }
 
 /* ================= TITLE ================= */
-
 h2{
     text-align:center;
-    margin-bottom:25px;
-    color#ffffff;
+    margin-bottom:30px;
     letter-spacing:1px;
 }
 
 /* ================= FORM ================= */
-
 label{
     font-weight:600;
     font-size:14px;
-    letter-spacing:0.5px;
 }
 
 input, select{
@@ -160,33 +184,32 @@ input, select{
 }
 
 input:focus, select:focus{
-    border-color:#00c6ff;
-    box-shadow:0 0 12px rgba(0,198,255,0.7);
+    border-color:#d4af37;
+    box-shadow:0 0 12px rgba(212,175,55,0.6);
     outline:none;
 }
 
 /* ================= BUTTON ================= */
-
 button{
     width:100%;
-    padding:12px;
-    background:linear-gradient(45deg,#005c97,#00c6ff);
-    color:#fff;
+    padding:14px;
+    background:#d4af37;
+    color:#0f223a;
     font-weight:bold;
     border:none;
-    border-radius:8px;
+    border-radius:10px;
     cursor:pointer;
-    transition: all 0.3s ease;
+    transition:0.3s ease;
     letter-spacing:1px;
 }
 
 button:hover{
-    transform:translateY(-2px);
-    box-shadow:0 5px 20px rgba(0,198,255,0.8);
+    background:#c39c2d;
+    box-shadow:0 5px 20px rgba(212,175,55,0.7);
+    transform:translateY(-3px);
 }
 
 /* ================= MESSAGE ================= */
-
 .success{
     background:#102f44;
     border-left:4px solid #00c6ff;
@@ -203,7 +226,28 @@ button:hover{
     margin-bottom:15px;
 }
 
-/* ================= FOOTER BADGE ================= */
+/* ================= RETURN BUTTON ================= */
+.return{
+    text-align:center;
+    margin-top:35px;
+}
+
+.return a{
+    text-decoration:none;
+    padding:14px 28px;
+    background:#d4af37;
+    color:#0f223a;
+    border-radius:30px;
+    font-weight:bold;
+    transition:0.3s ease;
+}
+
+.return a:hover{
+    background:#c39c2d;
+    box-shadow:0 5px 20px rgba(212,175,55,0.7);
+}
+
+/* ================= FOOTER ================= */
 
 .footer{
     text-align:center;
@@ -212,15 +256,17 @@ button:hover{
     color:#aaa;
     letter-spacing:1px;
 }
-
 </style>
 </head>
 
 <body>
 
-<div class="header">
-    <img src="../images/logo.jpg" alt="Indian Army Logo">
-    <h1>INDIAN ARMY IT ASSET MANAGEMENT</h1>
+<div class="ribbon">
+    <h1>
+        <img src="../images/logo.jpg">
+        INDIAN ARMY IT ASSET MANAGEMENT
+        <img src="../images/logo.jpg">
+    </h1>
 </div>
 
 <div class="container">
@@ -262,6 +308,10 @@ INITIATE USER CREATION
 
 <div class="footer">
 SECURE ADMIN PANEL • MILITARY GRADE SYSTEM
+</div>
+
+<div class="return">
+    <a href="../dashboard.php">← Return to Dashboard</a>
 </div>
 
 </div>
