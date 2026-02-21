@@ -31,19 +31,34 @@ body.homepage{
 
 /* =========================================================
    HEADER SECTION (Title + Logo)
-   - Increased size
-   - Premium gradient text
+   - Centered with dual logo
+   - No layout breaking
 ========================================================= */
+
+.header-banner{
+    position:relative;
+    text-align:center;
+}
+
+.banner-content{
+    display:flex;
+    align-items:center;
+    justify-content:center;   /* horizontally center */
+    gap:40px;
+    width:100%;
+}
+
 .banner-content h1{
-    font-size:64px; /* Increased heading size */
+    font-size:64px;
     letter-spacing:4px;
     background:linear-gradient(90deg,#ffd700,#ffffff);
     -webkit-background-clip:text;
     -webkit-text-fill-color:transparent;
+    margin:0;
 }
 
 .logo{
-    width:150px; /* Increased logo size */
+    width:120px;
 }
 
 /* =========================================================

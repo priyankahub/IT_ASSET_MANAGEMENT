@@ -18,6 +18,7 @@ session_start();
     <div class="banner-content">
         <img src="images/logo.jpg" class="logo">
         <h1>THE INFANTRY SCHOOL MHOW</h1>
+        <img src="images/logo.jpg" class="logo">
     </div>
 </div>
 
