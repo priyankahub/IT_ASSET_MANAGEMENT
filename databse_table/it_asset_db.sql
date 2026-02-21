@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Feb 21, 2026 at 05:26 PM
+-- Generation Time: Feb 21, 2026 at 09:07 PM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.1.25
 
@@ -42,7 +42,13 @@ CREATE TABLE `activity_logs` (
 INSERT INTO `activity_logs` (`id`, `user_username`, `action_tag`, `description`, `action_date`) VALUES
 (1, 'test_clerk', 'Test Action', 'Testing log entry', '2026-02-21 21:33:33'),
 (2, 'neha.verma', 'New User Creation', 'Requested CREATE for user: karan bisht (Army No: ik9876543)', '2026-02-21 21:37:13'),
-(3, 'neha.verma', 'Equipment Status Request', 'Registered Gun | Serial: 87654 | Requested Status: Under-Maintenance', '2026-02-21 21:44:08');
+(3, 'neha.verma', 'Equipment Status Request', 'Registered Gun | Serial: 87654 | Requested Status: Under-Maintenance', '2026-02-21 21:44:08'),
+(4, 'sneha.kapoor', 'New User Creation', 'Requested CREATE for user: ererr (Army No: errrr)', '2026-02-21 22:44:50'),
+(5, 'sneha.kapoor', 'New User Creation', 'Requested CREATE for user: werr (Army No: weee)', '2026-02-21 22:45:29'),
+(6, 'sneha.kapoor', 'New User Creation', 'Requested CREATE for user: yuuu (Army No: uiiii)', '2026-02-21 22:47:39'),
+(7, 'sneha.kapoor', 'New User Creation', 'Requested CREATE for user: Jyoti Sharma (Army No: JC098765)', '2026-02-22 00:37:07'),
+(8, 'sneha.kapoor', 'Edit User', 'Requested EDIT for user: prakash.singh → prakash.singh | Rank: ITJCO', '2026-02-22 01:05:34'),
+(9, 'sneha.kapoor', 'Delete User', 'Requested DELETE for user: Himnegi | Rank: USER', '2026-02-22 01:36:54');
 
 -- --------------------------------------------------------
 
@@ -330,7 +336,13 @@ INSERT INTO `user_requests` (`id`, `request_type`, `full_name`, `username`, `pas
 (5, 'CREATE', 'pryy', 'pr', 'Password@#123', 'pryy', 'CO', 'amit.sharma', '2026-02-20', 'Approved', 'amit.sharma', '2026-02-20', NULL),
 (6, 'CREATE', 'priy', 'pri', 'Password@#123', 'priy', 'USER', 'amit.sharma', '2026-02-20', 'Approved', 'amit.sharma', '2026-02-20', NULL),
 (7, 'CREATE', 'Himanshu Negi', 'Himnegi', 'Password@3123456', 'JK098765L', 'USER', 'SELF', '2026-02-21', 'Approved', 'amit.sharma', '2026-02-21', NULL),
-(8, 'CREATE', 'karan bisht', 'kra.dishtt', 'Password@#123', 'ik9876543', 'CO', 'neha.verma', '2026-02-21', 'Pending', NULL, NULL, NULL);
+(8, 'CREATE', 'karan bisht', 'kra.dishtt', 'Password@#123', 'ik9876543', 'CO', 'neha.verma', '2026-02-21', 'Pending', NULL, NULL, NULL),
+(9, 'DELETE', 'ererr', 'errrr', 'Password@#123', 'errrr', 'ADMIN', 'sneha.kapoor', '2026-02-21', 'Pending', NULL, NULL, NULL),
+(10, 'DELETE', 'werr', 'wee', 'Password@#123', 'weee', 'CO', 'sneha.kapoor', '2026-02-21', 'Pending', NULL, NULL, NULL),
+(11, 'EDIT', 'yuuu', 'uii', 'Password@#123', 'uiiii', 'ITJCO', 'sneha.kapoor', '2026-02-21', 'Pending', NULL, NULL, NULL),
+(12, 'CREATE', 'Jyoti Sharma', 'jyoti.sharma', 'Password@#123', 'JC098765', 'CO', 'sneha.kapoor', '2026-02-21', 'Pending', NULL, NULL, NULL),
+(13, 'EDIT', 'Subedar Singh Prakash ', 'prakash.singh', '', 'JC-2007', 'ITJCO', 'sneha.kapoor', '2026-02-22', 'Pending', NULL, NULL, NULL),
+(18, 'DELETE', 'Himanshu Negi', 'Himnegi', '', 'JK098765L', 'USER', 'sneha.kapoor', '2026-02-22', 'Pending', NULL, NULL, NULL);
 
 --
 -- Indexes for dumped tables
@@ -414,10 +426,7 @@ ALTER TABLE `users`
 -- Indexes for table `user_requests`
 --
 ALTER TABLE `user_requests`
-  ADD PRIMARY KEY (`id`),
-  ADD UNIQUE KEY `army_no` (`army_no`),
-  ADD UNIQUE KEY `army_no_2` (`army_no`),
-  ADD UNIQUE KEY `username` (`username`);
+  ADD PRIMARY KEY (`id`);
 
 --
 -- AUTO_INCREMENT for dumped tables
@@ -427,7 +436,7 @@ ALTER TABLE `user_requests`
 -- AUTO_INCREMENT for table `activity_logs`
 --
 ALTER TABLE `activity_logs`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
 -- AUTO_INCREMENT for table `allocation`
@@ -493,7 +502,7 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT for table `user_requests`
 --
 ALTER TABLE `user_requests`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
 
 --
 -- Constraints for dumped tables

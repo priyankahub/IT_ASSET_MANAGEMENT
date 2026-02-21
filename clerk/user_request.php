@@ -13,7 +13,7 @@ $message = "";
 
 if (isset($_POST['submit_request'])) {
 
-    $request_type = $_POST['request_type'];
+    $request_type = "CREATE";
     $full_name    = mysqli_real_escape_string($conn, $_POST['full_name']);
     $username     = mysqli_real_escape_string($conn, $_POST['username']);
     $army_no      = mysqli_real_escape_string($conn, $_POST['army_no']);
@@ -21,7 +21,7 @@ if (isset($_POST['submit_request'])) {
     $requested_by = $_SESSION['username'];
     $today        = date('Y-m-d');
 
-    // Default password for clerk-created users
+    // Default password
     $password = "Password@#123";
 
     // Username uniqueness
@@ -53,9 +53,7 @@ if (isset($_POST['submit_request'])) {
             ('$request_type','$full_name','$username','$password','$army_no','$rank','$requested_by','$today','Pending')
         ");
 
-        /* =========================
-        ACTIVITY LOG ENTRY
-        ========================= */
+        // Activity Log Entry
         mysqli_query($conn,"
             INSERT INTO activity_logs
             (user_username, action_tag, description)
@@ -69,7 +67,15 @@ if (isset($_POST['submit_request'])) {
     }
 }
 ?>
+
+<!DOCTYPE html>
+<html>
+<head>
+<title>User Management Request</title>
+
 <style>
+
+/* ================= BODY ================= */
 body{
     margin:0;
     font-family:Segoe UI, sans-serif;
@@ -77,82 +83,67 @@ body{
     color:#f5f7fa;
 }
 
-/* HEADER */
-.header{
-    padding:25px 0;
-    font-size:22px;
-    font-weight:600;
-    background:#122944;
+/* ================= RIBBON ================= */
+.ribbon{
+    width:100%;
+    background:#0c1f33;
     border-bottom:3px solid #d4af37;
+    padding:18px 0;
     text-align:center;
+    box-shadow:0 5px 25px rgba(0,0,0,0.6);
 }
 
-/* CONTAINER */
+.ribbon h1{
+    margin:0;
+    font-size:22px;
+    letter-spacing:2px;
+    font-weight:700;
+    color:#ffffff;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    gap:18px;
+}
+
+.ribbon img{
+    height:45px;
+}
+
+/* ================= CONTAINER ================= */
 .container{
     width:95%;
     max-width:950px;
     margin:50px auto;
 }
 
-/* CARD */
+/* ================= CARD ================= */
 .card{
     background:#162f4f;
     padding:30px;
     border-radius:6px;
     border-left:4px solid #d4af37;
     margin-bottom:30px;
-    transition:all 0.35s ease;
-    position:relative;
-    overflow:hidden;
+    transition:0.35s ease;
 }
 
-/* Lift + Glow */
 .card:hover{
-    transform:translateY(-10px) scale(1.01);
     background:#1d3a5c;
-    box-shadow:
-        0 0 25px rgba(212,175,55,0.6),
-        0 20px 40px rgba(0,0,0,0.75);
+    box-shadow:0 15px 40px rgba(0,0,0,0.6);
 }
 
-/* Subtle highlight sweep animation */
-.card::before{
-    content:"";
-    position:absolute;
-    top:0;
-    left:-100%;
-    width:100%;
-    height:100%;
-    background:linear-gradient(
-        120deg,
-        transparent,
-        rgba(255,255,255,0.08),
-        transparent
-    );
-    transition:0.6s;
-}
-
-.card:hover::before{
-    left:100%;
-}
-
-/* TITLE */
+/* ================= FORM ================= */
 h2{
-    color:#ffffff;
     margin-bottom:20px;
     font-weight:600;
 }
 
-/* LABELS */
 label{
     font-size:13px;
     font-weight:600;
     color:#b8c6db;
 }
 
-/* INPUT FIELDS */
-input,
-select{
+input, select{
     width:100%;
     padding:10px;
     margin-top:6px;
@@ -163,13 +154,11 @@ select{
     color:#ffffff;
 }
 
-input:focus,
-select:focus{
+input:focus, select:focus{
     border-color:#d4af37;
     outline:none;
 }
 
-/* BUTTON */
 button{
     width:100%;
     padding:12px;
@@ -186,7 +175,7 @@ button:hover{
     background:#c39c2d;
 }
 
-/* SUCCESS MESSAGE */
+/* ================= MESSAGE ================= */
 .success{
     background:#1e4d2b;
     color:#a8e6a1;
@@ -195,7 +184,7 @@ button:hover{
     margin-bottom:20px;
 }
 
-/* FOOTER ACTIONS */
+/* ================= FOOTER ================= */
 .footer-actions{
     text-align:center;
     margin-top:30px;
@@ -214,26 +203,32 @@ button:hover{
 .footer-actions a:hover{
     background:#c39c2d;
 }
+
 </style>
+</head>
+
+<body>
+
+<!-- Ribbon Header -->
+<div class="ribbon">
+    <h1>
+        <img src="../images/logo.jpg" alt="Logo">
+        User Management Request
+        <img src="../images/logo.jpg" alt="Logo">
+    </h1>
+</div>
 
 <div class="container">
 
 <div class="card">
 
-<h2>User Management Request (Clerk)</h2>
+<h2>New User Creation Request</h2>
 
 <?php if($message!=""){ ?>
 <div class="success"><?php echo $message; ?></div>
 <?php } ?>
 
 <form method="POST">
-
-<label>Request Type</label>
-<select name="request_type" required>
-    <option value="CREATE">Create User</option>
-    <option value="EDIT">Edit User</option>
-    <option value="DELETE">Delete User</option>
-</select>
 
 <label>Full Name</label>
 <input type="text" name="full_name" required>

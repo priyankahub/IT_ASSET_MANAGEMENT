@@ -41,7 +41,15 @@ if (isset($_POST['approve'])) {
             )
         ");
     }
-
+    if ($req['request_type'] == 'EDIT') {
+        mysqli_query($conn,"
+            UPDATE users
+            SET name = '{$req['full_name']}',
+                army_no = '{$req['army_no']}',
+                rank = '{$req['rank']}'
+            WHERE username = '{$req['username']}'
+        ");
+    }
     if ($req['request_type'] == 'DELETE') {
         mysqli_query($conn,"
             DELETE FROM users WHERE username='{$req['username']}'

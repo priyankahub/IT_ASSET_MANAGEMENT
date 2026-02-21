@@ -277,7 +277,9 @@ body::before{
 
     <div class="card">
         <h3>User Requests</h3>
-        <a href="clerk/user_request.php">Create / Edit / Delete Users</a>
+        <a href="clerk/user_request.php">Create New User</a>
+        <a href="clerk/edit_user_request.php">Update User</a>
+        <a href="clerk/delete_user_request.php">Delete User</a>
     </div>
 
     <div class="card activity-banner">
