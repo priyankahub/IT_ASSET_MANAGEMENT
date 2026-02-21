@@ -1,0 +1,509 @@
+/* =========================================================
+   GLOBAL RESET
+========================================================= */
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+/* =========================================================
+   DEFAULT BODY (ADMIN / FORMS DEFAULT LIGHT MODE)
+   This keeps your existing admin pages working
+========================================================= */
+body{
+    font-family: Arial;
+    background: #f4f4f4;
+}
+
+/* =========================================================
+   ================= ADMIN FORMS =================
+   (YOUR ORIGINAL CODE PRESERVED)
+========================================================= */
+
+form {
+    background: #fff;
+    padding: 20px;
+    width: 300px;
+    margin: auto;
+}
+
+input, button, select {
+    margin: 5px;
+    padding: 8px;
+    width: 90%;
+}
+
+table{
+    width:100%;
+    border-collapse:collapse;
+    margin-top:15px;
+}
+
+th,td{
+    padding:10px;
+    border-bottom:1px solid #ddd;
+    text-align:left;
+}
+
+th{
+    background:#f4f6f9;
+}
+
+label{
+    display:block;
+    font-weight:bold;
+    margin-bottom:5px;
+    color:#333;
+}
+
+.form-grid div{
+    display:flex;
+    flex-direction:column;
+}
+
+.edit-card{
+    background:#fff;
+    padding:25px;
+    border-radius:10px;
+    box-shadow:0 6px 15px rgba(0,0,0,0.15);
+    margin-bottom:25px;
+}
+
+.edit-card input,
+.edit-card select{
+    width:100%;
+    padding:8px;
+    margin:6px 0 12px;
+}
+
+.edit-card button{
+    background:#2a5298;
+    color:#fff;
+    padding:10px;
+    border:none;
+    border-radius:6px;
+}
+
+.edit-btn{
+    background:#ffc107;
+    padding:6px 10px;
+    color:#000;
+    text-decoration:none;
+    border-radius:5px;
+    margin-right:6px;
+}
+
+.delete-btn{
+    background:#dc3545;
+    color:#fff;
+    padding:6px 10px;
+    border:none;
+    border-radius:5px;
+}
+
+/* =========================================================
+   PREMIUM DEFENCE INDUSTRY DARK THEME
+========================================================= */
+
+body{
+    font-family: 'Segoe UI', sans-serif;
+    background: linear-gradient(135deg,#0f172a,#111827,#1e293b);
+    color:#fff;
+    overflow-x:hidden;
+}
+
+/* ================= HEADER ================= */
+
+.header-banner{
+    position:relative;
+    height:260px;
+    overflow:hidden;
+}
+
+.banner-img{
+    width:100%;
+    height:260px;
+    object-fit:cover;
+    filter:brightness(40%);
+    transform:scale(1.05);
+}
+
+.banner-overlay{
+    position:absolute;
+    top:0;
+    left:0;
+    width:100%;
+    height:100%;
+    background:linear-gradient(to right, rgba(0,0,0,0.85), rgba(0,0,0,0.4));
+}
+
+.banner-content h1{
+    font-size:38px;
+    background:linear-gradient(90deg,#ffd700,#ffffff);
+    -webkit-background-clip:text;
+    -webkit-text-fill-color:transparent;
+    letter-spacing:2px;
+    text-transform:uppercase;
+}
+
+/* ================= NEWS TICKER ================= */
+
+.news-ticker{
+    background:#ffd700;
+    color:#000;
+    padding:8px 0;
+    font-weight:600;
+    overflow:hidden;
+    white-space:nowrap;
+}
+
+.news-ticker span{
+    display:inline-block;
+    padding-left:100%;
+    animation:scrollNews 18s linear infinite;
+}
+
+@keyframes scrollNews{
+    0%{ transform:translateX(0); }
+    100%{ transform:translateX(-100%); }
+}
+/* ================= Checking-Start================= */
+/* ================= NAVBAR ================= */
+
+.navbar{
+    background:rgba(0,0,0,0.85);
+    backdrop-filter:blur(10px);
+    border-bottom:1px solid rgba(255,215,0,0.3);
+}
+
+.navbar a, .dropbtn{
+    transition:all 0.3s ease;
+    position:relative;
+}
+
+.navbar a::after,
+.dropbtn::after{
+    content:'';
+    position:absolute;
+    width:0%;
+    height:2px;
+    bottom:-5px;
+    left:0;
+    background:#ffd700;
+    transition:0.3s;
+}
+
+.navbar a:hover::after,
+.dropbtn:hover::after{
+    width:100%;
+}
+
+.navbar a:hover,
+.dropbtn:hover{
+    color:#ffd700;
+}
+
+/* ================= GLASS CARDS ================= */
+
+.info-card{
+    background:rgba(255,255,255,0.05);
+    backdrop-filter:blur(15px);
+    border:1px solid rgba(255,255,255,0.1);
+    transition:all 0.4s ease;
+}
+
+.info-card:hover{
+    transform:translateY(-8px);
+    box-shadow:0 15px 40px rgba(0,0,0,0.6);
+    border-color:#ffd700;
+}
+
+/* ================= SLIDER ================= */
+
+.slider{
+    border-radius:15px;
+    box-shadow:0 20px 40px rgba(0,0,0,0.6);
+    transition:0.4s;
+}
+
+.slide{
+    transition:opacity 0.6s ease-in-out;
+}
+
+/* Arrow glow */
+.prev, .next{
+    transition:0.3s;
+}
+
+.prev:hover, .next:hover{
+    box-shadow:0 0 20px #ffd700;
+}
+
+/* ================= BUTTON EFFECTS ================= */
+
+.nav-right a{
+    transition:all 0.3s ease;
+}
+
+.nav-right a:hover{
+    transform:translateY(-3px);
+    box-shadow:0 10px 25px rgba(255,215,0,0.4);
+}
+
+/* ================= FOOTER ================= */
+
+.footer{
+    background:#0f172a;
+    border-top:1px solid rgba(255,215,0,0.2);
+}
+.info-card{
+    opacity:0;
+    transform:translateY(40px);
+    transition:0.6s ease;
+}
+/* ================= Checking-End================= */
+/* ================= NAVBAR ================= */
+
+.navbar{
+    background:#000;
+    display:flex;
+    align-items:center;
+    justify-content:flex-start;
+    padding:15px 60px;
+    gap:40px;
+    font-size:15px;
+}
+
+.navbar a,
+.dropbtn{
+    display:flex;
+    align-items:center;
+    gap:6px;
+    background:none;
+    border:none;
+    color:#fff;
+    font-size:15px;
+    font-weight:600;
+    cursor:pointer;
+}
+.dropdown{
+    position:relative;
+    display:flex;
+    align-items:center;
+}
+
+.navbar a:hover,
+.dropbtn:hover{
+    color:#ffd700;
+}
+/* Prevent navbar text wrapping */
+.navbar a,
+.dropbtn{
+    white-space: nowrap;
+}
+/* Home icon */
+.home-icon{
+    font-size:18px;
+    margin-right:10px;
+}
+
+/* Right side buttons */
+.nav-right{
+    margin-left:auto;
+    display:flex;
+    gap:15px;
+}
+
+/* DROPDOWN */
+
+.dropdown{
+    position:relative;
+}
+
+.dropdown-content{
+    display:none;
+    position:absolute;
+    background:#162338;
+    min-width:200px;
+    top:35px;
+    border-radius:5px;
+    box-shadow:0 6px 15px rgba(0,0,0,0.5);
+    z-index:1000;
+}
+
+.dropdown-content a{
+    display:block;
+    padding:10px 15px;
+    font-size:13px;
+}
+
+.dropdown-content a:hover{
+    background:#0f1a2b;
+}
+
+.dropdown:hover .dropdown-content{
+    display:block;
+}
+
+/* ================= MAIN LAYOUT ================= */
+
+.main-section{
+    display:flex;
+    gap:40px;
+    padding:50px 8%;
+    align-items:flex-start;
+}
+
+/* ================= SLIDER ================= */
+
+.slider-container{
+    position:relative;
+    width:70%;
+}
+
+.slider{
+    position:relative;
+    height:500px;
+    border-radius:12px;
+    overflow:hidden;
+}
+
+.slide{
+    width:100%;
+    height:500px;
+    object-fit:cover;
+    display:none;
+}
+
+.slide.active{
+    display:block;
+}
+
+.prev, .next{
+    position:absolute;
+    top:50%;
+    transform:translateY(-50%);
+    background:rgba(0,0,0,0.6);
+    color:#ffd700;
+    border:2px solid #ffd700;
+    width:45px;
+    height:45px;
+    border-radius:50%;
+    font-size:20px;
+    cursor:pointer;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    z-index:10;
+}
+
+.prev{ left:15px; }
+.next{ right:15px; }
+
+.prev:hover, .next:hover{
+    background:#ffd700;
+    color:#000;
+}
+
+/* ================= RIGHT PANEL ================= */
+
+.right-panel{
+    width:30%;
+    display:flex;
+    flex-direction:column;
+    gap:25px;
+}
+
+.info-card{
+    background:#162338;
+    padding:22px 25px;
+    border-radius:12px;
+    box-shadow:0 6px 18px rgba(0,0,0,0.4);
+    color:#fff;
+}
+
+.info-card h3{
+    color:#ffd700;
+    margin-bottom:15px;
+    font-size:18px;
+}
+
+.info-card ul{
+    list-style-position:inside;
+    padding-left:0;
+    line-height:1.7;
+}
+
+.info-card li{
+    margin-bottom:8px;
+    font-size:14px;
+}
+
+.no-bullets ul{
+    list-style:none;
+    padding-left:0;
+}
+
+.info-card a{
+    color:#ffd700;
+    text-decoration:none;
+}
+
+.info-card a:hover{
+    text-decoration:underline;
+}
+
+/* ================= FOOTER ================= */
+
+.footer{
+    background:#111c2e;
+    text-align:center;
+    padding:20px;
+    margin-top:40px;
+    font-size:14px;
+    color:#ccc;
+}
+
+/* ================= RESPONSIVE ================= */
+
+@media(max-width:1100px){
+    .main-section{
+        flex-direction:column;
+    }
+
+    .slider-container{
+        width:100%;
+    }
+
+    .slider,
+    .slide{
+        height:350px;
+    }
+
+    .right-panel{
+        width:100%;
+    }
+}
+
+.nav-right a{
+    padding:8px 18px;
+    border-radius:4px;
+    font-weight:600;
+}
+
+/* Login button */
+.nav-right a:first-child{
+    background:#1e3c72;
+    border:1px solid #ffd700;
+}
+
+/* Sign Up button */
+.nav-right a:last-child{
+    background:#ffd700;
+    color:#000;
+}
+
+.nav-right a:last-child:hover{
+    background:#e6c200;
+}
