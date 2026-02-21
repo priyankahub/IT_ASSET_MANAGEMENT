@@ -201,7 +201,7 @@ a:hover{
 
 <div class="card">
 
-<img src="../assets/indian_army_logo.png" class="logo" alt="Indian Army Logo">
+<img src="../images/indian_army_logo.png" class="logo" alt="Indian Army Logo">
 
 <h2>New User - Self Registration</h2>
 
