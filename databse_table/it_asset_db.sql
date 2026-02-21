@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Feb 20, 2026 at 12:23 PM
+-- Generation Time: Feb 21, 2026 at 05:26 PM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.1.25
 
@@ -20,6 +20,29 @@ SET time_zone = "+00:00";
 --
 -- Database: `it_asset_db`
 --
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `activity_logs`
+--
+
+CREATE TABLE `activity_logs` (
+  `id` int(11) NOT NULL,
+  `user_username` varchar(100) DEFAULT NULL,
+  `action_tag` varchar(100) DEFAULT NULL,
+  `description` text DEFAULT NULL,
+  `action_date` datetime DEFAULT current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `activity_logs`
+--
+
+INSERT INTO `activity_logs` (`id`, `user_username`, `action_tag`, `description`, `action_date`) VALUES
+(1, 'test_clerk', 'Test Action', 'Testing log entry', '2026-02-21 21:33:33'),
+(2, 'neha.verma', 'New User Creation', 'Requested CREATE for user: karan bisht (Army No: ik9876543)', '2026-02-21 21:37:13'),
+(3, 'neha.verma', 'Equipment Status Request', 'Registered Gun | Serial: 87654 | Requested Status: Under-Maintenance', '2026-02-21 21:44:08');
 
 -- --------------------------------------------------------
 
@@ -82,6 +105,16 @@ CREATE TABLE `condemnation_requests` (
   `remarks` text DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+--
+-- Dumping data for table `condemnation_requests`
+--
+
+INSERT INTO `condemnation_requests` (`id`, `equipment_id`, `requested_by`, `request_date`, `status`, `approved_by`, `approval_date`, `remarks`) VALUES
+(1, 3, 'neha.verma', '2026-02-21', 'Pending', NULL, NULL, NULL),
+(6, 5, 'sneha.kapoor', '2026-02-21', 'Pending', NULL, NULL, NULL),
+(7, 8, 'sneha.kapoor', '2026-02-21', 'Pending', NULL, NULL, NULL),
+(8, 9, 'neha.verma', '2026-02-21', 'Pending', NULL, NULL, NULL);
+
 -- --------------------------------------------------------
 
 --
@@ -121,7 +154,7 @@ CREATE TABLE `equipment` (
   `purchase_date` date DEFAULT NULL,
   `warranty_end` date DEFAULT NULL,
   `cost` decimal(10,5) DEFAULT NULL,
-  `status` enum('Serviceable','Under Repair','Unserviceable','Condemned') DEFAULT NULL
+  `status` enum('Serviceable','Non-Serviceable','Under-Maintenance','Condemned','Pending Approval') NOT NULL DEFAULT 'Serviceable'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
@@ -133,9 +166,62 @@ INSERT INTO `equipment` (`id`, `type`, `make`, `model`, `serial_no`, `purchase_d
 (2, 'Eqip1', 'France', 'F002', 'F23123', '2023-06-30', '2026-01-29', 99999.99999, 'Condemned'),
 (3, 'Gun', 'China', 'CH991', 'CH76552', '2026-01-01', '2026-01-31', 99999.99999, 'Serviceable'),
 (4, 'Tank', '342345', 'asdf', '2134', '2026-01-01', '2026-01-30', 98797.00000, 'Condemned'),
-(5, 'Tank', '342345', 'asdf', '2134', '2026-01-01', '2026-01-30', 98797.00000, 'Serviceable'),
+(5, 'Tank', '342345', 'asdf', '21345', '2026-01-01', '2026-01-30', 98797.00000, 'Serviceable'),
 (6, 'Tank', 'America', 'AM00987', '3456789tyu', '2026-01-01', '2026-02-28', 2365.00000, 'Condemned'),
-(7, 'Bomb', 'Russia', 'RS92892', '678tyu', '2025-12-31', '2026-02-28', 10000.00000, 'Condemned');
+(7, 'Bomb', 'Russia', 'RS92892', '678tyu', '2025-12-31', '2026-02-28', 10000.00000, 'Condemned'),
+(8, 'Tank', 'France', 'IND002', '1234t5y5', '2026-02-10', '2026-06-25', 99999.99999, 'Serviceable'),
+(9, 'Bomb', '2345', '234', '2334', '2026-02-05', '2026-03-06', 99999.99999, 'Serviceable'),
+(10, 'Tank', 'Indian', 'IND003', '12345667890', '2026-02-04', '2026-06-09', 99999.99999, 'Serviceable'),
+(11, 'Gun', 'tyui', 'werty', 'qwer6', '2023-02-07', '2026-02-21', 99999.99999, 'Serviceable'),
+(12, 'Gun', 'China', 'fgh', '8765432', '2022-02-08', '2026-02-21', 43556.00000, 'Pending Approval'),
+(13, 'Gun', 'uytre', 'wer', '87654', '2026-02-12', '2026-02-27', 99999.99999, 'Pending Approval');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `equipment_status_requests`
+--
+
+CREATE TABLE `equipment_status_requests` (
+  `id` int(11) NOT NULL,
+  `equipment_id` int(11) NOT NULL,
+  `requested_status` enum('Non-Serviceable','Under-Maintenance','Condemned') NOT NULL,
+  `requested_by` varchar(100) DEFAULT NULL,
+  `request_date` date DEFAULT NULL,
+  `status` enum('Pending','Approved','Rejected') DEFAULT 'Pending',
+  `approved_by` varchar(100) DEFAULT NULL,
+  `approval_date` date DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `equipment_status_requests`
+--
+
+INSERT INTO `equipment_status_requests` (`id`, `equipment_id`, `requested_status`, `requested_by`, `request_date`, `status`, `approved_by`, `approval_date`) VALUES
+(1, 12, 'Non-Serviceable', 'neha.verma', '2026-02-21', 'Pending', NULL, NULL),
+(2, 13, 'Under-Maintenance', 'neha.verma', '2026-02-21', 'Pending', NULL, NULL);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `equipment_types`
+--
+
+CREATE TABLE `equipment_types` (
+  `id` int(11) NOT NULL,
+  `type_name` varchar(100) NOT NULL,
+  `is_active` tinyint(4) DEFAULT 1
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `equipment_types`
+--
+
+INSERT INTO `equipment_types` (`id`, `type_name`, `is_active`) VALUES
+(1, 'Gun', 1),
+(2, 'Tank', 1),
+(3, 'Bomb', 1),
+(4, 'Artillery', 1);
 
 -- --------------------------------------------------------
 
@@ -208,7 +294,8 @@ INSERT INTO `users` (`id`, `name`, `username`, `password`, `rank`, `army_no`, `c
 (8, 'Rahul Mehta', 'rahul.mehta', 'User@1A', 'USER', 'OR-4001', '2026-02-20 05:30:32'),
 (9, 'Priya Nair', 'priya.nair', 'User@2A', 'USER', 'OR-4002', '2026-02-20 05:30:32'),
 (10, 'Arjun Singh', 'arjun.singh', 'User@3A', 'USER', 'OR-4003', '2026-02-20 05:30:32'),
-(14, 'pryy', 'pryy', 'Password@#123', 'CO', 'pryy', '2026-02-20 10:48:11');
+(14, 'pryy', 'pryy', 'Password@#123', 'CO', 'pryy', '2026-02-20 10:48:11'),
+(15, 'Himanshu Negi', 'Himnegi', 'Password@3123456', 'USER', 'JK098765L', '2026-02-21 12:29:03');
 
 -- --------------------------------------------------------
 
@@ -241,11 +328,19 @@ INSERT INTO `user_requests` (`id`, `request_type`, `full_name`, `username`, `pas
 (2, 'CREATE', 'karan bisht', 'bisht001', 'bisht001', 'ki98765', 'ADMIN', 'clerk', '2026-02-18', 'Rejected', 'admin', '2026-02-18', 'Retired'),
 (4, 'CREATE', 'Priyanka Rawat', 'priyanka.rawat', 'Priyanka#27', 'COL098765', 'CLERK', 'SELF', '2026-02-20', 'Approved', 'amit.sharma', '2026-02-20', NULL),
 (5, 'CREATE', 'pryy', 'pr', 'Password@#123', 'pryy', 'CO', 'amit.sharma', '2026-02-20', 'Approved', 'amit.sharma', '2026-02-20', NULL),
-(6, 'CREATE', 'priy', 'pri', 'Password@#123', 'priy', 'USER', 'amit.sharma', '2026-02-20', 'Approved', 'amit.sharma', '2026-02-20', NULL);
+(6, 'CREATE', 'priy', 'pri', 'Password@#123', 'priy', 'USER', 'amit.sharma', '2026-02-20', 'Approved', 'amit.sharma', '2026-02-20', NULL),
+(7, 'CREATE', 'Himanshu Negi', 'Himnegi', 'Password@3123456', 'JK098765L', 'USER', 'SELF', '2026-02-21', 'Approved', 'amit.sharma', '2026-02-21', NULL),
+(8, 'CREATE', 'karan bisht', 'kra.dishtt', 'Password@#123', 'ik9876543', 'CO', 'neha.verma', '2026-02-21', 'Pending', NULL, NULL, NULL);
 
 --
 -- Indexes for dumped tables
 --
+
+--
+-- Indexes for table `activity_logs`
+--
+ALTER TABLE `activity_logs`
+  ADD PRIMARY KEY (`id`);
 
 --
 -- Indexes for table `allocation`
@@ -276,7 +371,23 @@ ALTER TABLE `disposal`
 -- Indexes for table `equipment`
 --
 ALTER TABLE `equipment`
-  ADD PRIMARY KEY (`id`);
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `serial_no` (`serial_no`),
+  ADD UNIQUE KEY `serial_no_2` (`serial_no`);
+
+--
+-- Indexes for table `equipment_status_requests`
+--
+ALTER TABLE `equipment_status_requests`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `equipment_id` (`equipment_id`);
+
+--
+-- Indexes for table `equipment_types`
+--
+ALTER TABLE `equipment_types`
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `type_name` (`type_name`);
 
 --
 -- Indexes for table `maintenance`
@@ -313,6 +424,12 @@ ALTER TABLE `user_requests`
 --
 
 --
+-- AUTO_INCREMENT for table `activity_logs`
+--
+ALTER TABLE `activity_logs`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+
+--
 -- AUTO_INCREMENT for table `allocation`
 --
 ALTER TABLE `allocation`
@@ -328,7 +445,7 @@ ALTER TABLE `audit_logs`
 -- AUTO_INCREMENT for table `condemnation_requests`
 --
 ALTER TABLE `condemnation_requests`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- AUTO_INCREMENT for table `disposal`
@@ -340,7 +457,19 @@ ALTER TABLE `disposal`
 -- AUTO_INCREMENT for table `equipment`
 --
 ALTER TABLE `equipment`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
+
+--
+-- AUTO_INCREMENT for table `equipment_status_requests`
+--
+ALTER TABLE `equipment_status_requests`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+
+--
+-- AUTO_INCREMENT for table `equipment_types`
+--
+ALTER TABLE `equipment_types`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
 
 --
 -- AUTO_INCREMENT for table `maintenance`
@@ -358,13 +487,13 @@ ALTER TABLE `maintenance_schedule`
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
 
 --
 -- AUTO_INCREMENT for table `user_requests`
 --
 ALTER TABLE `user_requests`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- Constraints for dumped tables
@@ -375,6 +504,12 @@ ALTER TABLE `user_requests`
 --
 ALTER TABLE `allocation`
   ADD CONSTRAINT `allocation_ibfk_1` FOREIGN KEY (`equipment_id`) REFERENCES `equipment` (`id`);
+
+--
+-- Constraints for table `equipment_status_requests`
+--
+ALTER TABLE `equipment_status_requests`
+  ADD CONSTRAINT `equipment_status_requests_ibfk_1` FOREIGN KEY (`equipment_id`) REFERENCES `equipment` (`id`);
 
 --
 -- Constraints for table `maintenance`
