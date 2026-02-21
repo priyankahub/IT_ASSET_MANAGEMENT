@@ -219,7 +219,7 @@ body::before{
 <?php if ($r === 'ADMIN') { ?>
     <div class="card">
         <h3>Equipment Management</h3>
-        <a href="admin/equipment_master.php">Equipment Master</a>
+        <a href="admin/equipment_master.php">New Equipment Registration</a>
         <a href="admin/disposal.php">Direct Condemnation</a>
     </div>
 
@@ -257,8 +257,18 @@ body::before{
 
 <?php if ($r === 'CLERK') { ?>
     <div class="card">
+        <h3>Equipment Registration</h3>
+        <a href="admin/equipment_master.php">New Equipment Registration</a>
+    </div>
+
+    <div class="card">
         <h3>Equipment Allocation</h3>
         <a href="clerk/allocation.php">Issue / Return Equipment</a>
+    </div>
+
+    <div class="card">
+        <h3>Condemnation</h3>
+        <a href="clerk/condemn_request.php">Raise Condemnation Request</a>
     </div>
 
     <div class="card">
@@ -267,10 +277,7 @@ body::before{
         <a href="clerk/my_activity.php">My Activity Log</a>
     </div>
 
-    <div class="card">
-        <h3>Condemnation</h3>
-        <a href="clerk/condemn_request.php">Raise Condemnation Request</a>
-    </div>
+    
 <?php } ?>
 
 <?php if ($r === 'USER') { ?>

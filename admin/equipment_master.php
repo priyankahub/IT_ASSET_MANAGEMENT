@@ -2,7 +2,8 @@
 session_start();
 include("../config/db.php");
 
-if (!isset($_SESSION['rank']) || $_SESSION['rank'] != 'ADMIN') {
+if (!isset($_SESSION['rank']) || 
+    !in_array($_SESSION['rank'], ['ADMIN','CLERK'])) {
     die("Access Denied");
 }
 
