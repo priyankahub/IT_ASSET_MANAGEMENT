@@ -350,3 +350,12 @@ body.homepage .footer{
     background:#0a1425;
     margin-top:40px;
 }
+/* Login page title */
+.login-title {
+    font-family: 'Cinzel', serif;   /* Professional institutional look */
+    font-size: 32px;
+    font-weight: 600;
+    letter-spacing: 1px;
+    text-transform: capitalize;
+    color: #1a1a1a;   /* Use white if dark background */
+}

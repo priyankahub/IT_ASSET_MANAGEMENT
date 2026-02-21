@@ -110,10 +110,26 @@ session_start();
         <div class="info-card">
             <h3>Useful Links</h3>
             <ul>
-                <li><a href="#">Indian Army Official Website</a></li>
-                <li><a href="#">Internal Asset Portal</a></li>
-                <li><a href="#">Training & Doctrine</a></li>
-                <li><a href="#">Help Desk & Support</a></li>
+                <li>
+                    <a href="https://indianarmy.nic.in/" target="_blank">
+                        Indian Army Official Website
+                    </a>
+                </li>
+                <li>
+                    <a href="https://www.rashtriyamilitaryschools.edu.in/" target="_blank">
+                        Rashtriya Military School
+                    </a>
+                </li>
+                <li>
+                    <a href="https://indianarmy.nic.in/Training/training-site-main/training-teams" target="_blank">
+                        Training & Doctrine
+                    </a>
+                </li>
+                <li>
+                    <a href="https://indianarmy.nic.in/honours/honours-awards-site-main/honorary-commission" target="_blank">
+                        Honorary Commissions
+                    </a>
+                </li>
             </ul>
         </div>
 
