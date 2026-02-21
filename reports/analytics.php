@@ -68,7 +68,17 @@ body{
     padding:20px;
     border-radius:6px;
     border-left:4px solid #d4af37;
+    transition:all 0.3s ease;
+    position:relative;
 }
+
+.kpi:hover{
+    transform:translateY(-8px);
+    box-shadow:0 0 20px rgba(212,175,55,0.6),
+               0 15px 35px rgba(0,0,0,0.7);
+    background:#1d3a5c;
+}
+
 
 .kpi-title{
     font-size:13px;
@@ -92,6 +102,15 @@ body{
     background:#162f4f;
     padding:20px;
     border-radius:6px;
+    transition:all 0.3s ease;
+    position:relative;
+}
+
+.chart-box:hover{
+    transform:translateY(-8px);
+    box-shadow:0 0 25px rgba(212,175,55,0.5),
+               0 15px 35px rgba(0,0,0,0.7);
+    background:#1d3a5c;
 }
 
 canvas{
