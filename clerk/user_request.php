@@ -54,95 +54,152 @@ if (isset($_POST['submit_request'])) {
     }
 }
 ?>
-
-<!DOCTYPE html>
-<html>
-<head>
-<title>User Management Request</title>
-
 <style>
 body{
     margin:0;
-    font-family:Arial,sans-serif;
-    background:linear-gradient(135deg,#1e3c72,#2a5298);
+    font-family:Segoe UI, sans-serif;
+    background:#0f223a;
+    color:#f5f7fa;
 }
 
+/* HEADER */
+.header{
+    padding:25px 0;
+    font-size:22px;
+    font-weight:600;
+    background:#122944;
+    border-bottom:3px solid #d4af37;
+    text-align:center;
+}
+
+/* CONTAINER */
 .container{
     width:95%;
-    max-width:900px;
-    margin:40px auto;
+    max-width:950px;
+    margin:50px auto;
 }
 
+/* CARD */
 .card{
-    background:#fff;
+    background:#162f4f;
     padding:30px;
-    border-radius:12px;
-    box-shadow:0 6px 20px rgba(0,0,0,.2);
-    margin-bottom:25px;
+    border-radius:6px;
+    border-left:4px solid #d4af37;
+    margin-bottom:30px;
+    transition:all 0.35s ease;
+    position:relative;
+    overflow:hidden;
 }
 
+/* Lift + Glow */
+.card:hover{
+    transform:translateY(-10px) scale(1.01);
+    background:#1d3a5c;
+    box-shadow:
+        0 0 25px rgba(212,175,55,0.6),
+        0 20px 40px rgba(0,0,0,0.75);
+}
+
+/* Subtle highlight sweep animation */
+.card::before{
+    content:"";
+    position:absolute;
+    top:0;
+    left:-100%;
+    width:100%;
+    height:100%;
+    background:linear-gradient(
+        120deg,
+        transparent,
+        rgba(255,255,255,0.08),
+        transparent
+    );
+    transition:0.6s;
+}
+
+.card:hover::before{
+    left:100%;
+}
+
+/* TITLE */
 h2{
-    color:#2a5298;
+    color:#ffffff;
     margin-bottom:20px;
+    font-weight:600;
 }
 
+/* LABELS */
 label{
-    font-weight:bold;
+    font-size:13px;
+    font-weight:600;
+    color:#b8c6db;
 }
 
-input, select{
+/* INPUT FIELDS */
+input,
+select{
     width:100%;
     padding:10px;
     margin-top:6px;
     margin-bottom:15px;
-    border-radius:6px;
-    border:1px solid #ccc;
+    border-radius:4px;
+    border:1px solid #2c4c73;
+    background:#0f223a;
+    color:#ffffff;
 }
 
+input:focus,
+select:focus{
+    border-color:#d4af37;
+    outline:none;
+}
+
+/* BUTTON */
 button{
     width:100%;
-    padding:10px;
-    background:#2a5298;
-    color:#fff;
+    padding:12px;
+    background:#d4af37;
+    color:#0f223a;
     border:none;
-    border-radius:6px;
+    border-radius:4px;
+    font-weight:600;
     cursor:pointer;
-    font-weight:bold;
+    transition:.3s;
 }
 
 button:hover{
-    background:#1e3c72;
+    background:#c39c2d;
 }
 
+/* SUCCESS MESSAGE */
 .success{
-    background:#d4edda;
-    color:#155724;
-    padding:10px;
-    border-radius:6px;
-    margin-bottom:15px;
+    background:#1e4d2b;
+    color:#a8e6a1;
+    padding:12px;
+    border-radius:4px;
+    margin-bottom:20px;
 }
 
+/* FOOTER ACTIONS */
 .footer-actions{
     text-align:center;
-    margin-top:20px;
+    margin-top:30px;
 }
 
 .footer-actions a{
-    color:#fff;
     text-decoration:none;
+    padding:12px 24px;
+    background:#d4af37;
+    color:#0f223a;
+    border-radius:6px;
+    font-weight:600;
     margin:0 10px;
-    padding:8px 15px;
-    background:rgba(255,255,255,0.2);
-    border-radius:20px;
 }
 
 .footer-actions a:hover{
-    background:rgba(255,255,255,0.35);
+    background:#c39c2d;
 }
 </style>
-</head>
-
-<body>
 
 <div class="container">
 
