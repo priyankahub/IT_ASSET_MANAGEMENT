@@ -39,7 +39,6 @@ if (isset($_POST['add'])) {
     }
 }
 ?>
-
 <!DOCTYPE html>
 <html>
 <head>
@@ -48,36 +47,51 @@ if (isset($_POST['add'])) {
 <style>
 body{
     margin:0;
-    font-family: 'Segoe UI', sans-serif;
-    background: linear-gradient(135deg,#1e3c72,#2a5298);
+    font-family:Segoe UI, sans-serif;
+    background:#0f223a;
+    color:#f5f7fa;
 }
 
+/* HEADER */
+.header{
+    padding:25px 0;
+    font-size:22px;
+    font-weight:600;
+    background:#122944;
+    border-bottom:3px solid #d4af37;
+    text-align:center;
+}
+
+/* CONTAINER */
 .container{
     width:95%;
-    max-width:1150px;
-    margin:40px auto;
+    max-width:1300px;
+    margin:50px auto;
 }
 
+/* CARD */
 .card{
-    background:#ffffff;
+    background:#162f4f;
     padding:30px;
-    border-radius:12px;
-    box-shadow:0 8px 20px rgba(0,0,0,.15);
-    margin-bottom:30px;
+    border-radius:6px;
+    margin-bottom:40px;
+    border-left:4px solid #d4af37;
 }
 
-.page-title{
-    font-size:24px;
+/* TITLES */
+.page-title,
+.table-title{
+    font-size:20px;
     font-weight:600;
-    color:#2a5298;
     margin-bottom:20px;
+    color:#ffffff;
 }
 
 /* FORM GRID */
 .form-grid{
     display:grid;
     grid-template-columns:repeat(2,1fr);
-    gap:20px;
+    gap:25px;
 }
 
 .form-group{
@@ -87,67 +101,60 @@ body{
 
 .form-group label{
     font-size:13px;
-    font-weight:600;
     margin-bottom:6px;
-    color:#333;
+    color:#b8c6db;
 }
 
 .form-group input{
     padding:10px;
-    border-radius:6px;
-    border:1px solid #ccc;
+    border-radius:4px;
+    border:1px solid #2c4c73;
+    background:#0f223a;
+    color:#ffffff;
     font-size:14px;
-    transition:.3s;
 }
 
 .form-group input:focus{
-    border-color:#2a5298;
     outline:none;
-    box-shadow:0 0 4px rgba(42,82,152,.4);
+    border-color:#d4af37;
 }
 
+/* BUTTON */
 .submit-btn{
-    margin-top:20px;
-    padding:12px;
-    width:200px;
+    margin-top:25px;
+    padding:12px 20px;
+    width:220px;
     border:none;
-    border-radius:6px;
-    background:#2a5298;
-    color:white;
+    border-radius:4px;
+    background:#d4af37;
+    color:#0f223a;
     font-weight:600;
     cursor:pointer;
     transition:.3s;
 }
 
 .submit-btn:hover{
-    background:#1e3c72;
+    background:#c39c2d;
 }
 
 /* MESSAGE STYLES */
 .success{
     padding:12px;
-    border-radius:6px;
-    background:#e8f5e9;
-    color:#2e7d32;
-    margin-bottom:15px;
+    border-radius:4px;
+    background:#1b5e20;
+    color:#a5d6a7;
+    margin-bottom:20px;
 }
 
 .error{
     padding:12px;
-    border-radius:6px;
-    background:#fdecea;
-    color:#c62828;
-    margin-bottom:15px;
+    border-radius:4px;
+    background:#7f1d1d;
+    color:#ffb3b3;
+    margin-bottom:20px;
 }
 
 /* TABLE */
-.table-title{
-    font-size:20px;
-    font-weight:600;
-    color:#2a5298;
-    margin-bottom:15px;
-}
-
 table{
     width:100%;
     border-collapse:collapse;
@@ -155,50 +162,58 @@ table{
 }
 
 th{
-    background:#f4f6f9;
+    background:#122944;
     padding:12px;
     text-align:left;
     font-weight:600;
+    color:#f5f7fa;
 }
 
 td{
     padding:12px;
-    border-bottom:1px solid #eee;
+    border-bottom:1px solid #2c4c73;
 }
 
 tr:hover{
-    background:#f9fbff;
+    background:#1a355a;
 }
 
 .status-serviceable{
-    color:#2e7d32;
+    color:#6dd3ce;
     font-weight:600;
 }
 
 .status-condemned{
-    color:#c62828;
+    color:#ff8fa3;
     font-weight:600;
 }
 
+/* BACK BUTTON */
 .back{
     text-align:center;
-    margin-top:20px;
+    margin-top:40px;
 }
 
 .back a{
     text-decoration:none;
-    padding:10px 18px;
-    background:rgba(255,255,255,.25);
-    color:white;
-    border-radius:20px;
+    padding:12px 24px;
+    background:#d4af37;
+    color:#0f223a;
+    border-radius:4px;
+    font-weight:600;
 }
+
 .back a:hover{
-    background:rgba(255,255,255,.4);
+    background:#c39c2d;
 }
 </style>
 </head>
 
 <body>
+
+<div class="header">
+INF BN – EQUIPMENT REGISTRATION CONTROL
+</div>
 
 <div class="container">
 
@@ -299,7 +314,7 @@ echo "<tr>
 </div>
 
 <div class="back">
-<a href="../dashboard.php">⬅ Back to Dashboard</a>
+<a href="../dashboard.php">Return to Dashboard</a>
 </div>
 
 </div>
