@@ -117,6 +117,38 @@ body::before{
     transition:0.4s ease;
     border:1px solid rgba(0,198,255,0.25);
     min-height:220px;
+    position:relative;
+    overflow:hidden;
+}
+
+/* Lift + Glow */
+.card:hover{
+    transform:translateY(-12px) scale(1.02);
+    box-shadow:
+        0 0 30px rgba(0,198,255,0.6),
+        0 25px 60px rgba(0,0,0,0.9);
+    border-color:#00c6ff;
+}
+
+/* Sweep Highlight Animation */
+.card::before{
+    content:"";
+    position:absolute;
+    top:0;
+    left:-100%;
+    width:100%;
+    height:100%;
+    background:linear-gradient(
+        120deg,
+        transparent,
+        rgba(255,255,255,0.08),
+        transparent
+    );
+    transition:0.7s;
+}
+
+.card:hover::before{
+    left:100%;
 }
 /* ===== FULL WIDTH CARD (2nd Row Stretch) ===== */
 /* ===========================
@@ -149,11 +181,6 @@ body::before{
     justify-content:center;
     align-items:center;
     text-align:center;
-}
-.card:hover{
-    transform:translateY(-10px);
-    box-shadow:0 25px 60px rgba(0,0,0,0.9);
-    border-color:#00c6ff;
 }
 
 .card h3{

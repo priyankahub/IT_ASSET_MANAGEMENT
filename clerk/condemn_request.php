@@ -67,89 +67,207 @@ exit;
 <title>Raise Condemnation Request</title>
 
 <style>
+
+/* ================= BODY ================= */
 body{
     margin:0;
-    font-family:Segoe UI, sans-serif;
-    background:#0f223a;
+    font-family:'Segoe UI',sans-serif;
+    background:
+        radial-gradient(circle at top left,#0f2027,#203a43 60%,#0a1923);
     color:#f5f7fa;
 }
-.header{
-    padding:25px 0;
-    font-size:22px;
-    font-weight:600;
-    background:#122944;
-    border-bottom:3px solid #d4af37;
-    text-align:center;
+
+/* Subtle Grid Overlay */
+body::before{
+    content:"";
+    position:fixed;
+    width:100%;
+    height:100%;
+    background-image:
+        linear-gradient(rgba(212,175,55,0.05) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(212,175,55,0.05) 1px, transparent 1px);
+    background-size:40px 40px;
+    pointer-events:none;
 }
+
+/* ================= RIBBON ================= */
+.ribbon{
+    width:100%;
+    background:#0c1f33;
+    border-bottom:3px solid #d4af37;
+    padding:18px 0;
+    text-align:center;
+    box-shadow:0 5px 25px rgba(0,0,0,0.6);
+}
+
+.ribbon h1{
+    margin:0;
+    font-size:22px;
+    letter-spacing:2px;
+    font-weight:700;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    gap:18px;
+}
+
+.ribbon img{
+    height:45px;
+    transition:0.3s ease;
+}
+
+.ribbon img:hover{
+    transform:scale(1.1);
+}
+
+/* ================= CONTAINER ================= */
 .container{
     width:95%;
     max-width:1200px;
-    margin:40px auto;
+    margin:60px auto;
 }
+
+/* ================= CARD ================= */
 .card{
-    background:#162f4f;
-    padding:30px;
-    border-radius:6px;
+    background:rgba(10,25,40,0.92);
+    padding:35px;
+    border-radius:18px;
     border-left:4px solid #d4af37;
-    margin-bottom:40px;
+    margin-bottom:50px;
+    box-shadow:0 15px 40px rgba(0,0,0,0.6);
+    transition:0.4s ease;
+    position:relative;
+    overflow:hidden;
 }
+
+/* Lift + Glow */
 .card:hover{
-    transform:translateY(-5px);
-    background:#1d3a5c;
-    box-shadow:0 0 20px rgba(212,175,55,0.5);
+    transform:translateY(-12px) scale(1.01);
+    box-shadow:
+        0 0 30px rgba(212,175,55,0.6),
+        0 25px 60px rgba(0,0,0,0.9);
 }
+
+/* Sweep Highlight */
+.card::before{
+    content:"";
+    position:absolute;
+    top:0;
+    left:-100%;
+    width:100%;
+    height:100%;
+    background:linear-gradient(
+        120deg,
+        transparent,
+        rgba(255,255,255,0.08),
+        transparent
+    );
+    transition:0.7s;
+}
+
+.card:hover::before{
+    left:100%;
+}
+
+/* ================= TITLES ================= */
 h2{
-    margin-bottom:20px;
+    margin-bottom:25px;
+    font-size:22px;
+    letter-spacing:1px;
 }
+
+/* ================= CHECKBOX ITEMS ================= */
 .checkbox-item{
-    padding:8px 0;
-    border-bottom:1px solid #2c4c73;
+    padding:12px 10px;
+    border-bottom:1px solid rgba(255,255,255,0.05);
+    transition:0.3s ease;
 }
+
+.checkbox-item:hover{
+    background:rgba(212,175,55,0.08);
+    box-shadow:inset 0 0 10px rgba(212,175,55,0.2);
+    transform:translateX(5px);
+}
+
+/* ================= BUTTON ================= */
 button{
-    margin-top:20px;
-    padding:12px;
+    margin-top:25px;
+    padding:14px;
     width:100%;
     background:#d4af37;
     color:#0f223a;
     border:none;
-    border-radius:6px;
-    font-weight:600;
+    border-radius:10px;
+    font-weight:700;
     cursor:pointer;
+    transition:0.3s ease;
+    letter-spacing:1px;
 }
+
 button:hover{
     background:#c39c2d;
+    box-shadow:0 0 20px rgba(212,175,55,0.7);
+    transform:translateY(-3px);
 }
+
+/* ================= TABLE ================= */
 table{
     width:100%;
     border-collapse:collapse;
+    overflow:hidden;
+    border-radius:12px;
 }
-th,td{
-    padding:10px;
-    border:1px solid #2c4c73;
-    text-align:center;
-}
+
 th{
     background:#122944;
+    padding:14px;
     color:#d4af37;
-}
-.footer{
-    text-align:center;
-}
-.footer a{
-    text-decoration:none;
-    padding:12px 24px;
-    background:#d4af37;
-    color:#0f223a;
-    border-radius:6px;
     font-weight:600;
 }
+
+td{
+    padding:14px;
+    border-bottom:1px solid rgba(255,255,255,0.05);
+    transition:0.3s ease;
+}
+
+tr:hover{
+    background:rgba(212,175,55,0.08);
+    box-shadow:inset 0 0 15px rgba(212,175,55,0.2);
+}
+
+/* ================= FOOTER ================= */
+.footer{
+    text-align:center;
+    margin-top:50px;
+}
+
+.footer a{
+    text-decoration:none;
+    padding:14px 30px;
+    background:#d4af37;
+    color:#0f223a;
+    border-radius:30px;
+    font-weight:bold;
+    transition:0.3s ease;
+}
+
+.footer a:hover{
+    background:#c39c2d;
+    box-shadow:0 5px 20px rgba(212,175,55,0.7);
+}
+
 </style>
 </head>
 
 <body>
 
-<div class="header">
-INF BN – RAISE CONDEMNATION REQUEST
+<div class="ribbon">
+    <h1>
+        <img src="../images/logo.jpg">
+        INF BN – RAISE CONDEMNATION REQUEST
+        <img src="../images/logo.jpg">
+    </h1>
 </div>
 
 <div class="container">
