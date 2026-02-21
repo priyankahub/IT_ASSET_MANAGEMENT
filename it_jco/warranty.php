@@ -24,48 +24,143 @@ $result = mysqli_query($conn, "
 <style>
 body{
     margin:0;
-    font-family:Arial,sans-serif;
-    background:linear-gradient(135deg,#1e3c72,#2a5298);
+    font-family:Segoe UI, sans-serif;
+    background:#0f223a;
+    color:#f5f7fa;
 }
+
+/* HEADER */
+.header{
+    padding:25px 0;
+    font-size:22px;
+    font-weight:600;
+    background:#122944;
+    border-bottom:3px solid #d4af37;
+    text-align:center;
+}
+
+/* CONTAINER */
 .container{
     width:95%;
-    max-width:1000px;
-    margin:40px auto;
+    max-width:1100px;
+    margin:50px auto;
 }
+
+/* CARD */
 .card{
-    background:#fff;
-    padding:25px;
-    border-radius:10px;
-    box-shadow:0 6px 15px rgba(0,0,0,.2);
+    background:#162f4f;
+    padding:30px;
+    border-radius:6px;
+    border-left:4px solid #d4af37;
+    transition:all 0.35s ease;
+    position:relative;
+    overflow:hidden;
 }
-h2{color:#2a5298;}
+
+/* Lift + Glow */
+.card:hover{
+    transform:translateY(-10px) scale(1.01);
+    background:#1d3a5c;
+    box-shadow:
+        0 0 25px rgba(212,175,55,0.6),
+        0 20px 40px rgba(0,0,0,0.75);
+}
+
+/* Subtle sweep animation */
+.card::before{
+    content:"";
+    position:absolute;
+    top:0;
+    left:-100%;
+    width:100%;
+    height:100%;
+    background:linear-gradient(
+        120deg,
+        transparent,
+        rgba(255,255,255,0.08),
+        transparent
+    );
+    transition:0.6s;
+}
+
+.card:hover::before{
+    left:100%;
+}
+
+/* TITLE */
+h2{
+    margin-bottom:20px;
+    font-weight:600;
+}
+
+/* TABLE */
 table{
     width:100%;
     border-collapse:collapse;
     margin-top:20px;
 }
-th,td{
-    padding:10px;
-    border-bottom:1px solid #ddd;
+
+th{
+    background:#122944;
+    padding:12px;
+    text-align:left;
+    font-weight:600;
 }
-th{background:#f4f6f9;}
-.expired{color:red;font-weight:bold;}
-.warning{color:#e67e22;font-weight:bold;}
-.ok{color:green;}
+
+td{
+    padding:12px;
+    border-bottom:1px solid #2c4c73;
+}
+
+tr:hover{
+    background:#1a355a;
+}
+
+/* STATUS COLORS */
+.expired{
+    color:#ff8fa3;
+    font-weight:600;
+}
+
+.warning{
+    color:#ffd166;
+    font-weight:600;
+}
+
+.ok{
+    color:#6dd3ce;
+    font-weight:600;
+}
+
+/* FOOTER */
 .back{
     text-align:center;
-    margin-top:25px;
+    margin-top:40px;
 }
+
 .back a{
-    color:#fff;
     text-decoration:none;
+    padding:12px 24px;
+    background:#d4af37;
+    color:#0f223a;
+    border-radius:6px;
+    font-weight:600;
+}
+
+.back a:hover{
+    background:#c39c2d;
 }
 </style>
 </head>
 
 <body>
 
+<div class="header">
+INF BN – WARRANTY MONITORING CONTROL
+</div>
+
 <div class="container">
+
 <div class="card">
 
 <h2>Warranty Tracking</h2>
@@ -104,7 +199,7 @@ while($row=mysqli_fetch_assoc($result)){
 </div>
 
 <div class="back">
-<a href="../dashboard.php">⬅ Back to Dashboard</a>
+<a href="../dashboard.php">Return to Dashboard</a>
 </div>
 
 </div>
