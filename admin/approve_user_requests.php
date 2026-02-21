@@ -115,78 +115,200 @@ $requests = mysqli_query($conn,"
 <title>User Requests Approval</title>
 
 <style>
+
+/* ================= BODY ================= */
 body{
     margin:0;
-    font-family:Arial,sans-serif;
-    background:linear-gradient(135deg,#1e3c72,#2a5298);
+    font-family:'Segoe UI',sans-serif;
+    background:
+        radial-gradient(circle at top left,#0f2027,#203a43 60%,#0a1923);
+    color:#fff;
 }
+
+/* Tech Grid */
+body::before{
+    content:"";
+    position:fixed;
+    width:100%;
+    height:100%;
+    background-image:
+        linear-gradient(rgba(0,198,255,0.05) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(0,198,255,0.05) 1px, transparent 1px);
+    background-size:40px 40px;
+    pointer-events:none;
+}
+
+/* ================= CONTAINER ================= */
 .container{
     width:95%;
     max-width:1200px;
-    margin:40px auto;
+    margin:60px auto;
 }
+
+/* ================= CARD ================= */
 .card{
-    background:#fff;
-    padding:25px;
-    border-radius:10px;
-    box-shadow:0 6px 15px rgba(0,0,0,.2);
+    background:rgba(10,25,40,0.9);
+    padding:30px;
+    border-radius:16px;
+    box-shadow:0 15px 40px rgba(0,0,0,0.6);
+    border:1px solid rgba(0,198,255,0.3);
+    backdrop-filter:blur(8px);
+    transition:0.3s;
 }
+
+.card:hover{
+    box-shadow:0 20px 50px rgba(0,0,0,0.8);
+}
+
+/* ================= TITLE ================= */
 h2{
-    color:#2a5298;
+    color:#ffffff;
+    letter-spacing:1px;
 }
+
+/* ================= TABLE ================= */
 table{
     width:100%;
     border-collapse:collapse;
-    margin-top:20px;
+    margin-top:25px;
+    overflow:hidden;
+    border-radius:12px;
 }
+
 th,td{
     padding:12px;
-    border-bottom:1px solid #ddd;
     text-align:center;
 }
+
 th{
-    background:#f4f6f9;
+    background:#102a3a;
+    color:#00c6ff;
+    font-weight:600;
+    border-bottom:1px solid rgba(0,198,255,0.3);
 }
-.status-pending{color:#ff9800;font-weight:bold;}
-.status-approved{color:green;font-weight:bold;}
-.status-rejected{color:red;font-weight:bold;}
+
+tr{
+    transition:0.3s ease;
+}
+
+tr:hover{
+    background:rgba(0,198,255,0.08);
+    box-shadow:inset 0 0 15px rgba(0,198,255,0.2);
+}
+
+/* ================= STATUS ================= */
+.status-pending{
+    color:#ffb74d;
+    font-weight:bold;
+}
+
+.status-approved{
+    color:#00e676;
+    font-weight:bold;
+}
+
+.status-rejected{
+    color:#ff5252;
+    font-weight:bold;
+}
+
+/* ================= BUTTONS ================= */
 button{
-    padding:6px 10px;
+    padding:6px 12px;
     border:none;
-    border-radius:5px;
+    border-radius:6px;
     cursor:pointer;
+    font-weight:bold;
+    transition:0.3s ease;
 }
-.approve{background:#28a745;color:white;}
-.reject{background:#dc3545;color:white;}
-.update{background:#ffc107;}
-.save{background:#007bff;color:white;}
+
+.approve{
+    background:#00c853;
+    color:#001f54;
+}
+
+.approve:hover{
+    box-shadow:0 0 12px rgba(0,200,83,0.8);
+    transform:translateY(-2px);
+}
+
+.reject{
+    background:#d32f2f;
+    color:white;
+}
+
+.reject:hover{
+    box-shadow:0 0 12px rgba(211,47,47,0.8);
+    transform:translateY(-2px);
+}
+
+.update{
+    background:#ffb300;
+    color:#001f54;
+}
+
+.update:hover{
+    box-shadow:0 0 12px rgba(255,179,0,0.8);
+}
+
+.save{
+    background:#00c6ff;
+    color:#001f54;
+}
+
+.save:hover{
+    box-shadow:0 0 12px rgba(0,198,255,0.8);
+}
+
+/* ================= INPUTS ================= */
 input,select{
     padding:6px;
+    border-radius:6px;
+    border:1px solid rgba(0,198,255,0.4);
+    background:#102a3a;
+    color:white;
 }
+
+input:focus,select:focus{
+    outline:none;
+    box-shadow:0 0 8px rgba(0,198,255,0.7);
+}
+
+/* ================= SUCCESS ================= */
 .success{
-    background:#c8e6c9;
-    padding:10px;
-    margin-top:10px;
-    border-radius:5px;
+    background:#102f44;
+    padding:12px;
+    margin-top:15px;
+    border-left:4px solid #00c6ff;
+    border-radius:6px;
 }
+
+/* ================= FOOTER ================= */
+.footer{
+    margin-top:35px;
+    text-align:center;
+}
+
+.footer a{
+    text-decoration:none;
+    padding:10px 20px;
+    border-radius:25px;
+    background:#00c6ff;
+    color:#001f54;
+    margin:5px;
+    font-weight:bold;
+    transition:0.3s;
+}
+
+.footer a:hover{
+    background:#0099cc;
+    box-shadow:0 5px 20px rgba(0,198,255,0.8);
+}
+
 .actions form{
     display:inline;
 }
-.footer{
-    margin-top:25px;
-    text-align:center;
-}
-.footer a{
-    text-decoration:none;
-    padding:8px 15px;
-    border-radius:20px;
-    background:rgba(255,255,255,0.3);
-    color:white;
-    margin:5px;
-}
-.footer a:hover{
-    background:rgba(255,255,255,0.5);
-}
+
 </style>
 </head>
 
