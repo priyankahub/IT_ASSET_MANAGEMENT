@@ -26,12 +26,11 @@ body{
     background:
         radial-gradient(circle at top left,#0f2027,#203a43 60%,#0a1923);
     display:flex;
-    align-items:center;
-    justify-content:center;
+    flex-direction:column;
     color:#fff;
 }
 
-/* Tech grid overlay */
+/* Grid Overlay */
 body::before{
     content:"";
     position:fixed;
@@ -44,168 +43,172 @@ body::before{
     pointer-events:none;
 }
 
+/* ===== TOP RIBBON ===== */
+.ribbon{
+    width:100%;
+    background:#0c1f33;
+    border-bottom:3px solid #d4af37;
+    padding:15px 0;
+    text-align:center;
+    box-shadow:0 5px 25px rgba(0,0,0,0.6);
+}
+
+.ribbon h1{
+    margin:0;
+    font-size:24px;
+    letter-spacing:2px;
+    font-weight:700;
+    color:#ffffff;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    gap:20px;
+}
+
+.ribbon img{
+    height:45px;
+}
+
 /* ===== Container ===== */
 .container{
     width:92%;
-    max-width:1200px;
-    margin:140px auto 60px auto;
+    max-width:1400px;
+    margin:60px auto;
 }
 
-/* ===== Army Header ===== */
-.top-header{
-    text-align:center;
-    margin-bottom:30px;
-}
-
-.top-header img{
-    height:70px;
-    transition:0.4s ease;
-}
-
-.top-header img:hover{
-    transform:scale(1.1) rotate(-2deg);
-}
-
-.top-header h1{
-    margin:10px 0 0;
-    font-size:22px;
-    letter-spacing:2px;
-    color:#00c6ff;
-}
-
-/* ===== Welcome Header Card ===== */
+/* ===== Welcome Card ===== */
 .header{
     background:rgba(10,25,40,0.9);
-    padding:30px;
-    border-radius:16px;
+    padding:35px;
+    border-radius:18px;
     box-shadow:0 15px 40px rgba(0,0,0,0.6);
-    margin-bottom:35px;
+    margin-bottom:45px;
     border:1px solid rgba(0,198,255,0.3);
-    backdrop-filter:blur(8px);
-    transition:0.3s;
-}
-
-.header:hover{
-    box-shadow:0 20px 50px rgba(0,0,0,0.8);
 }
 
 .header h2{
     margin:0;
-    font-weight:700;
-    letter-spacing:1px;
-    color:#ffffff;
+    font-size:24px;
 }
 
-/* Role Badge */
 .role-badge{
     display:inline-block;
-    margin-top:12px;
-    padding:6px 18px;
-    border-radius:20px;
+    margin-top:15px;
+    padding:8px 20px;
+    border-radius:25px;
     font-size:13px;
     background:#00c6ff;
     color:#001f54;
     font-weight:bold;
-    letter-spacing:1px;
 }
 
-/* ===== Cards Layout ===== */
+/* ===== Cards ===== */
 .cards{
     display:grid;
-    grid-template-columns:repeat(auto-fit,minmax(270px,1fr));
-    gap:25px;
+    grid-template-columns:repeat(auto-fit,minmax(320px,1fr));
+    gap:35px;
 }
 
-/* ===== Card Styling ===== */
 .card{
-    background:rgba(10,25,40,0.88);
-    padding:28px;
-    border-radius:16px;
-    box-shadow:0 10px 30px rgba(0,0,0,0.5);
+    background:rgba(10,25,40,0.92);
+    padding:40px 30px;
+    border-radius:20px;
+    box-shadow:0 15px 40px rgba(0,0,0,0.6);
     transition:0.4s ease;
     border:1px solid rgba(0,198,255,0.25);
-    backdrop-filter:blur(6px);
-    position:relative;
-    overflow:hidden;
+    min-height:220px;
+}
+/* ===== FULL WIDTH CARD (2nd Row Stretch) ===== */
+/* ===========================
+   FULL WIDTH ACTIVITY BANNER
+=========================== */
+/* ===========================
+   FULL WIDTH ACTIVITY BANNER
+=========================== */
+
+.activity-banner{
+    grid-column: 1 / -1; /* span entire row */
+    min-height: 150px;   /* smaller height */
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+    align-items:center;
+    text-align:center;
+    padding:35px;
 }
 
+/* Make button slightly larger for banner look */
+.activity-banner a{
+    max-width:300px;
+}
+.full-width-card{
+    grid-column: 1 / -1;   /* span entire row */
+    min-height: 160px;     /* shorter than other cards */
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+    align-items:center;
+    text-align:center;
+}
 .card:hover{
-    transform:translateY(-8px);
-    box-shadow:0 20px 50px rgba(0,0,0,0.9);
+    transform:translateY(-10px);
+    box-shadow:0 25px 60px rgba(0,0,0,0.9);
     border-color:#00c6ff;
 }
 
-/* glow animation sweep */
-.card::before{
-    content:"";
-    position:absolute;
-    top:0;
-    left:-100%;
-    width:100%;
-    height:100%;
-    background:linear-gradient(120deg,transparent,rgba(0,198,255,0.2),transparent);
-    transition:0.6s;
-}
-
-.card:hover::before{
-    left:100%;
-}
-
 .card h3{
-    margin-bottom:18px;
-    font-weight:700;
-    color:#ffffff;
+    margin-bottom:25px;
+    font-size:18px;
 }
 
-/* ===== Buttons ===== */
 .card a{
     display:block;
-    margin:10px 0;
-    padding:11px;
+    margin:14px 0;
+    padding:14px;
     background:#102a3a;
     color:#00c6ff;
     text-decoration:none;
-    border-radius:8px;
+    border-radius:10px;
     font-size:14px;
     font-weight:bold;
     transition:0.3s ease;
     border:1px solid rgba(0,198,255,0.3);
+    text-align:center;
 }
 
 .card a:hover{
     background:#00c6ff;
     color:#001f54;
-    box-shadow:0 5px 15px rgba(0,198,255,0.6);
-    transform:translateX(4px);
 }
 
 /* ===== Logout ===== */
 .logout{
-    margin-top:60px;
+    margin-top:70px;
     text-align:center;
 }
 
 .logout a{
-    color:#001f54;
-    font-size:14px;
-    text-decoration:none;
     background:#00c6ff;
-    padding:10px 24px;
-    border-radius:25px;
+    padding:12px 30px;
+    border-radius:30px;
+    text-decoration:none;
+    color:#001f54;
     font-weight:bold;
-    transition:0.3s;
-}
-
-.logout a:hover{
-    background:#0099cc;
-    box-shadow:0 5px 20px rgba(0,198,255,0.8);
 }
 
 </style>
-
 </head>
 
 <body>
+
+<!-- Ribbon -->
+<div class="ribbon">
+    <h1>
+        <img src="images/logo.jpg">
+        IT Equipment Lifecycle Management
+        <img src="images/logo.jpg">
+    </h1>
+</div>
 
 <div class="container">
 
@@ -219,20 +222,20 @@ body::before{
 <?php if ($r === 'ADMIN') { ?>
     <div class="card">
         <h3>Equipment Management</h3>
-        <a href="admin/equipment_master.php">Update Equipment Status</a>
+        <a href="admin/equipment_master.php">Equipment Master</a>
         <a href="admin/disposal.php">Direct Condemnation</a>
     </div>
 
     <div class="card">
         <h3>User Management</h3>
-        <a href="admin/create_user.php">Create User (Direct)</a>
-        <a href="admin/manage_users.php">Edit / Delete Users</a>
+        <a href="admin/create_user.php">Create User</a>
+        <a href="admin/manage_users.php">Manage Users</a>
         <a href="admin/approve_user_requests.php">Approve User Requests</a>
     </div>
 
     <div class="card">
         <h3>Approval Workflows</h3>
-        <a href="admin/approve_condemn_requests.php">Approve Condemnation Requests</a>
+        <a href="admin/approve_condemn_requests.php">Approve Condemnation</a>
         <a href="reports/analytics.php">Analytics Dashboard</a>
     </div>
 <?php } ?>
@@ -256,6 +259,7 @@ body::before{
 <?php } ?>
 
 <?php if ($r === 'CLERK') { ?>
+
     <div class="card">
         <h3>Equipment Registration</h3>
         <a href="admin/equipment_master.php">Update Equipment Status</a>
@@ -273,11 +277,15 @@ body::before{
 
     <div class="card">
         <h3>User Requests</h3>
-        <a href="clerk/user_request.php">Create / Edit / Delete User Request</a>
-        <a href="clerk/my_activity.php">My Activity Log</a>
+        <a href="clerk/user_request.php">Create / Edit / Delete Users</a>
     </div>
 
-    
+    <div class="card activity-banner">
+        <h3>My Activity Log</h3>
+        <a href="clerk/my_activity.php">View My Activity</a>
+    </div>
+
+
 <?php } ?>
 
 <?php if ($r === 'USER') { ?>
