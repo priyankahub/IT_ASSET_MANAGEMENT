@@ -25,7 +25,6 @@ if (isset($_POST['approve'])) {
 
     if ($req['request_type'] == 'CREATE') {
 
-        // 🔥 Safety check
         if (empty($req['army_no'])) {
             die("Army Number cannot be empty. Please update before approving.");
         }
@@ -103,12 +102,10 @@ if (isset($_POST['save_update'])) {
         WHERE id='$id'
     ");
 
-    // Remove edit mode after save
     header("Location: approve_user_requests.php?msg=updated");
     exit;
 }
 
-/* ================= FETCH REQUESTS ================= */
 $requests = mysqli_query($conn,"
     SELECT * FROM user_requests
     ORDER BY 
@@ -124,6 +121,27 @@ $requests = mysqli_query($conn,"
 
 <style>
 
+/* ================= RIBBON ================= */
+.ribbon{
+    width:100%;
+    background:linear-gradient(90deg,#001f3f,#003f5c,#001f3f);
+    padding:15px 0;
+    text-align:center;
+    font-size:22px;
+    font-weight:bold;
+    letter-spacing:2px;
+    color:#ffffff;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    gap:20px;
+    box-shadow:0 4px 15px rgba(0,0,0,0.6);
+}
+
+.ribbon img{
+    height:45px;
+}
+
 /* ================= BODY ================= */
 body{
     margin:0;
@@ -133,24 +151,11 @@ body{
     color:#fff;
 }
 
-/* Tech Grid */
-body::before{
-    content:"";
-    position:fixed;
-    width:100%;
-    height:100%;
-    background-image:
-        linear-gradient(rgba(0,198,255,0.05) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(0,198,255,0.05) 1px, transparent 1px);
-    background-size:40px 40px;
-    pointer-events:none;
-}
-
 /* ================= CONTAINER ================= */
 .container{
     width:95%;
-    max-width:1200px;
-    margin:60px auto;
+    max-width:1400px;
+    margin:40px auto;
 }
 
 /* ================= CARD ================= */
@@ -160,18 +165,6 @@ body::before{
     border-radius:16px;
     box-shadow:0 15px 40px rgba(0,0,0,0.6);
     border:1px solid rgba(0,198,255,0.3);
-    backdrop-filter:blur(8px);
-    transition:0.3s;
-}
-
-.card:hover{
-    box-shadow:0 20px 50px rgba(0,0,0,0.8);
-}
-
-/* ================= TITLE ================= */
-h2{
-    color:#ffffff;
-    letter-spacing:1px;
 }
 
 /* ================= TABLE ================= */
@@ -179,46 +172,28 @@ table{
     width:100%;
     border-collapse:collapse;
     margin-top:25px;
-    overflow:hidden;
-    border-radius:12px;
 }
 
 th,td{
     padding:12px;
     text-align:center;
+    white-space:nowrap;
 }
 
 th{
     background:#102a3a;
     color:#00c6ff;
     font-weight:600;
-    border-bottom:1px solid rgba(0,198,255,0.3);
-}
-
-tr{
-    transition:0.3s ease;
 }
 
 tr:hover{
     background:rgba(0,198,255,0.08);
-    box-shadow:inset 0 0 15px rgba(0,198,255,0.2);
 }
 
 /* ================= STATUS ================= */
-.status-pending{
-    color:#ffb74d;
-    font-weight:bold;
-}
-
-.status-approved{
-    color:#00e676;
-    font-weight:bold;
-}
-
-.status-rejected{
-    color:#ff5252;
-    font-weight:bold;
-}
+.status-pending{ color:#ffb74d; font-weight:bold; }
+.status-approved{ color:#00e676; font-weight:bold; }
+.status-rejected{ color:#ff5252; font-weight:bold; }
 
 /* ================= BUTTONS ================= */
 button{
@@ -227,68 +202,25 @@ button{
     border-radius:6px;
     cursor:pointer;
     font-weight:bold;
-    transition:0.3s ease;
 }
 
-.approve{
-    background:#00c853;
-    color:#001f54;
+.approve{ background:#00c853; color:#001f54; }
+.reject{ background:#d32f2f; color:white; }
+.update{ background:#ffb300; color:#001f54; }
+
+.actions{
+    display:flex;
+    gap:6px;
+    justify-content:center;
+    align-items:center;
 }
 
-.approve:hover{
-    box-shadow:0 0 12px rgba(0,200,83,0.8);
-    transform:translateY(-2px);
-}
-
-.reject{
-    background:#d32f2f;
-    color:white;
-}
-
-.reject:hover{
-    box-shadow:0 0 12px rgba(211,47,47,0.8);
-    transform:translateY(-2px);
-}
-
-.update{
-    background:#ffb300;
-    color:#001f54;
-}
-
-.update:hover{
-    box-shadow:0 0 12px rgba(255,179,0,0.8);
-}
-
-.save{
-    background:#00c6ff;
-    color:#001f54;
-}
-
-.save:hover{
-    box-shadow:0 0 12px rgba(0,198,255,0.8);
-}
-
-/* ================= INPUTS ================= */
-input,select{
+input{
     padding:6px;
     border-radius:6px;
     border:1px solid rgba(0,198,255,0.4);
     background:#102a3a;
     color:white;
-}
-
-input:focus,select:focus{
-    outline:none;
-    box-shadow:0 0 8px rgba(0,198,255,0.7);
-}
-
-/* ================= SUCCESS ================= */
-.success{
-    background:#102f44;
-    padding:12px;
-    margin-top:15px;
-    border-left:4px solid #00c6ff;
-    border-radius:6px;
 }
 
 /* ================= FOOTER ================= */
@@ -305,16 +237,6 @@ input:focus,select:focus{
     color:#001f54;
     margin:5px;
     font-weight:bold;
-    transition:0.3s;
-}
-
-.footer a:hover{
-    background:#0099cc;
-    box-shadow:0 5px 20px rgba(0,198,255,0.8);
-}
-
-.actions form{
-    display:inline;
 }
 
 </style>
@@ -322,16 +244,17 @@ input:focus,select:focus{
 
 <body>
 
+<!-- ================= TOP RIBBON ================= -->
+<div class="ribbon">
+    <img src="../images/logo.jpg">
+    IT EQUIPMENT LIFECYCLE MANAGEMENT
+    <img src="../images/logo.jpg">
+</div>
+
 <div class="container">
 <div class="card">
 
 <h2>User Requests Approval (Admin)</h2>
-
-<?php
-if(isset($_GET['msg']) && $_GET['msg']=='updated'){
-    echo "<div class='success'>✏ Request Updated Successfully</div>";
-}
-?>
 
 <table>
 <tr>
@@ -343,87 +266,52 @@ if(isset($_GET['msg']) && $_GET['msg']=='updated'){
     <th>Rank</th>
     <th>Requested By</th>
     <th>Status</th>
+    <th>Remark</th>
     <th>Actions</th>
 </tr>
 
 <?php
 while($r = mysqli_fetch_assoc($requests)){
 
-    $edit_mode = (isset($_GET['edit']) && $_GET['edit']==$r['id']);
+echo "<tr>";
+echo "<td>{$r['id']}</td>";
+echo "<td>{$r['request_type']}</td>";
+echo "<td>{$r['full_name']}</td>";
+echo "<td>{$r['username']}</td>";
+echo "<td>{$r['army_no']}</td>";
+echo "<td>{$r['rank']}</td>";
+echo "<td>{$r['requested_by']}</td>";
 
-    echo "<tr>";
+$status_class = strtolower($r['status']);
+echo "<td class='status-$status_class'>{$r['status']}</td>";
 
-    echo "<td>{$r['id']}</td>";
-    echo "<td>{$r['request_type']}</td>";
+echo "<td>".($r['remarks'] ?? '-')."</td>";
 
-    if($edit_mode){
+echo "<td class='actions'>";
 
-        echo "<form method='POST'>";
-        echo "<input type='hidden' name='id' value='{$r['id']}'>";
+if($r['status']=='Pending'){
+    echo "
+    <form method='POST'>
+        <input type='hidden' name='id' value='{$r['id']}'>
+        <button class='approve' name='approve'>Approve</button>
+    </form>
 
-        echo "<td><input type='text' name='full_name' value='{$r['full_name']}' required></td>";
-        echo "<td>{$r['username']}</td>";
-        echo "<td><input type='text' name='army_no' value='{$r['army_no']}' required></td>";
+    <form method='POST'>
+        <input type='hidden' name='id' value='{$r['id']}'>
+        <input type='text' name='reason' placeholder='Remark' required>
+        <button class='reject' name='reject'>Reject</button>
+    </form>
 
-        echo "<td>
-            <select name='rank'>
-                <option ".($r['rank']=='ADMIN'?'selected':'').">ADMIN</option>
-                <option ".($r['rank']=='CO'?'selected':'').">CO</option>
-                <option ".($r['rank']=='ITJCO'?'selected':'').">ITJCO</option>
-                <option ".($r['rank']=='CLERK'?'selected':'').">CLERK</option>
-                <option ".($r['rank']=='USER'?'selected':'').">USER</option>
-            </select>
-        </td>";
+    <a href='approve_user_requests.php?edit={$r['id']}'>
+        <button class='update'>Update</button>
+    </a>
+    ";
+} else {
+    echo "-";
+}
 
-        echo "<td>{$r['requested_by']}</td>";
-
-        echo "<td class='status-pending'>Pending</td>";
-
-        echo "<td>
-            <button class='save' name='save_update'>Save</button>
-        </td>";
-
-        echo "</form>";
-
-    } else {
-
-        echo "<td>{$r['full_name']}</td>";
-        echo "<td>{$r['username']}</td>";
-        echo "<td>{$r['army_no']}</td>";
-        echo "<td>{$r['rank']}</td>";
-        echo "<td>{$r['requested_by']}</td>";
-
-        $status_class = strtolower($r['status']);
-        echo "<td class='status-$status_class'>{$r['status']}</td>";
-
-        echo "<td class='actions'>";
-
-        if($r['status']=='Pending'){
-
-            echo "
-            <form method='POST'>
-                <input type='hidden' name='id' value='{$r['id']}'>
-                <button class='approve' name='approve'>Approve</button>
-            </form>
-
-            <form method='POST'>
-                <input type='hidden' name='id' value='{$r['id']}'>
-                <input type='text' name='reason' placeholder='Remark' required>
-                <button class='reject' name='reject'>Reject</button>
-            </form>
-
-            <a href='approve_user_requests.php?edit={$r['id']}'>
-                <button class='update'>Update</button>
-            </a>
-            ";
-        } else {
-            echo "-";
-        }
-
-        echo "</td>";
-    }
-
-    echo "</tr>";
+echo "</td>";
+echo "</tr>";
 }
 ?>
 
