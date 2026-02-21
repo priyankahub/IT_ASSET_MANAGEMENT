@@ -60,87 +60,151 @@ if (isset($_POST['return'])) {
     ");
 }
 ?>
-
-<!DOCTYPE html>
-<html>
-<head>
-<title>Equipment Allocation</title>
-
 <style>
 body{
     margin:0;
-    font-family:Arial,sans-serif;
-    background:linear-gradient(135deg,#1e3c72,#2a5298);
+    font-family:Segoe UI, sans-serif;
+    background:#0f223a;
+    color:#f5f7fa;
 }
+
+/* HEADER */
+.header{
+    padding:25px 0;
+    font-size:22px;
+    font-weight:600;
+    background:#122944;
+    border-bottom:3px solid #d4af37;
+    text-align:center;
+}
+
+/* CONTAINER */
 .container{
     width:95%;
-    max-width:950px;
-    margin:30px auto;
+    max-width:1000px;
+    margin:50px auto;
 }
+
+/* CARD */
 .card{
-    background:#fff;
-    padding:25px;
-    border-radius:10px;
-    box-shadow:0 6px 15px rgba(0,0,0,.2);
-    margin-bottom:25px;
+    background:#162f4f;
+    padding:30px;
+    border-radius:6px;
+    border-left:4px solid #d4af37;
+    margin-bottom:30px;
+    transition:all 0.3s ease;
+    position:relative;
 }
+
+/* Hover Highlight Effect */
+.card:hover{
+    transform:translateY(-8px);
+    background:#1d3a5c;
+    box-shadow:
+        0 0 20px rgba(212,175,55,0.5),
+        0 15px 35px rgba(0,0,0,0.7);
+}
+
+/* TITLES */
 h2{
-    color:#2a5298;
-    margin-bottom:15px;
+    color:#ffffff;
+    margin-bottom:20px;
+    font-weight:600;
 }
+
+/* LABELS */
 label{
-    font-weight:bold;
+    font-size:13px;
+    color:#b8c6db;
+    font-weight:600;
 }
-select,input,button{
+
+/* INPUTS */
+select,
+input{
     width:100%;
     padding:10px;
-    margin-top:8px;
-    border-radius:5px;
-    border:1px solid #ccc;
+    margin-top:6px;
+    margin-bottom:15px;
+    border-radius:4px;
+    border:1px solid #2c4c73;
+    background:#0f223a;
+    color:#ffffff;
 }
+
+select:focus,
+input:focus{
+    border-color:#d4af37;
+    outline:none;
+}
+
+/* BUTTON */
 button{
-    background:#2a5298;
-    color:#fff;
+    width:100%;
+    padding:12px;
+    background:#d4af37;
+    color:#0f223a;
     border:none;
+    border-radius:4px;
+    font-weight:600;
     cursor:pointer;
+    transition:.3s;
 }
+
 button:hover{
-    background:#1e3c72;
+    background:#c39c2d;
 }
+
+/* TABLE */
 table{
     width:100%;
     border-collapse:collapse;
     margin-top:20px;
 }
-th,td{
-    padding:12px;
-    border-bottom:1px solid #ddd;
-    text-align:left;
-}
+
 th{
-    background:#f4f6f9;
-    font-weight:bold;
+    background:#122944;
+    padding:12px;
+    text-align:left;
+    font-weight:600;
+    color:#ffffff;
 }
+
+td{
+    padding:12px;
+    border-bottom:1px solid #2c4c73;
+}
+
 tr:hover{
-    background:#f9fbff;
+    background:#1a355a;
 }
-.back{
-    text-align:center;
-}
-.back a{
-    color:#fff;
-    text-decoration:none;
-    font-weight:bold;
-}
+
+/* DIVIDER */
 .divider{
     height:1px;
-    background:#ddd;
+    background:#2c4c73;
     margin:30px 0;
 }
-</style>
-</head>
 
-<body>
+/* BACK BUTTON */
+.back{
+    text-align:center;
+    margin-top:30px;
+}
+
+.back a{
+    text-decoration:none;
+    padding:12px 24px;
+    background:#d4af37;
+    color:#0f223a;
+    border-radius:6px;
+    font-weight:600;
+}
+
+.back a:hover{
+    background:#c39c2d;
+}
+</style>
 
 <div class="container">
 
