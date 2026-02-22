@@ -321,20 +321,21 @@ body::before{
         <h3>Equipment Management</h3>
         <a href="admin/equipment_master.php">Equipment Master</a>
         <a href="admin/disposal.php">Direct Condemnation</a>
-        <a href="admin/approve_equipment_requests.php">Approve Equipment Request</a>
+        <a href="reports/analytics.php">Equipment Analytics Dashboard</a>        
     </div>
 
     <div class="card">
         <h3>User Management</h3>
         <a href="admin/create_user.php">Create User</a>
-        <a href="admin/manage_users.php">Manage Users</a>
-        <a href="admin/approve_user_requests.php">Approve User Requests</a>
+        <a href="admin/manage_users.php">Manage Users</a>        
     </div>
 
     <div class="card">
         <h3>Approval Workflows</h3>
-        <a href="admin/approve_condemn_requests.php">Approve Condemnation</a>
-        <a href="reports/analytics.php">Analytics Dashboard</a>
+        <a href="admin/approve_equipment_requests.php">Approve Equipment Request</a>
+        <a href="admin/approve_condemn_requests.php">Approve Condemnation Request</a>
+        <a href="admin/approve_user_requests.php">Approve User Creation Requests</a>
+        
     </div>
 <?php } ?>
 
