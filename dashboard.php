@@ -321,7 +321,7 @@ body::before{
         <h3>Equipment Management</h3>
         <a href="admin/equipment_master.php">Equipment Master</a>
         <a href="admin/disposal.php">Direct Condemnation</a>
-        <a href="reports/analytics.php">Equipment Analytics Dashboard</a>        
+        <a href="reports/equipment_analytics_dashboard.php">Equipment Analytics Dashboard</a>        
     </div>
 
     <div class="card">
@@ -345,7 +345,7 @@ body::before{
         <a href="reports/holding_state.php">Holding State</a>
         <a href="reports/lifecycle_report.php">Life Cycle History</a>
         <a href="reports/maintenance_report.php">Maintenance Reports</a>
-        <a href="reports/analytics.php">Analytics Dashboard</a>
+        <a href="reports/analytics.php">Equipment Analytics Dashboard</a>
     </div>
 <?php } ?>
 
