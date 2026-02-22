@@ -114,32 +114,39 @@ session_start();
 
             <div class="commands-row">
 
-                <a href="https://indianarmy.nic.in/command/command/western-command-commands-site-main" target="_blank">
+                <a href="https://indianarmy.nic.in/command/command/western-command-commands-site-main" target="_blank" class="command-item">
                     <img src="images/Western.png" alt="Western Command">
+                    <span>Western</span>
                 </a>
 
-                <a href="https://indianarmy.nic.in/command/command/southern-command-commands-site-main" target="_blank">
+                <a href="https://indianarmy.nic.in/command/command/southern-command-commands-site-main" target="_blank" class="command-item">
                     <img src="images/Southern.png" alt="Southern Command">
+                    <span>Southern</span>
                 </a>
 
-                <a href="https://indianarmy.nic.in/command/command/northern-command-commands-site-main" target="_blank">
+                <a href="https://indianarmy.nic.in/command/command/northern-command-commands-site-main" target="_blank" class="command-item">
                     <img src="images/Northen.png" alt="Northern Command">
+                    <span>Northern</span>
                 </a>
 
-                <a href="https://indianarmy.nic.in/command/command/eastern-command-commands-site-main" target="_blank">
+                <a href="https://indianarmy.nic.in/command/command/eastern-command-commands-site-main" target="_blank" class="command-item">
                     <img src="images/Eastern.png" alt="Eastern Command">
+                    <span>Eastern</span>
                 </a>
 
-                <a href="https://indianarmy.nic.in/command/command/central-command-commands-site-main" target="_blank">
+                <a href="https://indianarmy.nic.in/command/command/central-command-commands-site-main" target="_blank" class="command-item">
                     <img src="images/Central.png" alt="Central Command">
+                    <span>Central</span>
                 </a>
 
-                <a href="https://indianarmy.nic.in/command/command/artrac-commands-site-main" target="_blank">
+                <a href="https://indianarmy.nic.in/command/command/artrac-commands-site-main" target="_blank" class="command-item">
                     <img src="images/Arctrac.png" alt="ARTRAC">
+                    <span>ARTRAC</span>
                 </a>
 
-                <a href="https://indianarmy.nic.in/command/command/south-western-command-commands-site-main" target="_blank">
+                <a href="https://indianarmy.nic.in/command/command/south-western-command-commands-site-main" target="_blank" class="command-item">
                     <img src="images/Southern-Western.png" alt="South Western Command">
+                    <span>South Western</span>
                 </a>
 
             </div>

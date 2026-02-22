@@ -399,7 +399,7 @@ body.homepage .nav-right a:hover{
 ========================================================= */
 
 body.homepage .commands-panel{
-    width:100%; /* Same as slider width */
+    width:100%;
     margin-top:30px;
     background:rgba(255,255,255,0.12);
     backdrop-filter:blur(10px);
@@ -412,33 +412,45 @@ body.homepage .commands-panel{
 body.homepage .commands-panel h3{
     text-align:center;
     color:#ffd700;
-    margin-bottom:20px;
+    margin-bottom:22px;
     font-size:20px;
     letter-spacing:1px;
 }
 
-/* Horizontal layout like reference */
+/* Horizontal layout (single row + scroll safe) */
 body.homepage .commands-row{
     display:flex;
     justify-content:center;
-    align-items:center;
-    gap:20px;
-    flex-wrap:nowrap;      /* Force single line */
-    overflow-x:auto;       /* Prevent breaking layout */
-    padding:10px 0;
+    align-items:flex-start;
+    gap:22px;
+    flex-wrap:nowrap;
+    overflow-x:auto;
+    padding:12px 0;
 }
 
-/* Individual Logo Box */
+/* Individual Logo Card */
 body.homepage .commands-row a{
+    min-width:110px;
     background:#ffffff;
-    padding:10px;
-    border-radius:10px;
-    border:2px solid #ff0000;
-    transition:all 0.3s ease;
+    padding:12px 10px;
+    border-radius:12px;
+    border:2px solid #d00000;
+    transition:all 0.35s ease;
     display:flex;
+    flex-direction:column;   /* IMPORTANT for text under logo */
     align-items:center;
     justify-content:center;
+    text-decoration:none;
+    position:relative;
 }
+
+/* Logo Size Control (No Distortion) */
+/* body.homepage .commands-row img{
+    width:70px;
+    height:70px;
+    object-fit:contain;
+    transition:all 0.35s ease;
+} */
 
 body.homepage .commands-row img{
     width:90px;
@@ -448,4 +460,51 @@ body.homepage .commands-row img{
 
 body.homepage .commands-row img:hover{
     transform:scale(1.1);
+}
+
+/* Command Name Under Logo */
+/* Command Name Under Logo - Uniform Height */
+body.homepage .commands-row span{
+    margin-top:6px;
+    font-size:13px;
+    font-weight:600;
+    color:#2c3e50;
+    letter-spacing:0.5px;
+
+    white-space:nowrap;       /* Prevent 2 lines */
+    overflow:hidden;
+    text-overflow:ellipsis;
+}
+
+/* ================= HOVER POP-UP EFFECT ================= */
+
+body.homepage .commands-row a:hover{
+    transform:translateY(-8px) scale(1.08);
+    border-color:#ffd700;
+    box-shadow:0 12px 30px rgba(255,215,0,0.45);
+}
+
+body.homepage .commands-row a:hover img{
+    transform:scale(1.15);
+}
+
+body.homepage .commands-row a:hover span{
+    color:#000;
+}
+
+/* Clean Hover Effect (No yellow line) */
+body.homepage .commands-row a:hover{
+    transform:translateY(-8px) scale(1.06);
+    border-color:#ffd700;
+    box-shadow:0 12px 28px rgba(255,215,0,0.35);
+}
+
+/* Smooth scrollbar styling */
+body.homepage .commands-row::-webkit-scrollbar{
+    height:6px;
+}
+
+body.homepage .commands-row::-webkit-scrollbar-thumb{
+    background:#ffd700;
+    border-radius:10px;
 }
