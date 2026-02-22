@@ -2,7 +2,7 @@
 session_start();
 include("../config/db.php");
 
-if (!isset($_SESSION['rank']) || $_SESSION['rank'] != 'ADMIN') {
+if (!isset($_SESSION['role']) || $_SESSION['role'] != 'ADMIN') {
     die("Access Denied");
 }
 if (isset($_GET['created'])) {
@@ -30,13 +30,13 @@ if (isset($_POST['approve'])) {
         }
 
         mysqli_query($conn,"
-            INSERT INTO users (name, username, password, army_no, rank)
+            INSERT INTO users (name, username, password, army_no, role)
             VALUES (
                 '{$req['full_name']}',
                 '{$req['username']}',
                 '{$req['password']}',
                 '{$req['army_no']}',
-                '{$req['rank']}'
+                '{$req['role']}'
             )
         ");
     }
@@ -45,7 +45,7 @@ if (isset($_POST['approve'])) {
             UPDATE users
             SET name = '{$req['full_name']}',
                 army_no = '{$req['army_no']}',
-                rank = '{$req['rank']}'
+                role = '{$req['role']}'
             WHERE username = '{$req['username']}'
         ");
     }
@@ -91,13 +91,13 @@ if (isset($_POST['save_update'])) {
 
     $id = $_POST['id'];
     $full_name = $_POST['full_name'];
-    $rank = $_POST['rank'];
+    $role = $_POST['role'];
     $army_no = $_POST['army_no'];
 
     mysqli_query($conn,"
         UPDATE user_requests
         SET full_name='$full_name',
-            rank='$rank',
+            role='$role',
             army_no='$army_no'
         WHERE id='$id'
     ");
@@ -263,7 +263,7 @@ input{
     <th>Full Name</th>
     <th>Username</th>
     <th>ID No</th>
-    <th>Rank</th>
+    <th>Role</th>
     <th>Requested By</th>
     <th>Status</th>
     <th>Remark</th>
@@ -279,7 +279,7 @@ echo "<td>{$r['request_type']}</td>";
 echo "<td>{$r['full_name']}</td>";
 echo "<td>{$r['username']}</td>";
 echo "<td>{$r['army_no']}</td>";
-echo "<td>{$r['rank']}</td>";
+echo "<td>{$r['role']}</td>";
 echo "<td>{$r['requested_by']}</td>";
 
 $status_class = strtolower($r['status']);

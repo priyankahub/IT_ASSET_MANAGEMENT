@@ -5,7 +5,7 @@ include("../config/db.php");
 /* =========================
    ROLE CHECK
 ========================= */
-if ($_SESSION['rank'] != 'CLERK') die("Access Denied");
+if ($_SESSION['role'] != 'CLERK') die("Access Denied");
 
 /* =========================
    FETCH ACTIVITY LOGS

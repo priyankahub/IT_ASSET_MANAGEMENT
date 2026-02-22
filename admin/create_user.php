@@ -2,7 +2,7 @@
 session_start();
 include("../config/db.php");
 
-if (!isset($_SESSION['rank']) || $_SESSION['rank'] != 'ADMIN') {
+if (!isset($_SESSION['role']) || $_SESSION['role'] != 'ADMIN') {
     die("Access Denied");
 }
 
@@ -13,7 +13,7 @@ if (isset($_POST['submit_request'])) {
     $full_name    = mysqli_real_escape_string($conn, $_POST['full_name']);
     $username     = mysqli_real_escape_string($conn, $_POST['username']);
     $army_no      = mysqli_real_escape_string($conn, $_POST['army_no']);
-    $rank         = mysqli_real_escape_string($conn, $_POST['rank']);
+    $role         = mysqli_real_escape_string($conn, $_POST['role']);
     $requested_by = $_SESSION['username'];
     $today        = date('Y-m-d');
 
@@ -41,9 +41,9 @@ if (isset($_POST['submit_request'])) {
 
         mysqli_query($conn,"
             INSERT INTO user_requests
-            (request_type, full_name, username, password, army_no, rank, requested_by, request_date, status)
+            (request_type, full_name, username, password, army_no, role, requested_by, request_date, status)
             VALUES
-            ('CREATE','$full_name','$username','$password','$army_no','$rank','$requested_by','$today','Pending')
+            ('CREATE','$full_name','$username','$password','$army_no','$role','$requested_by','$today','Pending')
         ");
 
         header("Location: approve_user_requests.php?created=1");
@@ -291,8 +291,8 @@ button:hover{
 <label>Army Number</label>
 <input type="text" name="army_no" required>
 
-<label>Rank</label>
-<select name="rank" required>
+<label>Role</label>
+<select name="role" required>
     <option value="ADMIN">ADMIN</option>
     <option value="CO">CO</option>
     <option value="ITJCO">ITJCO</option>

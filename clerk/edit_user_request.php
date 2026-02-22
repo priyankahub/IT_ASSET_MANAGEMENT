@@ -2,7 +2,7 @@
 session_start();
 include("../config/db.php");
 
-if (!isset($_SESSION['rank']) || $_SESSION['rank']!='CLERK') {
+if (!isset($_SESSION['role']) || $_SESSION['role']!='CLERK') {
     die("Access Denied");
 }
 
@@ -11,9 +11,9 @@ $userData=null;
 
 /* ===== FETCH USERS FOR DROPDOWN ===== */
 $users=mysqli_query($conn,"
-    SELECT username,name,rank 
+    SELECT username,name,role 
     FROM users 
-    WHERE rank IN ('CLERK','ITJCO','USER')
+    WHERE role IN ('CLERK','ITJCO','USER')
 ");
 
 /* ===== LOAD USER DETAILS ===== */
@@ -24,7 +24,7 @@ if(isset($_POST['load_user'])){
     $res=mysqli_query($conn,"
         SELECT * FROM users 
         WHERE username='$username'
-        AND rank IN ('CLERK','ITJCO','USER')
+        AND role IN ('CLERK','ITJCO','USER')
     ");
 
     if(mysqli_num_rows($res)==0){
@@ -41,14 +41,14 @@ if(isset($_POST['submit_edit'])){
     $username=mysqli_real_escape_string($conn,$_POST['username']);
     $full_name=mysqli_real_escape_string($conn,$_POST['full_name']);
     $army_no=mysqli_real_escape_string($conn,$_POST['army_no']);
-    $rank=mysqli_real_escape_string($conn,$_POST['rank']);
+    $role=mysqli_real_escape_string($conn,$_POST['role']);
 
     mysqli_query($conn,"
         INSERT INTO user_requests
-        (request_type,full_name,username,password,army_no,rank,requested_by,request_date,status)
+        (request_type,full_name,username,password,army_no,role,requested_by,request_date,status)
         VALUES
         ('EDIT','$full_name','$username','',
-         '$army_no','$rank',
+         '$army_no','$role',
          '{$_SESSION['username']}',CURDATE(),'Pending')
     ");
 
@@ -58,7 +58,7 @@ if(isset($_POST['submit_edit'])){
         VALUES
         ('{$_SESSION['username']}',
          'Edit User',
-         'Requested EDIT for user: $original_username → $username | Rank: $rank')
+         'Requested EDIT for user: $original_username → $username | Role: $role')
     ");
 
     $message="✅ Edit request sent for Admin approval.";
@@ -237,7 +237,7 @@ button:hover{
 <option value="">-- Select User --</option>
 <?php while($u=mysqli_fetch_assoc($users)){ ?>
 <option value="<?php echo $u['username']; ?>">
-<?php echo $u['username']." - ".$u['name']." (".$u['rank'].")"; ?>
+<?php echo $u['username']." - ".$u['name']." (".$u['role'].")"; ?>
 </option>
 <?php } ?>
 </select>
@@ -267,11 +267,11 @@ button:hover{
 <label>Army Number</label>
 <input type="text" name="army_no" value="<?php echo $userData['army_no']; ?>" required>
 
-<label>Rank</label>
-<select name="rank" required>
-    <option value="CLERK" <?php if($userData['rank']=='CLERK') echo 'selected'; ?>>CLERK</option>
-    <option value="ITJCO" <?php if($userData['rank']=='ITJCO') echo 'selected'; ?>>ITJCO</option>
-    <option value="USER" <?php if($userData['rank']=='USER') echo 'selected'; ?>>USER</option>
+<label>Role</label>
+<select name="role" required>
+    <option value="CLERK" <?php if($userData['role']=='CLERK') echo 'selected'; ?>>CLERK</option>
+    <option value="ITJCO" <?php if($userData['role']=='ITJCO') echo 'selected'; ?>>ITJCO</option>
+    <option value="USER" <?php if($userData['role']=='USER') echo 'selected'; ?>>USER</option>
 </select>
 
 <button type="submit" name="submit_edit">Send Edit Request</button>

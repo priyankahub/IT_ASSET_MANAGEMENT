@@ -1,12 +1,12 @@
 <?php
 session_start();
 
-if (!isset($_SESSION['rank'])) {
+if (!isset($_SESSION['role'])) {
     header("Location: index.php");
     exit;
 }
 
-$r = trim($_SESSION['rank']);
+$r = trim($_SESSION['role']);
 $name = $_SESSION['name'];
 ?>
 
@@ -321,6 +321,7 @@ body::before{
         <h3>Equipment Management</h3>
         <a href="admin/equipment_master.php">Equipment Master</a>
         <a href="admin/disposal.php">Direct Condemnation</a>
+        <a href="admin/approve_equipment_requests.php">Approve Equipment Request</a>
     </div>
 
     <div class="card">

@@ -19,7 +19,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
         if ($password === $user['password']) {
 
-            $_SESSION['rank']     = $user['rank'];
+            $_SESSION['role']     = $user['role'];
             $_SESSION['name']     = $user['name'];
             $_SESSION['username'] = $user['username'];
             $_SESSION['army_no']  = $user['army_no'];

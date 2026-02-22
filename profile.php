@@ -137,8 +137,8 @@ body::before{
     color:#00c6ff;
 }
 
-/* Rank Badge */
-.rank-badge{
+/* Role Badge */
+.role-badge{
     display:inline-block;
     padding:6px 15px;
     border-radius:20px;
@@ -205,9 +205,9 @@ body::before{
     </div>
 
     <div class="profile-item">
-        <strong>Rank:</strong>
-        <span class="rank-badge">
-            <?php echo htmlspecialchars($user['rank']); ?>
+        <strong>Role:</strong>
+        <span class="role-badge">
+            <?php echo htmlspecialchars($user['role']); ?>
         </span>
     </div>
 

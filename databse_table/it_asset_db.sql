@@ -47,8 +47,8 @@ INSERT INTO `activity_logs` (`id`, `user_username`, `action_tag`, `description`,
 (5, 'sneha.kapoor', 'New User Creation', 'Requested CREATE for user: werr (Army No: weee)', '2026-02-21 22:45:29'),
 (6, 'sneha.kapoor', 'New User Creation', 'Requested CREATE for user: yuuu (Army No: uiiii)', '2026-02-21 22:47:39'),
 (7, 'sneha.kapoor', 'New User Creation', 'Requested CREATE for user: Jyoti Sharma (Army No: JC098765)', '2026-02-22 00:37:07'),
-(8, 'sneha.kapoor', 'Edit User', 'Requested EDIT for user: prakash.singh → prakash.singh | Rank: ITJCO', '2026-02-22 01:05:34'),
-(9, 'sneha.kapoor', 'Delete User', 'Requested DELETE for user: Himnegi | Rank: USER', '2026-02-22 01:36:54');
+(8, 'sneha.kapoor', 'Edit User', 'Requested EDIT for user: prakash.singh → prakash.singh | Role: ITJCO', '2026-02-22 01:05:34'),
+(9, 'sneha.kapoor', 'Delete User', 'Requested DELETE for user: Himnegi | Role: USER', '2026-02-22 01:36:54');
 
 -- --------------------------------------------------------
 
@@ -280,7 +280,7 @@ CREATE TABLE `users` (
   `name` varchar(100) NOT NULL,
   `username` varchar(50) NOT NULL,
   `password` varchar(20) NOT NULL,
-  `rank` enum('ADMIN','CO','ITJCO','CLERK','USER') NOT NULL,
+  `role` enum('ADMIN','CO','ITJCO','CLERK','USER') NOT NULL,
   `army_no` varchar(50) NOT NULL,
   `created_at` timestamp NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
@@ -289,7 +289,7 @@ CREATE TABLE `users` (
 -- Dumping data for table `users`
 --
 
-INSERT INTO `users` (`id`, `name`, `username`, `password`, `rank`, `army_no`, `created_at`) VALUES
+INSERT INTO `users` (`id`, `name`, `username`, `password`, `role`, `army_no`, `created_at`) VALUES
 (1, 'Amit Sharma', 'amit.sharma', 'Admin@123', 'ADMIN', 'IC-1001', '2026-02-20 05:30:32'),
 (2, 'Col Rajiv Malhotra', 'rajiv.malhotra', 'CO@123A', 'CO', 'IC-1002', '2026-02-20 05:30:32'),
 (3, 'Col Ankit Chauhan', 'ankit.chauhan', 'CO@456A', 'CO', 'IC-1003', '2026-02-20 05:30:32'),
@@ -316,7 +316,7 @@ CREATE TABLE `user_requests` (
   `username` varchar(100) DEFAULT NULL,
   `password` varchar(20) DEFAULT NULL,
   `army_no` varchar(50) DEFAULT NULL,
-  `rank` enum('ADMIN','CO','ITJCO','CLERK','USER') DEFAULT NULL,
+  `role` enum('ADMIN','CO','ITJCO','CLERK','USER') DEFAULT NULL,
   `requested_by` varchar(100) DEFAULT NULL,
   `request_date` date DEFAULT NULL,
   `status` enum('Pending','Approved','Rejected') DEFAULT 'Pending',
@@ -329,7 +329,7 @@ CREATE TABLE `user_requests` (
 -- Dumping data for table `user_requests`
 --
 
-INSERT INTO `user_requests` (`id`, `request_type`, `full_name`, `username`, `password`, `army_no`, `rank`, `requested_by`, `request_date`, `status`, `approved_by`, `approval_date`, `remarks`) VALUES
+INSERT INTO `user_requests` (`id`, `request_type`, `full_name`, `username`, `password`, `army_no`, `role`, `requested_by`, `request_date`, `status`, `approved_by`, `approval_date`, `remarks`) VALUES
 (1, 'CREATE', 'Karan Negi', 'negi001', 'negi001', 'jk6789', 'USER', 'clerk', '2026-02-18', 'Approved', 'admin', '2026-02-18', NULL),
 (2, 'CREATE', 'karan bisht', 'bisht001', 'bisht001', 'ki98765', 'ADMIN', 'clerk', '2026-02-18', 'Rejected', 'admin', '2026-02-18', 'Retired'),
 (4, 'CREATE', 'Priyanka Rawat', 'priyanka.rawat', 'Priyanka#27', 'COL098765', 'CLERK', 'SELF', '2026-02-20', 'Approved', 'amit.sharma', '2026-02-20', NULL),

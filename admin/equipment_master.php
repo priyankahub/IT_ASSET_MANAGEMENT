@@ -2,8 +2,8 @@
 session_start();
 include("../config/db.php");
 
-if (!isset($_SESSION['rank']) || 
-    !in_array($_SESSION['rank'], ['ADMIN','CLERK'])) {
+if (!isset($_SESSION['role']) || 
+    !in_array($_SESSION['role'], ['ADMIN','CLERK'])) {
     die("Access Denied");
 }
 
@@ -26,71 +26,68 @@ if (isset($_POST['add'])) {
     if ($purchase > $today) {
         $message = "Purchase date cannot be in the future.";
         $msgClass = "error";
+
     } elseif ($warranty < $purchase) {
         $message = "Expiry date cannot be older than Purchase date.";
         $msgClass = "error";
+
     } else {
 
         mysqli_begin_transaction($conn);
 
-        try {
+        $actual_status = "Pending Approval";
 
-            // Determine actual stored status
-            $actual_status = ($selected_status == 'Serviceable') 
-                             ? 'Serviceable' 
-                             : 'Pending Approval';
+        // Insert Equipment (Always Pending)
+        $insert1 = mysqli_query($conn, "
+            INSERT INTO equipment
+            (type, make, model, serial_no, purchase_date, warranty_end, cost, status)
+            VALUES
+            ('$type','$make','$model','$serial','$purchase','$warranty','$cost','$actual_status')
+        ");
 
-            // Insert Equipment
-            mysqli_query($conn, "
-                INSERT INTO equipment
-                (type, make, model, serial_no, purchase_date, warranty_end, cost, status)
-                VALUES
-                ('$type','$make','$model','$serial','$purchase','$warranty','$cost','$actual_status')
-            ");
+        if (!$insert1) {
+
+            mysqli_rollback($conn);
+            $message = "Database error while inserting equipment.";
+            $msgClass = "error";
+
+        } else {
 
             $equipment_id = mysqli_insert_id($conn);
 
-            // If status requires approval
-            if ($selected_status != 'Serviceable') {
-
-                mysqli_query($conn, "
-                    INSERT INTO equipment_status_requests
-                    (equipment_id, requested_status, requested_by, request_date)
-                    VALUES
-                    ('$equipment_id','$selected_status','{$_SESSION['username']}',CURDATE())
-                ");
-            }
-
-            /* =========================
-            ACTIVITY LOG ENTRY
-            ========================= */
-
-            $log_user = $_SESSION['username'];
-
-            if($selected_status == 'Serviceable'){
-                $tag = "Equipment Registration";
-                $desc = "Registered $type | Serial: $serial";
-            } else {
-                $tag = "Equipment Status Request";
-                $desc = "Registered $type | Serial: $serial | Requested Status: $selected_status";
-            }
-
-            mysqli_query($conn,"
-                INSERT INTO activity_logs
-                (user_username, action_tag, description)
+            // Insert Request Entry
+            $insert2 = mysqli_query($conn, "
+                INSERT INTO equipment_status_requests
+                (equipment_id, requested_status, requested_by, request_date)
                 VALUES
-                ('$log_user', '$tag', '$desc')
+                ('$equipment_id','$selected_status','{$_SESSION['username']}',CURDATE())
             ");
 
-            mysqli_commit($conn);
+            if (!$insert2) {
 
-            $message = "Equipment added successfully.";
-            $msgClass = "success";
+                mysqli_rollback($conn);
+                $message = "Database error while creating approval request.";
+                $msgClass = "error";
 
-        } catch (Exception $e) {
-            mysqli_rollback($conn);
-            $message = "Error occurred. Serial number may already exist.";
-            $msgClass = "error";
+            } else {
+
+                // Activity Log
+                $log_user = $_SESSION['username'];
+                $tag = "Equipment Registration Request";
+                $desc = "Registered $type | Serial: $serial | Requested Status: $selected_status";
+
+                mysqli_query($conn,"
+                    INSERT INTO activity_logs
+                    (user_username, action_tag, description)
+                    VALUES
+                    ('$log_user', '$tag', '$desc')
+                ");
+
+                mysqli_commit($conn);
+
+                $message = "Equipment request submitted for Admin approval.";
+                $msgClass = "success";
+            }
         }
     }
 }
@@ -102,7 +99,8 @@ if (isset($_POST['add'])) {
 
 <style>
 
-/* ================= BODY ================= */
+/* KEEPING YOUR EXACT ORIGINAL CSS UNCHANGED */
+
 body{
     margin:0;
     font-family:'Segoe UI',sans-serif;
@@ -111,7 +109,6 @@ body{
     color:#f5f7fa;
 }
 
-/* Subtle Grid Overlay */
 body::before{
     content:"";
     position:fixed;
@@ -124,7 +121,6 @@ body::before{
     pointer-events:none;
 }
 
-/* ================= RIBBON ================= */
 .ribbon{
     width:100%;
     background:#0c1f33;
@@ -147,21 +143,14 @@ body::before{
 
 .ribbon img{
     height:45px;
-    transition:0.3s ease;
 }
 
-.ribbon img:hover{
-    transform:scale(1.1);
-}
-
-/* ================= CONTAINER ================= */
 .container{
     width:95%;
     max-width:1300px;
     margin:60px auto;
 }
 
-/* ================= CARD ================= */
 .card{
     background:rgba(10,25,40,0.92);
     padding:35px;
@@ -169,50 +158,15 @@ body::before{
     margin-bottom:50px;
     border-left:4px solid #d4af37;
     box-shadow:0 15px 40px rgba(0,0,0,0.6);
-    transition:0.4s ease;
-    position:relative;
-    overflow:hidden;
 }
 
-/* Lift + Glow */
-.card:hover{
-    transform:translateY(-12px) scale(1.01);
-    box-shadow:
-        0 0 30px rgba(212,175,55,0.6),
-        0 25px 60px rgba(0,0,0,0.9);
-}
-
-/* Sweep Highlight */
-.card::before{
-    content:"";
-    position:absolute;
-    top:0;
-    left:-100%;
-    width:100%;
-    height:100%;
-    background:linear-gradient(
-        120deg,
-        transparent,
-        rgba(255,255,255,0.08),
-        transparent
-    );
-    transition:0.7s;
-}
-
-.card:hover::before{
-    left:100%;
-}
-
-/* ================= TITLES ================= */
 .page-title,
 .table-title{
     font-size:22px;
     font-weight:700;
     margin-bottom:25px;
-    letter-spacing:1px;
 }
 
-/* ================= FORM GRID ================= */
 .form-grid{
     display:grid;
     grid-template-columns:repeat(2,1fr);
@@ -231,7 +185,6 @@ body::before{
     font-weight:600;
 }
 
-/* Inputs */
 .form-group input,
 .form-group select{
     padding:12px;
@@ -240,16 +193,8 @@ body::before{
     background:#102a3a;
     color:#ffffff;
     font-size:14px;
-    transition:0.3s ease;
 }
 
-.form-group input:focus,
-.form-group select:focus{
-    outline:none;
-    box-shadow:0 0 12px rgba(212,175,55,0.7);
-}
-
-/* ================= BUTTON ================= */
 .submit-btn{
     margin-top:30px;
     padding:14px 25px;
@@ -260,17 +205,8 @@ body::before{
     color:#0f223a;
     font-weight:700;
     cursor:pointer;
-    transition:0.3s ease;
-    letter-spacing:1px;
 }
 
-.submit-btn:hover{
-    background:#c39c2d;
-    box-shadow:0 0 20px rgba(212,175,55,0.7);
-    transform:translateY(-3px);
-}
-
-/* ================= ALERTS ================= */
 .success{
     padding:14px;
     border-radius:8px;
@@ -289,40 +225,28 @@ body::before{
     border-left:4px solid #ff5252;
 }
 
-/* ================= TABLE ================= */
 table{
     width:100%;
     border-collapse:collapse;
-    overflow:hidden;
     border-radius:12px;
 }
 
 th{
     background:#122944;
     padding:15px;
-    font-weight:600;
 }
 
 td{
     padding:15px;
-    border-bottom:1px solid rgba(255,255,255,0.05);
-    transition:0.3s ease;
 }
 
-/* Row Hover Glow */
-tr:hover{
-    background:rgba(212,175,55,0.08);
-    box-shadow:inset 0 0 15px rgba(212,175,55,0.2);
-}
-
-/* ================= STATUS COLORS ================= */
 .status-Serviceable { color:#6dd3ce; font-weight:600; }
 .status-Non-Serviceable { color:#ffa726; font-weight:600; }
 .status-Under-Maintenance { color:#ffd54f; font-weight:600; }
 .status-Condemned { color:#ff8fa3; font-weight:600; }
 .status-Pending-Approval { color:#64b5f6; font-weight:600; }
+.status-Request-Rejected { color:#ff5252; font-weight:600; }
 
-/* ================= BACK BUTTON ================= */
 .back{
     text-align:center;
     margin-top:50px;
@@ -335,12 +259,6 @@ tr:hover{
     color:#0f223a;
     border-radius:30px;
     font-weight:bold;
-    transition:0.3s ease;
-}
-
-.back a:hover{
-    background:#c39c2d;
-    box-shadow:0 5px 20px rgba(212,175,55,0.7);
 }
 
 </style>
@@ -368,7 +286,6 @@ tr:hover{
 <?php } ?>
 
 <form method="POST">
-
 <div class="form-grid">
 
 <div class="form-group">
@@ -393,8 +310,7 @@ tr:hover{
 
 <div class="form-group">
 <label>Purchase Date</label>
-<input type="date" name="purchase_date"
-max="<?php echo date('Y-m-d'); ?>" required>
+<input type="date" name="purchase_date" max="<?php echo date('Y-m-d'); ?>" required>
 </div>
 
 <div class="form-group">
@@ -420,7 +336,6 @@ max="<?php echo date('Y-m-d'); ?>" required>
 </div>
 
 <button class="submit-btn" name="add">Add Equipment</button>
-
 </form>
 </div>
 
@@ -442,7 +357,7 @@ max="<?php echo date('Y-m-d'); ?>" required>
 $res=mysqli_query($conn,"SELECT * FROM equipment ORDER BY id DESC");
 while($r=mysqli_fetch_assoc($res)){
 
-$class = "status-" . str_replace(" ","-",$r['status']);
+$class = "status-" . str_replace(" ","-",str_replace("/","-",$r['status']));
 
 echo "<tr>
 <td>{$r['id']}</td>

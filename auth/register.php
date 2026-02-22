@@ -9,7 +9,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $username = mysqli_real_escape_string($conn, $_POST['username']);
     $password = $_POST['password'];
     $army_no  = mysqli_real_escape_string($conn, $_POST['army_no']);
-    $rank     = mysqli_real_escape_string($conn, $_POST['rank']);
+    $role     = mysqli_real_escape_string($conn, $_POST['role']);
 
     if (!preg_match('/^(?=.*[A-Z])(?=.*[\W_]).{6,20}$/', $password)) {
         $message = "❌ Password must be 6-20 chars, include 1 Capital & 1 Special character.";
@@ -38,9 +38,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
             mysqli_query($conn,"
                 INSERT INTO user_requests
-                (request_type, full_name, username, password, army_no, rank, requested_by, request_date, status)
+                (request_type, full_name, username, password, army_no, role, requested_by, request_date, status)
                 VALUES
-                ('CREATE','$name','$username','$password','$army_no','$rank','SELF',CURDATE(),'Pending')
+                ('CREATE','$name','$username','$password','$army_no','$role','SELF',CURDATE(),'Pending')
             ");
 
             $message = "✅ Registration request sent for Admin approval.";
@@ -268,8 +268,8 @@ a:hover{
     <input type="password" name="password" placeholder="Password" required>
     <input type="text" name="army_no" placeholder="Army Number" required>
 
-    <select name="rank" required>
-        <option value="">Select Rank</option>
+    <select name="role" required>
+        <option value="">Select Role</option>
         <option value="USER">USER</option>
         <option value="CLERK">CLERK</option>
         <option value="ITJCO">ITJCO</option>

@@ -2,8 +2,8 @@
 session_start();
 include("../config/db.php");
 
-/* ===== Rank Check ===== */
-if (!isset($_SESSION['rank']) || $_SESSION['rank'] != 'CLERK') {
+/* ===== Role Check ===== */
+if (!isset($_SESSION['role']) || $_SESSION['role'] != 'CLERK') {
     die("Access Denied");
 }
 

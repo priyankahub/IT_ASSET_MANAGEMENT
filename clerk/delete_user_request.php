@@ -2,7 +2,7 @@
 session_start();
 include("../config/db.php");
 
-if (!isset($_SESSION['rank']) || $_SESSION['rank']!='CLERK') {
+if (!isset($_SESSION['role']) || $_SESSION['role']!='CLERK') {
     die("Access Denied");
 }
 
@@ -11,9 +11,9 @@ $userData=null;
 
 /* ===== FETCH USERS FOR DROPDOWN ===== */
 $users=mysqli_query($conn,"
-    SELECT username,name,rank 
+    SELECT username,name,role 
     FROM users 
-    WHERE rank IN ('CLERK','ITJCO','USER')
+    WHERE role IN ('CLERK','ITJCO','USER')
 ");
 
 /* ===== LOAD USER DETAILS ===== */
@@ -24,7 +24,7 @@ if(isset($_POST['load_user'])){
     $res=mysqli_query($conn,"
         SELECT * FROM users 
         WHERE username='$username'
-        AND rank IN ('CLERK','ITJCO','USER')
+        AND role IN ('CLERK','ITJCO','USER')
     ");
 
     if(mysqli_num_rows($res)==0){
@@ -43,7 +43,7 @@ if(isset($_POST['submit_delete'])){
     $userCheck = mysqli_query($conn,"
         SELECT * FROM users 
         WHERE username='$username'
-        AND rank IN ('USER','CLERK','ITJCO')
+        AND role IN ('USER','CLERK','ITJCO')
     ");
 
     if(mysqli_num_rows($userCheck)==0){
@@ -69,14 +69,14 @@ if(isset($_POST['submit_delete'])){
             /* ===== Insert DELETE request ===== */
             mysqli_query($conn,"
                 INSERT INTO user_requests
-                (request_type,full_name,username,password,army_no,rank,requested_by,request_date,status)
+                (request_type,full_name,username,password,army_no,role,requested_by,request_date,status)
                 VALUES
                 ('DELETE',
                  '{$userData['name']}',
                  '{$userData['username']}',
                  '',
                  '{$userData['army_no']}',
-                 '{$userData['rank']}',
+                 '{$userData['role']}',
                  '{$_SESSION['username']}',
                  CURDATE(),
                  'Pending')
@@ -89,7 +89,7 @@ if(isset($_POST['submit_delete'])){
                 VALUES
                 ('{$_SESSION['username']}',
                  'Delete User',
-                 'Requested DELETE for user: $username | Rank: {$userData['rank']}')
+                 'Requested DELETE for user: $username | Role: {$userData['role']}')
             ");
 
             $message="⚠ Delete request sent to Admin for approval.";
@@ -265,7 +265,7 @@ button:hover{
 <option value="">-- Select User --</option>
 <?php while($u=mysqli_fetch_assoc($users)){ ?>
 <option value="<?php echo $u['username']; ?>">
-<?php echo $u['username']." - ".$u['name']." (".$u['rank'].")"; ?>
+<?php echo $u['username']." - ".$u['name']." (".$u['role'].")"; ?>
 </option>
 <?php } ?>
 </select>
@@ -287,11 +287,11 @@ button:hover{
 <input type="hidden" name="username" value="<?php echo $userData['username']; ?>">
 <input type="hidden" name="full_name" value="<?php echo $userData['name']; ?>">
 <input type="hidden" name="army_no" value="<?php echo $userData['army_no']; ?>">
-<input type="hidden" name="rank" value="<?php echo $userData['rank']; ?>">
+<input type="hidden" name="role" value="<?php echo $userData['role']; ?>">
 
 <p><strong>Username:</strong> <?php echo $userData['username']; ?></p>
 <p><strong>Full Name:</strong> <?php echo $userData['name']; ?></p>
-<p><strong>Rank:</strong> <?php echo $userData['rank']; ?></p>
+<p><strong>Role:</strong> <?php echo $userData['role']; ?></p>
 <p><strong>Army No:</strong> <?php echo $userData['army_no']; ?></p>
 
 <button type="submit" name="submit_delete">

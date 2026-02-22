@@ -5,7 +5,7 @@ include("../config/db.php");
 error_reporting(E_ALL);
 ini_set('display_errors', 1);
 
-if (!isset($_SESSION['rank']) || $_SESSION['rank'] != 'CLERK') {
+if (!isset($_SESSION['role']) || $_SESSION['role'] != 'CLERK') {
     die("Access Denied");
 }
 
@@ -17,7 +17,7 @@ if (isset($_POST['submit_request'])) {
     $full_name    = mysqli_real_escape_string($conn, $_POST['full_name']);
     $username     = mysqli_real_escape_string($conn, $_POST['username']);
     $army_no      = mysqli_real_escape_string($conn, $_POST['army_no']);
-    $rank         = mysqli_real_escape_string($conn, $_POST['rank']);
+    $role         = mysqli_real_escape_string($conn, $_POST['role']);
     $requested_by = $_SESSION['username'];
     $today        = date('Y-m-d');
 
@@ -48,9 +48,9 @@ if (isset($_POST['submit_request'])) {
 
         mysqli_query($conn,"
             INSERT INTO user_requests
-            (request_type, full_name, username, password, army_no, rank, requested_by, request_date, status)
+            (request_type, full_name, username, password, army_no, role, requested_by, request_date, status)
             VALUES
-            ('$request_type','$full_name','$username','$password','$army_no','$rank','$requested_by','$today','Pending')
+            ('$request_type','$full_name','$username','$password','$army_no','$role','$requested_by','$today','Pending')
         ");
 
         // Activity Log Entry
@@ -239,8 +239,8 @@ button:hover{
 <label>Army Number</label>
 <input type="text" name="army_no" required>
 
-<label>Rank</label>
-<select name="rank" required>
+<label>Role</label>
+<select name="role" required>
     <option value="ADMIN">ADMIN</option>
     <option value="CO">CO</option>
     <option value="ITJCO">ITJCO</option>

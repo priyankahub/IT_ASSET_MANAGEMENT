@@ -2,7 +2,7 @@
 session_start();
 include("../config/db.php");
 
-if (!isset($_SESSION['rank']) || $_SESSION['rank'] != 'ADMIN') {
+if (!isset($_SESSION['role']) || $_SESSION['role'] != 'ADMIN') {
     die("Access Denied");
 }
 
@@ -21,14 +21,14 @@ if (isset($_POST['update_user'])) {
     $id       = mysqli_real_escape_string($conn, $_POST['id']);
     $name     = mysqli_real_escape_string($conn, $_POST['name']);
     $username = mysqli_real_escape_string($conn, $_POST['username']);
-    $rank     = mysqli_real_escape_string($conn, $_POST['rank']);
+    $role     = mysqli_real_escape_string($conn, $_POST['role']);
     $army_no  = mysqli_real_escape_string($conn, $_POST['army_no']);
 
     mysqli_query($conn,"
         UPDATE users
         SET name='$name',
             username='$username',
-            rank='$rank',
+            role='$role',
             army_no='$army_no'
         WHERE id='$id'
     ");
@@ -43,10 +43,10 @@ if (isset($_POST['delete_user'])) {
     $id = mysqli_real_escape_string($conn, $_POST['id']);
 
     // EXTRA SECURITY: Prevent deleting ADMIN & CO from backend also
-    $checkRank = mysqli_query($conn,"SELECT rank FROM users WHERE id='$id'");
-    $rankData = mysqli_fetch_assoc($checkRank);
+    $checkRank = mysqli_query($conn,"SELECT role FROM users WHERE id='$id'");
+    $roleData = mysqli_fetch_assoc($checkRank);
 
-    if ($rankData['rank'] != 'ADMIN' && $rankData['rank'] != 'CO') {
+    if ($roleData['role'] != 'ADMIN' && $roleData['role'] != 'CO') {
         mysqli_query($conn,"DELETE FROM users WHERE id='$id'");
     }
 
@@ -253,13 +253,13 @@ INF BN – USER MANAGEMENT CONTROL
 <label>Army Number</label>
 <input type="text" name="army_no" value="<?php echo $editUser['army_no']; ?>" required>
 
-<label>Rank</label>
-<select name="rank" required>
-<option value="ADMIN" <?php if($editUser['rank']=='ADMIN') echo 'selected'; ?>>ADMIN</option>
-<option value="CO" <?php if($editUser['rank']=='CO') echo 'selected'; ?>>CO</option>
-<option value="ITJCO" <?php if($editUser['rank']=='ITJCO') echo 'selected'; ?>>ITJCO</option>
-<option value="CLERK" <?php if($editUser['rank']=='CLERK') echo 'selected'; ?>>CLERK</option>
-<option value="USER" <?php if($editUser['rank']=='USER') echo 'selected'; ?>>USER</option>
+<label>Role</label>
+<select name="role" required>
+<option value="ADMIN" <?php if($editUser['role']=='ADMIN') echo 'selected'; ?>>ADMIN</option>
+<option value="CO" <?php if($editUser['role']=='CO') echo 'selected'; ?>>CO</option>
+<option value="ITJCO" <?php if($editUser['role']=='ITJCO') echo 'selected'; ?>>ITJCO</option>
+<option value="CLERK" <?php if($editUser['role']=='CLERK') echo 'selected'; ?>>CLERK</option>
+<option value="USER" <?php if($editUser['role']=='USER') echo 'selected'; ?>>USER</option>
 </select>
 
 <button type="submit" name="update_user">Save Changes</button>
@@ -271,7 +271,7 @@ INF BN – USER MANAGEMENT CONTROL
 <tr>
 <th>Full Name</th>
 <th>Username</th>
-<th>Rank</th>
+<th>Role</th>
 <th>Army Number</th>
 <th>Action</th>
 </tr>
@@ -280,7 +280,7 @@ INF BN – USER MANAGEMENT CONTROL
 <tr>
 <td><?php echo $row['name']; ?></td>
 <td><?php echo $row['username']; ?></td>
-<td><?php echo $row['rank']; ?></td>
+<td><?php echo $row['role']; ?></td>
 <td><?php echo $row['army_no']; ?></td>
 <td>
 
@@ -288,7 +288,7 @@ INF BN – USER MANAGEMENT CONTROL
 <button class="edit-btn">Edit</button>
 </a>
 
-<?php if($row['rank'] != 'ADMIN' && $row['rank'] != 'CO') { ?>
+<?php if($row['role'] != 'ADMIN' && $row['role'] != 'CO') { ?>
 <form method="POST" style="display:inline;" onsubmit="return confirmDelete();">
 <input type="hidden" name="id" value="<?php echo $row['id']; ?>">
 <button type="submit" name="delete_user" class="delete-btn">Delete</button>

@@ -1,7 +1,7 @@
 <?php
 session_start();
 
-if (!isset($_SESSION['rank']) || $_SESSION['rank'] != 'CO') {
+if (!isset($_SESSION['role']) || $_SESSION['role'] != 'CO') {
     die("Access Denied");
 }
 ?>
