@@ -42,20 +42,20 @@ if (isset($_POST['delete_user'])) {
 
     $id = mysqli_real_escape_string($conn, $_POST['id']);
 
-    mysqli_query($conn,"
-        DELETE FROM users
-        WHERE id='$id'
-    ");
+    // EXTRA SECURITY: Prevent deleting ADMIN & CO from backend also
+    $checkRank = mysqli_query($conn,"SELECT rank FROM users WHERE id='$id'");
+    $rankData = mysqli_fetch_assoc($checkRank);
+
+    if ($rankData['rank'] != 'ADMIN' && $rankData['rank'] != 'CO') {
+        mysqli_query($conn,"DELETE FROM users WHERE id='$id'");
+    }
 
     header("Location: manage_users.php");
     exit;
 }
 
 /* ================= FETCH ALL USERS ================= */
-$users = mysqli_query($conn,"
-    SELECT * FROM users
-    ORDER BY id DESC
-");
+$users = mysqli_query($conn,"SELECT * FROM users ORDER BY id DESC");
 ?>
 
 <!DOCTYPE html>
@@ -119,17 +119,6 @@ h2{
     border-left:3px solid #d4af37;
 }
 
-.edit-card h3{
-    margin-bottom:15px;
-}
-
-.edit-card label{
-    font-size:13px;
-    color:#b8c6db;
-    display:block;
-    margin-top:10px;
-}
-
 .edit-card input,
 .edit-card select{
     width:100%;
@@ -139,12 +128,6 @@ h2{
     border:1px solid #2c4c73;
     background:#0f223a;
     color:#fff;
-}
-
-.edit-card input:focus,
-.edit-card select:focus{
-    border-color:#d4af37;
-    outline:none;
 }
 
 .edit-card button{
@@ -158,11 +141,6 @@ h2{
     cursor:pointer;
 }
 
-.edit-card button:hover{
-    background:#c39c2d;
-}
-
-/* TABLE */
 table{
     width:100%;
     border-collapse:collapse;
@@ -172,7 +150,6 @@ th{
     background:#122944;
     padding:12px;
     text-align:center;
-    font-weight:600;
 }
 
 td{
@@ -193,26 +170,29 @@ tr:hover{
     border:none;
     border-radius:4px;
     cursor:pointer;
+    font-weight:600;
 }
 
 .edit-btn:hover{
     background:#f4b942;
+    transform:scale(1.05);
 }
 
 .delete-btn{
-    background:#ff8fa3;
-    color:#000;
+    background:#ff4d6d;
+    color:#fff;
     padding:6px 12px;
     border:none;
     border-radius:4px;
     cursor:pointer;
+    font-weight:600;
 }
 
 .delete-btn:hover{
-    background:#ff6f91;
+    background:#ff1e4d;
+    transform:scale(1.05);
 }
 
-/* FOOTER */
 .footer{
     margin-top:40px;
     text-align:center;
@@ -226,11 +206,20 @@ tr:hover{
     border-radius:6px;
     font-weight:600;
 }
-
-.footer a:hover{
-    background:#c39c2d;
-}
 </style>
+
+<script>
+// DELETE CONFIRMATION
+function confirmDelete() {
+    return confirm("⚠ WARNING!\n\nAre you sure you want to perform DELETE?\nThis action is dangerous and CANNOT be reversed!");
+}
+
+// EDIT CONFIRMATION
+function confirmEdit() {
+    return confirm("⚠ Attention!\n\nYou are going to EDIT an existing user.\nPlease double-check the details before proceeding.\n\nAre you sure?");
+}
+</script>
+
 </head>
 
 <body>
@@ -240,7 +229,6 @@ INF BN – USER MANAGEMENT CONTROL
 </div>
 
 <div class="container">
-
 <div class="card">
 
 <h2>Manage Users</h2>
@@ -253,7 +241,7 @@ INF BN – USER MANAGEMENT CONTROL
 <div class="edit-card">
 <h3>Edit User</h3>
 
-<form method="POST">
+<form method="POST" onsubmit="return confirmEdit();">
 <input type="hidden" name="id" value="<?php echo $editUser['id']; ?>">
 
 <label>Full Name</label>
@@ -300,10 +288,12 @@ INF BN – USER MANAGEMENT CONTROL
 <button class="edit-btn">Edit</button>
 </a>
 
-<form method="POST" style="display:inline;">
+<?php if($row['rank'] != 'ADMIN' && $row['rank'] != 'CO') { ?>
+<form method="POST" style="display:inline;" onsubmit="return confirmDelete();">
 <input type="hidden" name="id" value="<?php echo $row['id']; ?>">
 <button type="submit" name="delete_user" class="delete-btn">Delete</button>
 </form>
+<?php } ?>
 
 </td>
 </tr>
