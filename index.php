@@ -28,6 +28,7 @@ session_start();
         🔔 System Maintenance on Sunday 02:00 AM |
         🚀 New Asset Tracking Module Launched |
         🔐 Security Upgrade Completed Successfully |
+        📚 2026 New batch enrolled for Infantry School, MHOW | 
         📢 Welcome to IT Equipment Lifecycle Management Portal
     </div>
 </div>
@@ -60,6 +61,26 @@ session_start();
         </div>
     </div>
 
+    <!-- Gallery -->
+    <div class="dropdown">
+        <button class="dropbtn">Gallery ▾</button>
+        <div class="dropdown-content">
+            <a href="https://indianarmy.nic.in/Media/" target="_blank">Photos</a>
+            <a href="https://indianarmy.nic.in/Media/Videos" target="_blank">Videos</a>
+        </div>
+    </div>
+
+    <!-- External Links -->
+    <div class="dropdown">
+        <button class="dropbtn">External Links ▾</button>
+        <div class="dropdown-content">
+            <a href="https://www.mod.gov.in/" target="_blank">Ministry of Defence</a>
+            <a href="https://indianarmy.nic.in/Home/Index" target="_blank">Indian Army</a>
+            <a href="https://indiannavy.nic.in/" target="_blank">Indian Navy</a>
+            <a href="https://indianairforce.nic.in/" target="_blank">Indian Airforce</a>
+        </div>
+    </div>
+
     <!-- Contact Us -->
     <a href="https://joinindianarmy.nic.in/contact-us.htm" target="_blank">Contact Us</a>
 
@@ -84,27 +105,43 @@ session_start();
             <button class="next" onclick="moveSlide(1)">❯</button>
         </div>
     </div>
-
+    
     <div class="right-panel">
 
         <div class="info-card">
             <h3>Latest News</h3>
-            <ul>
-                <li>Annual Tactical Training Exercise completed.</li>
-                <li>Modern Warfare Simulation Lab inaugurated.</li>
-                <li>Leadership Program launched.</li>
-                <li>Joint Exercise scheduled next quarter.</li>
-            </ul>
+            <div class="news-scroll">
+                <ul>
+                    <li>Annual Tactical Training Exercise completed successfully.</li>
+                    <li>Modern Warfare Simulation Lab inaugurated at Mhow.</li>
+                    <li>Young Officers Leadership Capsule launched.</li>
+                    <li>Joint Indo-Foreign Military Exercise concluded.</li>
+                    <li>Cyber Warfare Awareness Workshop conducted.</li>
+                    <li>Infantry Tactical Innovation Challenge announced.</li>
+                    <li>High Altitude Survival Training completed.</li>
+                    <li>Advanced Drone Combat Training integrated.</li>
+                    <li>Army Day Parade rehearsals underway.</li>
+                    <li>New IT Infrastructure Modernization Phase approved.</li>
+                </ul>
+            </div>
         </div>
 
         <div class="info-card">
             <h3>Notices / Circulars</h3>
-            <ul>
-                <li>Update asset inventory before 30th Sept.</li>
-                <li>System maintenance this Sunday.</li>
-                <li>New IT Asset Policy effective immediately.</li>
-                <li>Cyber security training mandatory.</li>
-            </ul>
+            <div class="notice-scroll">
+                <ul>
+                    <li>Update asset inventory before 30th Sept.</li>
+                    <li>System maintenance scheduled Sunday 02:00 AM.</li>
+                    <li>New IT Asset Policy effective immediately.</li>
+                    <li>Cyber security awareness training mandatory.</li>
+                    <li>Quarterly Audit documentation submission due.</li>
+                    <li>All units to verify asset tagging compliance.</li>
+                    <li>Password reset advisory issued for all users.</li>
+                    <li>Annual hardware verification drive initiated.</li>
+                    <li>Procurement guidelines updated as per MoD directive.</li>
+                    <li>Data backup validation exercise to commence next week.</li>
+                </ul>
+            </div>
         </div>
 
         <div class="info-card">
