@@ -373,14 +373,7 @@ tr:hover{
 
 <div class="form-group">
 <label>Equipment Type</label>
-<select name="type" required>
-<?php
-$types = mysqli_query($conn,"SELECT type_name FROM equipment_types WHERE is_active=1");
-while($t=mysqli_fetch_assoc($types)){
-echo "<option value='{$t['type_name']}'>{$t['type_name']}</option>";
-}
-?>
-</select>
+<input type="text" name="type" required>
 </div>
 
 <div class="form-group">
