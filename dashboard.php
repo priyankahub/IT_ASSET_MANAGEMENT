@@ -90,16 +90,74 @@ body::before{
     margin:0;
     font-size:24px;
 }
-
-.role-badge{
-    display:inline-block;
+/* Align badge + profile under Welcome */
+.profile-wrapper{
     margin-top:15px;
+    display:flex;
+    align-items:center;
+    gap:15px;
+}
+/* ===== ROLE BADGE ===== */
+.role-badge{
     padding:8px 20px;
     border-radius:25px;
     font-size:13px;
     background:#00c6ff;
     color:#001f54;
     font-weight:bold;
+}
+/* ===== PROFILE BUTTON ===== */
+.profile-dropdown{
+    position:relative;
+}
+/* ===== PROFILE BUTTON ===== */
+.profile-dropdown{
+    position:relative;
+}
+
+.profile-btn{
+    padding:8px 20px;
+    border-radius:25px;
+    font-size:13px;
+    background:#102a3a;
+    color:#00c6ff;
+    border:1px solid rgba(0,198,255,0.5);
+    cursor:pointer;
+    font-weight:bold;
+    transition:0.3s ease;
+}
+
+.profile-btn:hover{
+    background:#00c6ff;
+    color:#001f54;
+}
+
+.dropdown-content{
+    display:none;
+    position:absolute;
+    top:45px;
+    left:0;
+    background:#0c1f33;
+    min-width:220px;
+    border-radius:12px;
+    box-shadow:0 15px 40px rgba(0,0,0,0.8);
+    border:1px solid rgba(0,198,255,0.4);
+    overflow:hidden;
+    z-index:999;
+}
+
+.dropdown-content a{
+    display:block;
+    padding:14px 18px;
+    text-decoration:none;
+    color:#00c6ff;
+    font-size:14px;
+    transition:0.3s ease;
+}
+
+.dropdown-content a:hover{
+    background:#00c6ff;
+    color:#001f54;
 }
 
 /* ===== Cards ===== */
@@ -241,7 +299,19 @@ body::before{
 
 <div class="header">
     <h2>Welcome, <?php echo htmlspecialchars($name); ?></h2>
-    <span class="role-badge"><?php echo $r; ?></span>
+
+    <div class="profile-wrapper">
+        <span class="role-badge"><?php echo $r; ?></span>
+
+        <div class="profile-dropdown">
+            <button class="profile-btn" onclick="toggleDropdown()">Profile ▾</button>
+
+            <div id="profileMenu" class="dropdown-content">
+                <a href="profile.php">Personal Details</a>
+                <a href="password_management.php">Password Management</a>
+            </div>
+        </div>
+    </div>
 </div>
 
 <div class="cards">
@@ -334,3 +404,20 @@ body::before{
 
 </body>
 </html>
+
+<script>
+function toggleDropdown() {
+    var menu = document.getElementById("profileMenu");
+    menu.style.display = (menu.style.display === "block") ? "none" : "block";
+}
+
+// Close dropdown when clicking outside
+window.onclick = function(event) {
+    if (!event.target.matches('.profile-btn')) {
+        var dropdown = document.getElementById("profileMenu");
+        if (dropdown.style.display === "block") {
+            dropdown.style.display = "none";
+        }
+    }
+}
+</script>
