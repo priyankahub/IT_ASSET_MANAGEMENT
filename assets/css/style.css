@@ -15,11 +15,11 @@ body:not(.homepage){
 
 /* =========================================================
    HOMEPAGE (index.php ONLY)
-   Dark Premium Military Theme
+   Premium Blue Defence Theme (Balanced)
 ========================================================= */
 body.homepage{
-    background:linear-gradient(135deg,#060c1a,#0b132b,#111827);
-    color:#fff;
+    background:linear-gradient(135deg,#2c3e50,#3a6073,#4b79a1);
+    color:#f5f7fa;
     font-family:'Segoe UI', sans-serif;
     animation: fadePage 0.6s ease-in-out;
 }
@@ -29,29 +29,22 @@ body.homepage{
     to{ opacity:1; }
 }
 
-/* =========================================================
-   HEADER SECTION (Title + Logo)
-   - Centered with dual logo
-   - Ribbon style with transparency
-========================================================= */
-
+/* ================= HEADER BANNER ================= */
 .header-banner{
     position:relative;
     text-align:center;
-    height:15vh;              /* thinner banner */
-    overflow:hidden;          /* crop image */
+    height:15vh;
+    overflow:hidden;
 }
 
-/* Background image control */
 body.homepage .banner-img{
     width:100%;
     height:100%;
-    object-fit:cover;         /* proper crop */
-    object-position:top;      /* show top part */
+    object-fit:cover;
+    object-position:center;
     display:block;
 }
 
-/* Ribbon strip */
 .banner-content{
     display:flex;
     align-items:center;
@@ -61,45 +54,35 @@ body.homepage .banner-img{
     position:absolute;
     top:50%;
     left:50%;
-    transform:translate(-50%, -50%);  /* TRUE vertical + horizontal center */
+    transform:translate(-50%, -50%);
 
     padding:15px 40px;
-
-    background:rgba(0,0,0,0.55);
+    background:rgba(44,62,80,0.75);
     backdrop-filter:blur(6px);
-    border-radius:8px;
-
-    width:auto;
+    border-radius:10px;
     max-width:85%;
 }
 
-/* Title styling */
 .banner-content h1{
-    font-size:48px;              /* slightly reduced to fit in one line */
-    letter-spacing:4px;
+    font-size:46px;
+    letter-spacing:3px;
     background:linear-gradient(90deg,#ffd700,#ffffff);
     -webkit-background-clip:text;
     -webkit-text-fill-color:transparent;
-    margin:0;
-    white-space:nowrap;          /* FORCE single line */
+    white-space:nowrap;
 }
 
-/* Logo styling */
 .logo{
     width:110px;
 }
-/* =========================================================
-   MOVING NEWS RIBBON
-   - Continuous scrolling
-   - Hover highlight
-========================================================= */
+
+/* ================= NEWS TICKER ================= */
 .news-ticker{
     background:#ffd700;
     overflow:hidden;
     height:42px;
     display:flex;
     align-items:center;
-    position:relative;
 }
 
 .ticker-track{
@@ -119,20 +102,13 @@ body.homepage .banner-img{
     100%{ transform:translateX(-100%); }
 }
 
-/* =========================================================
-   NAVIGATION BAR (Homepage Only)
-   - Dark premium
-   - Home icon instead of text
-   - Same line alignment
-   - Hover highlight & underline animation
-========================================================= */
+/* ================= NAVBAR ================= */
 body.homepage .navbar{
-    background:#000;
+    background:#2c3e50;
     padding:15px 60px;
     display:flex;
     align-items:center;
     gap:35px;
-    flex-wrap:nowrap;      /* Prevent wrapping */
     position:sticky;
     top:0;
     z-index:1000;
@@ -147,18 +123,15 @@ body.homepage .dropbtn{
     border:none;
     cursor:pointer;
     position:relative;
-    white-space:nowrap;   /* Keep in same line */
     transition:0.3s;
 }
 
-/* Hover highlight */
 body.homepage .navbar a:hover,
 body.homepage .dropbtn:hover{
     color:#ffd700;
     transform:translateY(-3px);
 }
 
-/* Underline animation */
 body.homepage .navbar a::after,
 body.homepage .dropbtn::after{
     content:"";
@@ -176,11 +149,7 @@ body.homepage .dropbtn:hover::after{
     width:100%;
 }
 
-/* =========================================================
-   DROPDOWN MENU (Homepage)
-   - Smooth animated appearance
-   - Hover highlight inside dropdown
-========================================================= */
+/* ================= DROPDOWN ================= */
 body.homepage .dropdown{
     position:relative;
 }
@@ -189,10 +158,10 @@ body.homepage .dropdown-content{
     position:absolute;
     top:35px;
     left:0;
-    background:#111;
+    background:#1f3554;
     min-width:200px;
     border-radius:8px;
-    box-shadow:0 10px 30px rgba(0,0,0,0.7);
+    box-shadow:0 10px 30px rgba(0,0,0,0.4);
     opacity:0;
     visibility:hidden;
     transform:translateY(10px);
@@ -205,7 +174,7 @@ body.homepage .dropdown-content a{
 }
 
 body.homepage .dropdown-content a:hover{
-    background:#1c1c1c;
+    background:#27466b;
     color:#ffd700;
 }
 
@@ -215,9 +184,7 @@ body.homepage .dropdown:hover .dropdown-content{
     transform:translateY(0);
 }
 
-/* =========================================================
-   LOGIN & SIGNUP BUTTONS (Homepage Only)
-========================================================= */
+/* ================= LOGIN / SIGNUP ================= */
 body.homepage .nav-right{
     margin-left:auto;
     display:flex;
@@ -239,23 +206,17 @@ body.homepage .signup-btn{
 
 body.homepage .signup-btn:hover{
     background:#ffcc00;
-    box-shadow:0 8px 20px rgba(255,215,0,0.5);
+    box-shadow:0 8px 20px rgba(255,215,0,0.4);
 }
 
-/* =========================================================
-   MAIN SECTION (Slider + Panels)
-========================================================= */
+/* ================= MAIN SECTION ================= */
 body.homepage .main-section{
     display:flex;
     gap:40px;
     padding:50px 8%;
 }
 
-/* =========================================================
-   SLIDER (Homepage Only)
-   - Zoom effect
-   - Premium arrows glow
-========================================================= */
+/* ================= SLIDER ================= */
 body.homepage .slider-container{ width:70%; }
 
 body.homepage .slider{
@@ -263,7 +224,7 @@ body.homepage .slider{
     height:500px;
     border-radius:15px;
     overflow:hidden;
-    box-shadow:0 20px 40px rgba(0,0,0,0.6);
+    box-shadow:0 20px 40px rgba(0,0,0,0.4);
 }
 
 body.homepage .slide{
@@ -279,13 +240,12 @@ body.homepage .slide.active{
     transform: scale(1.05);
 }
 
-/* arrows */
 body.homepage .prev,
 body.homepage .next{
     position:absolute;
     top:50%;
     transform:translateY(-50%);
-    background:rgba(0,0,0,0.6);
+    background:rgba(0,0,0,0.5);
     color:#ffd700;
     border:2px solid #ffd700;
     width:45px;height:45px;
@@ -300,11 +260,7 @@ body.homepage .next:hover{
     box-shadow:0 0 20px #ffd700;
 }
 
-/* =========================================================
-   RIGHT PANELS (Latest News, Notices, Useful Links)
-   - Pop-up effect
-   - Highlight on hover
-========================================================= */
+/* ================= RIGHT PANELS ================= */
 body.homepage .right-panel{
     width:30%;
     display:flex;
@@ -313,17 +269,17 @@ body.homepage .right-panel{
 }
 
 body.homepage .info-card{
-    background:rgba(255,255,255,0.05);
+    background:rgba(255,255,255,0.15);
     backdrop-filter:blur(12px);
     padding:22px;
     border-radius:12px;
-    border:1px solid rgba(255,255,255,0.1);
+    border:1px solid rgba(255,255,255,0.25);
     transition:0.4s ease;
 }
 
 body.homepage .info-card:hover{
-    transform:translateY(-10px) scale(1.03);
-    box-shadow:0 20px 40px rgba(0,0,0,0.7);
+    transform:translateY(-8px);
+    box-shadow:0 15px 30px rgba(0,0,0,0.4);
     border-color:#ffd700;
 }
 
@@ -341,21 +297,10 @@ body.homepage .info-card a:hover{
     text-decoration:underline;
 }
 
-/* =========================================================
-   FOOTER (Homepage Only)
-========================================================= */
+/* ================= FOOTER ================= */
 body.homepage .footer{
     text-align:center;
     padding:20px;
-    background:#0a1425;
+    background:#2c3e50;
     margin-top:40px;
-}
-/* Login page title */
-.login-title {
-    font-family: 'Cinzel', serif;   /* Professional institutional look */
-    font-size: 32px;
-    font-weight: 600;
-    letter-spacing: 1px;
-    text-transform: capitalize;
-    color: #1a1a1a;   /* Use white if dark background */
 }

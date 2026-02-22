@@ -1,6 +1,4 @@
-/* =========================================================
-   GLOBAL RESET
-========================================================= */
+/* ================= GLOBAL RESET ================= */
 *{
     margin:0;
     padding:0;
@@ -8,502 +6,356 @@
 }
 
 /* =========================================================
-   DEFAULT BODY (ADMIN / FORMS DEFAULT LIGHT MODE)
-   This keeps your existing admin pages working
+   ADMIN LIGHT MODE (Other Pages - DO NOT MODIFY)
 ========================================================= */
-body{
+body:not(.homepage){
     font-family: Arial;
-    background: #f4f4f4;
+    background:#f4f4f4;
 }
 
 /* =========================================================
-   ================= ADMIN FORMS =================
-   (YOUR ORIGINAL CODE PRESERVED)
+   HOMEPAGE (index.php ONLY)
+   Dark Premium Military Theme
 ========================================================= */
-
-form {
-    background: #fff;
-    padding: 20px;
-    width: 300px;
-    margin: auto;
-}
-
-input, button, select {
-    margin: 5px;
-    padding: 8px;
-    width: 90%;
-}
-
-table{
-    width:100%;
-    border-collapse:collapse;
-    margin-top:15px;
-}
-
-th,td{
-    padding:10px;
-    border-bottom:1px solid #ddd;
-    text-align:left;
-}
-
-th{
-    background:#f4f6f9;
-}
-
-label{
-    display:block;
-    font-weight:bold;
-    margin-bottom:5px;
-    color:#333;
-}
-
-.form-grid div{
-    display:flex;
-    flex-direction:column;
-}
-
-.edit-card{
-    background:#fff;
-    padding:25px;
-    border-radius:10px;
-    box-shadow:0 6px 15px rgba(0,0,0,0.15);
-    margin-bottom:25px;
-}
-
-.edit-card input,
-.edit-card select{
-    width:100%;
-    padding:8px;
-    margin:6px 0 12px;
-}
-
-.edit-card button{
-    background:#2a5298;
+body.homepage{
+    background:linear-gradient(135deg,#060c1a,#0b132b,#111827);
     color:#fff;
-    padding:10px;
-    border:none;
-    border-radius:6px;
+    font-family:'Segoe UI', sans-serif;
+    animation: fadePage 0.6s ease-in-out;
 }
 
-.edit-btn{
-    background:#ffc107;
-    padding:6px 10px;
-    color:#000;
-    text-decoration:none;
-    border-radius:5px;
-    margin-right:6px;
-}
-
-.delete-btn{
-    background:#dc3545;
-    color:#fff;
-    padding:6px 10px;
-    border:none;
-    border-radius:5px;
+@keyframes fadePage{
+    from{ opacity:0; }
+    to{ opacity:1; }
 }
 
 /* =========================================================
-   PREMIUM DEFENCE INDUSTRY DARK THEME
+   HEADER SECTION (Title + Logo)
+   - Centered with dual logo
+   - Ribbon style with transparency
 ========================================================= */
-
-body{
-    font-family: 'Segoe UI', sans-serif;
-    background: linear-gradient(135deg,#0f172a,#111827,#1e293b);
-    color:#fff;
-    overflow-x:hidden;
-}
-
-/* ================= HEADER ================= */
 
 .header-banner{
     position:relative;
-    height:260px;
-    overflow:hidden;
+    text-align:center;
+    height:15vh;              /* thinner banner */
+    overflow:hidden;          /* crop image */
 }
 
-.banner-img{
-    width:100%;
-    height:260px;
-    object-fit:cover;
-    filter:brightness(40%);
-    transform:scale(1.05);
-}
-
-.banner-overlay{
-    position:absolute;
-    top:0;
-    left:0;
+/* Background image control */
+body.homepage .banner-img{
     width:100%;
     height:100%;
-    background:linear-gradient(to right, rgba(0,0,0,0.85), rgba(0,0,0,0.4));
+    object-fit:cover;         /* proper crop */
+    object-position:top;      /* show top part */
+    display:block;
 }
 
+/* Ribbon strip */
+.banner-content{
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    gap:30px;
+
+    position:absolute;
+    top:50%;
+    left:50%;
+    transform:translate(-50%, -50%);  /* TRUE vertical + horizontal center */
+
+    padding:15px 40px;
+
+    background:rgba(0,0,0,0.55);
+    backdrop-filter:blur(6px);
+    border-radius:8px;
+
+    width:auto;
+    max-width:85%;
+}
+
+/* Title styling */
 .banner-content h1{
-    font-size:38px;
+    font-size:48px;              /* slightly reduced to fit in one line */
+    letter-spacing:4px;
     background:linear-gradient(90deg,#ffd700,#ffffff);
     -webkit-background-clip:text;
     -webkit-text-fill-color:transparent;
-    letter-spacing:2px;
-    text-transform:uppercase;
+    margin:0;
+    white-space:nowrap;          /* FORCE single line */
 }
 
-/* ================= NEWS TICKER ================= */
-
+/* Logo styling */
+.logo{
+    width:110px;
+}
+/* =========================================================
+   MOVING NEWS RIBBON
+   - Continuous scrolling
+   - Hover highlight
+========================================================= */
 .news-ticker{
     background:#ffd700;
-    color:#000;
-    padding:8px 0;
-    font-weight:600;
     overflow:hidden;
-    white-space:nowrap;
-}
-
-.news-ticker span{
-    display:inline-block;
-    padding-left:100%;
-    animation:scrollNews 18s linear infinite;
-}
-
-@keyframes scrollNews{
-    0%{ transform:translateX(0); }
-    100%{ transform:translateX(-100%); }
-}
-/* ================= Checking-Start================= */
-/* ================= NAVBAR ================= */
-
-.navbar{
-    background:rgba(0,0,0,0.85);
-    backdrop-filter:blur(10px);
-    border-bottom:1px solid rgba(255,215,0,0.3);
-}
-
-.navbar a, .dropbtn{
-    transition:all 0.3s ease;
+    height:42px;
+    display:flex;
+    align-items:center;
     position:relative;
 }
 
-.navbar a::after,
-.dropbtn::after{
-    content:'';
+.ticker-track{
+    white-space:nowrap;
+    display:inline-block;
+    animation: scrollText 18s linear infinite;
+    font-weight:700;
+    font-size:14px;
+}
+
+.news-ticker:hover{
+    background:#ffcc00;
+}
+
+@keyframes scrollText{
+    0%{ transform:translateX(100%); }
+    100%{ transform:translateX(-100%); }
+}
+
+/* =========================================================
+   NAVIGATION BAR (Homepage Only)
+   - Dark premium
+   - Home icon instead of text
+   - Same line alignment
+   - Hover highlight & underline animation
+========================================================= */
+body.homepage .navbar{
+    background:#000;
+    padding:15px 60px;
+    display:flex;
+    align-items:center;
+    gap:35px;
+    flex-wrap:nowrap;      /* Prevent wrapping */
+    position:sticky;
+    top:0;
+    z-index:1000;
+}
+
+body.homepage .navbar a,
+body.homepage .dropbtn{
+    color:#fff;
+    font-weight:600;
+    text-decoration:none;
+    background:none;
+    border:none;
+    cursor:pointer;
+    position:relative;
+    white-space:nowrap;   /* Keep in same line */
+    transition:0.3s;
+}
+
+/* Hover highlight */
+body.homepage .navbar a:hover,
+body.homepage .dropbtn:hover{
+    color:#ffd700;
+    transform:translateY(-3px);
+}
+
+/* Underline animation */
+body.homepage .navbar a::after,
+body.homepage .dropbtn::after{
+    content:"";
     position:absolute;
+    bottom:-6px;
+    left:0;
     width:0%;
     height:2px;
-    bottom:-5px;
-    left:0;
     background:#ffd700;
     transition:0.3s;
 }
 
-.navbar a:hover::after,
-.dropbtn:hover::after{
+body.homepage .navbar a:hover::after,
+body.homepage .dropbtn:hover::after{
     width:100%;
 }
 
-.navbar a:hover,
-.dropbtn:hover{
-    color:#ffd700;
-}
-
-/* ================= GLASS CARDS ================= */
-
-.info-card{
-    background:rgba(255,255,255,0.05);
-    backdrop-filter:blur(15px);
-    border:1px solid rgba(255,255,255,0.1);
-    transition:all 0.4s ease;
-}
-
-.info-card:hover{
-    transform:translateY(-8px);
-    box-shadow:0 15px 40px rgba(0,0,0,0.6);
-    border-color:#ffd700;
-}
-
-/* ================= SLIDER ================= */
-
-.slider{
-    border-radius:15px;
-    box-shadow:0 20px 40px rgba(0,0,0,0.6);
-    transition:0.4s;
-}
-
-.slide{
-    transition:opacity 0.6s ease-in-out;
-}
-
-/* Arrow glow */
-.prev, .next{
-    transition:0.3s;
-}
-
-.prev:hover, .next:hover{
-    box-shadow:0 0 20px #ffd700;
-}
-
-/* ================= BUTTON EFFECTS ================= */
-
-.nav-right a{
-    transition:all 0.3s ease;
-}
-
-.nav-right a:hover{
-    transform:translateY(-3px);
-    box-shadow:0 10px 25px rgba(255,215,0,0.4);
-}
-
-/* ================= FOOTER ================= */
-
-.footer{
-    background:#0f172a;
-    border-top:1px solid rgba(255,215,0,0.2);
-}
-.info-card{
-    opacity:0;
-    transform:translateY(40px);
-    transition:0.6s ease;
-}
-/* ================= Checking-End================= */
-/* ================= NAVBAR ================= */
-
-.navbar{
-    background:#000;
-    display:flex;
-    align-items:center;
-    justify-content:flex-start;
-    padding:15px 60px;
-    gap:40px;
-    font-size:15px;
-}
-
-.navbar a,
-.dropbtn{
-    display:flex;
-    align-items:center;
-    gap:6px;
-    background:none;
-    border:none;
-    color:#fff;
-    font-size:15px;
-    font-weight:600;
-    cursor:pointer;
-}
-.dropdown{
+/* =========================================================
+   DROPDOWN MENU (Homepage)
+   - Smooth animated appearance
+   - Hover highlight inside dropdown
+========================================================= */
+body.homepage .dropdown{
     position:relative;
-    display:flex;
-    align-items:center;
 }
 
-.navbar a:hover,
-.dropbtn:hover{
+body.homepage .dropdown-content{
+    position:absolute;
+    top:35px;
+    left:0;
+    background:#111;
+    min-width:200px;
+    border-radius:8px;
+    box-shadow:0 10px 30px rgba(0,0,0,0.7);
+    opacity:0;
+    visibility:hidden;
+    transform:translateY(10px);
+    transition:0.3s ease;
+}
+
+body.homepage .dropdown-content a{
+    display:block;
+    padding:12px 15px;
+}
+
+body.homepage .dropdown-content a:hover{
+    background:#1c1c1c;
     color:#ffd700;
 }
-/* Prevent navbar text wrapping */
-.navbar a,
-.dropbtn{
-    white-space: nowrap;
-}
-/* Home icon */
-.home-icon{
-    font-size:18px;
-    margin-right:10px;
+
+body.homepage .dropdown:hover .dropdown-content{
+    opacity:1;
+    visibility:visible;
+    transform:translateY(0);
 }
 
-/* Right side buttons */
-.nav-right{
+/* =========================================================
+   LOGIN & SIGNUP BUTTONS (Homepage Only)
+========================================================= */
+body.homepage .nav-right{
     margin-left:auto;
     display:flex;
     gap:15px;
 }
 
-/* DROPDOWN */
-
-.dropdown{
-    position:relative;
+body.homepage .login-btn{
+    border:1px solid #ffd700;
+    padding:8px 16px;
+    border-radius:6px;
 }
 
-.dropdown-content{
-    display:none;
-    position:absolute;
-    background:#162338;
-    min-width:200px;
-    top:35px;
-    border-radius:5px;
-    box-shadow:0 6px 15px rgba(0,0,0,0.5);
-    z-index:1000;
+body.homepage .signup-btn{
+    background:#ffd700;
+    color:#000;
+    padding:8px 16px;
+    border-radius:6px;
 }
 
-.dropdown-content a{
-    display:block;
-    padding:10px 15px;
-    font-size:13px;
+body.homepage .signup-btn:hover{
+    background:#ffcc00;
+    box-shadow:0 8px 20px rgba(255,215,0,0.5);
 }
 
-.dropdown-content a:hover{
-    background:#0f1a2b;
-}
-
-.dropdown:hover .dropdown-content{
-    display:block;
-}
-
-/* ================= MAIN LAYOUT ================= */
-
-.main-section{
+/* =========================================================
+   MAIN SECTION (Slider + Panels)
+========================================================= */
+body.homepage .main-section{
     display:flex;
     gap:40px;
     padding:50px 8%;
-    align-items:flex-start;
 }
 
-/* ================= SLIDER ================= */
+/* =========================================================
+   SLIDER (Homepage Only)
+   - Zoom effect
+   - Premium arrows glow
+========================================================= */
+body.homepage .slider-container{ width:70%; }
 
-.slider-container{
-    position:relative;
-    width:70%;
-}
-
-.slider{
+body.homepage .slider{
     position:relative;
     height:500px;
-    border-radius:12px;
+    border-radius:15px;
     overflow:hidden;
+    box-shadow:0 20px 40px rgba(0,0,0,0.6);
 }
 
-.slide{
+body.homepage .slide{
     width:100%;
     height:500px;
     object-fit:cover;
     display:none;
+    transition: transform 6s ease;
 }
 
-.slide.active{
+body.homepage .slide.active{
     display:block;
+    transform: scale(1.05);
 }
 
-.prev, .next{
+/* arrows */
+body.homepage .prev,
+body.homepage .next{
     position:absolute;
     top:50%;
     transform:translateY(-50%);
     background:rgba(0,0,0,0.6);
     color:#ffd700;
     border:2px solid #ffd700;
-    width:45px;
-    height:45px;
+    width:45px;height:45px;
     border-radius:50%;
-    font-size:20px;
     cursor:pointer;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    z-index:10;
 }
 
-.prev{ left:15px; }
-.next{ right:15px; }
-
-.prev:hover, .next:hover{
+body.homepage .prev:hover,
+body.homepage .next:hover{
     background:#ffd700;
     color:#000;
+    box-shadow:0 0 20px #ffd700;
 }
 
-/* ================= RIGHT PANEL ================= */
-
-.right-panel{
+/* =========================================================
+   RIGHT PANELS (Latest News, Notices, Useful Links)
+   - Pop-up effect
+   - Highlight on hover
+========================================================= */
+body.homepage .right-panel{
     width:30%;
     display:flex;
     flex-direction:column;
     gap:25px;
 }
 
-.info-card{
-    background:#162338;
-    padding:22px 25px;
+body.homepage .info-card{
+    background:rgba(255,255,255,0.05);
+    backdrop-filter:blur(12px);
+    padding:22px;
     border-radius:12px;
-    box-shadow:0 6px 18px rgba(0,0,0,0.4);
-    color:#fff;
+    border:1px solid rgba(255,255,255,0.1);
+    transition:0.4s ease;
 }
 
-.info-card h3{
+body.homepage .info-card:hover{
+    transform:translateY(-10px) scale(1.03);
+    box-shadow:0 20px 40px rgba(0,0,0,0.7);
+    border-color:#ffd700;
+}
+
+body.homepage .info-card h3{
     color:#ffd700;
-    margin-bottom:15px;
-    font-size:18px;
+    margin-bottom:12px;
 }
 
-.info-card ul{
-    list-style-position:inside;
-    padding-left:0;
-    line-height:1.7;
-}
-
-.info-card li{
-    margin-bottom:8px;
-    font-size:14px;
-}
-
-.no-bullets ul{
-    list-style:none;
-    padding-left:0;
-}
-
-.info-card a{
+body.homepage .info-card a{
     color:#ffd700;
     text-decoration:none;
 }
 
-.info-card a:hover{
+body.homepage .info-card a:hover{
     text-decoration:underline;
 }
 
-/* ================= FOOTER ================= */
-
-.footer{
-    background:#111c2e;
+/* =========================================================
+   FOOTER (Homepage Only)
+========================================================= */
+body.homepage .footer{
     text-align:center;
     padding:20px;
+    background:#0a1425;
     margin-top:40px;
-    font-size:14px;
-    color:#ccc;
 }
-
-/* ================= RESPONSIVE ================= */
-
-@media(max-width:1100px){
-    .main-section{
-        flex-direction:column;
-    }
-
-    .slider-container{
-        width:100%;
-    }
-
-    .slider,
-    .slide{
-        height:350px;
-    }
-
-    .right-panel{
-        width:100%;
-    }
-}
-
-.nav-right a{
-    padding:8px 18px;
-    border-radius:4px;
-    font-weight:600;
-}
-
-/* Login button */
-.nav-right a:first-child{
-    background:#1e3c72;
-    border:1px solid #ffd700;
-}
-
-/* Sign Up button */
-.nav-right a:last-child{
-    background:#ffd700;
-    color:#000;
-}
-
-.nav-right a:last-child:hover{
-    background:#e6c200;
+/* Login page title */
+.login-title {
+    font-family: 'Cinzel', serif;   /* Professional institutional look */
+    font-size: 32px;
+    font-weight: 600;
+    letter-spacing: 1px;
+    text-transform: capitalize;
+    color: #1a1a1a;   /* Use white if dark background */
 }
