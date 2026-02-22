@@ -91,21 +91,63 @@ session_start();
     </div>
 
 </div>
-
 <!-- ================= MAIN SECTION ================= -->
 <div class="main-section">
 
-    <div class="slider-container">
-        <div class="slider">
-            <img src="images/infantry1.jpg" class="slide active">
-            <img src="images/infantry2.jpg" class="slide">
-            <img src="images/infantry3.jpg" class="slide">
+    <!-- LEFT SIDE (Slider + Commands stacked) -->
+    <div class="left-panel">
 
-            <button class="prev" onclick="moveSlide(-1)">❮</button>
-            <button class="next" onclick="moveSlide(1)">❯</button>
+        <div class="slider-container">
+            <div class="slider">
+                <img src="images/infantry1.jpg" class="slide active">
+                <img src="images/infantry2.jpg" class="slide">
+                <img src="images/infantry3.jpg" class="slide">
+
+                <button class="prev" onclick="moveSlide(-1)">❮</button>
+                <button class="next" onclick="moveSlide(1)">❯</button>
+            </div>
         </div>
+
+        <!-- ================= INDIAN ARMY COMMAND PANEL ================= -->
+        <div class="commands-panel">
+            <h3>Indian Army Commands</h3>
+
+            <div class="commands-row">
+
+                <a href="https://indianarmy.nic.in/command/command/western-command-commands-site-main" target="_blank">
+                    <img src="images/Western.png" alt="Western Command">
+                </a>
+
+                <a href="https://indianarmy.nic.in/command/command/southern-command-commands-site-main" target="_blank">
+                    <img src="images/Southern.png" alt="Southern Command">
+                </a>
+
+                <a href="https://indianarmy.nic.in/command/command/northern-command-commands-site-main" target="_blank">
+                    <img src="images/Northen.png" alt="Northern Command">
+                </a>
+
+                <a href="https://indianarmy.nic.in/command/command/eastern-command-commands-site-main" target="_blank">
+                    <img src="images/Eastern.png" alt="Eastern Command">
+                </a>
+
+                <a href="https://indianarmy.nic.in/command/command/central-command-commands-site-main" target="_blank">
+                    <img src="images/Central.png" alt="Central Command">
+                </a>
+
+                <a href="https://indianarmy.nic.in/command/command/artrac-commands-site-main" target="_blank">
+                    <img src="images/Arctrac.png" alt="ARTRAC">
+                </a>
+
+                <a href="https://indianarmy.nic.in/command/command/south-western-command-commands-site-main" target="_blank">
+                    <img src="images/Southern-Western.png" alt="South Western Command">
+                </a>
+
+            </div>
+        </div>
+
     </div>
-    
+
+    <!-- RIGHT SIDE PANEL -->
     <div class="right-panel">
 
         <div class="info-card">
@@ -147,30 +189,15 @@ session_start();
         <div class="info-card">
             <h3>Useful Links</h3>
             <ul>
-                <li>
-                    <a href="https://indianarmy.nic.in/" target="_blank">
-                        Indian Army Official Website
-                    </a>
-                </li>
-                <li>
-                    <a href="https://www.rashtriyamilitaryschools.edu.in/" target="_blank">
-                        Rashtriya Military School
-                    </a>
-                </li>
-                <li>
-                    <a href="https://indianarmy.nic.in/Training/training-site-main/training-teams" target="_blank">
-                        Training & Doctrine
-                    </a>
-                </li>
-                <li>
-                    <a href="https://indianarmy.nic.in/honours/honours-awards-site-main/honorary-commission" target="_blank">
-                        Honorary Commissions
-                    </a>
-                </li>
+                <li><a href="https://indianarmy.nic.in/" target="_blank">Indian Army Official Website</a></li>
+                <li><a href="https://www.rashtriyamilitaryschools.edu.in/" target="_blank">Rashtriya Military School</a></li>
+                <li><a href="https://indianarmy.nic.in/Training/training-site-main/training-teams" target="_blank">Training & Doctrine</a></li>
+                <li><a href="https://indianarmy.nic.in/honours/honours-awards-site-main/honorary-commission" target="_blank">Honorary Commissions</a></li>
             </ul>
         </div>
 
     </div>
+
 </div>
 
 <div class="footer">

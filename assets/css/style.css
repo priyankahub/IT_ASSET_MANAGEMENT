@@ -216,7 +216,9 @@ body.homepage .main-section{
 }
 
 /* ================= SLIDER ================= */
-body.homepage .slider-container{ width:70%; }
+body.homepage .slider-container{
+    width:100%;
+}
 
 body.homepage .slider{
     position:relative;
@@ -391,4 +393,59 @@ body.homepage .nav-right a:hover{
     color:#000 !important;
     transform:translateY(-4px);
     box-shadow:0 10px 25px rgba(255,215,0,0.6);
+}
+/* =========================================================
+   INDIAN ARMY COMMAND PANEL (Under Slider Only)
+========================================================= */
+
+body.homepage .commands-panel{
+    width:100%; /* Same as slider width */
+    margin-top:30px;
+    background:rgba(255,255,255,0.12);
+    backdrop-filter:blur(10px);
+    padding:25px;
+    border-radius:14px;
+    border:1px solid rgba(255,255,255,0.2);
+    box-shadow:0 15px 30px rgba(0,0,0,0.35);
+}
+
+body.homepage .commands-panel h3{
+    text-align:center;
+    color:#ffd700;
+    margin-bottom:20px;
+    font-size:20px;
+    letter-spacing:1px;
+}
+
+/* Horizontal layout like reference */
+body.homepage .commands-row{
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    gap:20px;
+    flex-wrap:nowrap;      /* Force single line */
+    overflow-x:auto;       /* Prevent breaking layout */
+    padding:10px 0;
+}
+
+/* Individual Logo Box */
+body.homepage .commands-row a{
+    background:#ffffff;
+    padding:10px;
+    border-radius:10px;
+    border:2px solid #ff0000;
+    transition:all 0.3s ease;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+}
+
+body.homepage .commands-row img{
+    width:90px;
+    height:auto;
+    transition:0.3s ease;
+}
+
+body.homepage .commands-row img:hover{
+    transform:scale(1.1);
 }
